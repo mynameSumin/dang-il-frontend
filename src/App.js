@@ -1,26 +1,21 @@
-// src/App.js
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Auth from "./components/Auth";
-import Login from "./components/Login";
-import MainPage from "./pages/MainPage";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Login from './components/Login';
+import Auth from './components/Auth';
+// import './pages/App.css';  // 스타일을 포함하고 있다면 
 
 const App = () => {
   return (
-    <GoogleOAuthProvider clientId="">
-      <Router>
-        <Routes>
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/mainpage" element={<MainPage />} />
-          {/* <Route path="/" element={<Login />} /> */}
-          {/* 경로 임시 설정 */}
-          <Route path="/" element={<MainPage />} />
-          {/* 필요한 다른 경로들도 설정 */}
-        </Routes>
-      </Router>
-    </GoogleOAuthProvider>
-  );
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} /> 
+        <Route path="/auth/callback" element={<Auth />} />
+        <Route path="/" element={<Navigate to="/login" />} />
+      </Routes>
+    </Router>
+  ); //위의 코드설명 : path가 /login일떄 Login 컴포넌트를 렌더링함.
 };
 
 export default App;
+
+
