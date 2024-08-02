@@ -1,56 +1,58 @@
 // src/components/Auth.js
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-
 
 const Auth = () => {
     const location = useLocation();
-    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
-        const code = new URLSearchParams(location.search).get('code');
-        if (code) {
-            getKakaoToken(code);
+        const code = new URLSearchParams(location.search).get('code'); // 인가코드 추출.
+        const provider = new URLSearchParams(location.search).get('provider');
+        if (code && provider) {
+            sendCodeToBackend(code, provider); // 백엔드로 전달
         }
-    }, [location]);
+    }, [location]); //uri바뀔때마다(사용자교체와같은) 백엔드로 새로운 인가코드 전달.
 
-    const getKakaoToken = async (code) => {
+    const sendCodeToBackend = async (code, provider) => {
         try {
-            const response = await axios.post('https://kauth.kakao.com/oauth/token', null, {
-                params: {
-                    grant_type: 'authorization_code',
-                    client_id: '', // 여기에 올바른 클라이언트 ID를 입력하세요.
-                    redirect_uri: 'http://localhost:3000/auth',
-                    code: code
-                }
-            });
-
+            let response;
+            if (provider === 'kakao') {
+                response = await axios.post('', { code });
+            } else if (provider === 'google') {
+                response = await axios.post('', { code });
+            }
+    
             const { access_token } = response.data;
-            console.log(access_token);
-            getKakaoUserInfo(access_token);
+            getUserInfo(access_token, provider);
         } catch (error) {
-            console.error('Kakao Login Failed:', error);
+            console.error(`Failed to send code to backend: ${error}`);
         }
-    };
+    }; // 여기넣는 URI는 카카오 리다이렉트 URI가 아니라 백엔드 서버의 인가 코드를 처리하는 엔드포인트 URI여야 함. 아직 백엔드에서 개발 덜해서 마치면 넣도록~ 
 
-    const getKakaoUserInfo = async (token) => {
+    const getUserInfo = async (token, provider) => {
         try {
-            const response = await axios.get('https://kapi.kakao.com/v2/user/me', {
-                headers: {
+            const url = provider === 'kakao'
+                ? 'https://kapi.kakao.com/v2/user/me'
+                : 'https://www.googleapis.com/oauth2/v2/userinfo';
+
+            const response = await axios.get(url, {
+                headers: {// 엑세스 토큰을 포함하여 요청을 보내고, 카카오 api서버가 이 토큰을 사용해 사용자 요청을 인증하고 사용자 정보를 반환하도록 함.
                     Authorization: `Bearer ${token}`
                 }
             });
             setUserInfo(response.data);
-            navigate('/mainpage'); // 로그인 후 메인 페이지로 리디렉션
         } catch (error) {
-            console.error('Failed to fetch Kakao user info:', error);
+            console.error(`Failed to fetch ${provider} user info: ${error}`);
         }
     };
 
+    
+
     if (!userInfo) {
-        return <div>카카오 로그인 중...</div>;
+        const provider = new URLSearchParams(location.search).get('provider');
+        return <div>{provider === 'google' ? '구글 로그인 중...' : '카카오 로그인 중...'}</div>;
     }
 
     return (
@@ -62,7 +64,5 @@ const Auth = () => {
 };
 
 export default Auth;
-
-
 
 
