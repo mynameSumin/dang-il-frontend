@@ -1,47 +1,39 @@
-// src/components/Login.js
-import React from "react";
-import { Button } from "@mui/material";
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
-import axios from "axios";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const handleGoogleLoginSuccess = async (response) => {
-    const decoded = jwtDecode(response.credential);
-    console.log("Google Login Success:", decoded);
+  const navigate = useNavigate(); //navigate를 사용하여 페이지를 이동할수있다.
 
-    // 서버로 Google 토큰을 전송하여 인증 처리
-    try {
-      const res = await axios.post("http://localhost:3000/auth", {
-        token: response.credential,
-      });
-      console.log("Server response:", res.data);
-    } catch (error) {
-      console.error("Server error:", error);
+  useEffect(() => {
+    // URL에서 인증 코드 추출
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+
+    if (code) {
+      // 인증 코드를 FastAPI 서버로 전송
+      fetch(`https://www.dangil-artisticsw.site/auth/google/callback`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ code: code })
+      })
+        .then(response => response.json()) // fetch 요청이 완료되면 응답이 response에 담김. response안의 json이란 함수를 실행하여 json형식으로 응답을 파싱함.
+        // function (a,b){ return a+b} = (a,b) => a+b
+        .then(data => {
+          console.log('Token and user data:', data);
+          localStorage.setItem('token', data.id_token);
+          navigate('/');
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    } else {
+      console.error('No authorization code found');
     }
-  };
+  }, [navigate]); // useEffect함수의 2번째 파라미터에 값을 넣으면 그 값이 변경될때마다 useEffect함수가 실행됨. 만약 아무값도 넣지 않으면 렌더링될때마다 실행됨.
 
-  const handleGoogleLoginFailure = (error) => {
-    console.error("Google Login Failed:", error);
-  };
-
-  return (
-    <div>
-      <Button
-        onClick={() => {
-          window.location.href = process.env.REACT_APP_KAKAO_AUTH_URL;
-        }}
-        variant="contained"
-        color="primary"
-      >
-        카카오로 로그인하기
-      </Button>
-      <GoogleLogin
-        onSuccess={handleGoogleLoginSuccess}
-        onError={handleGoogleLoginFailure}
-      />
-    </div>
-  );
+  return <div>로딩중입니다. 조금만 기다려주세요</div>;
 };
 
 export default Login;

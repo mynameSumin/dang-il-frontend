@@ -2,6 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import "../styles/mainPage.css";
 
 export default function MainPage() {
+  const handleLogin = () => {
+    window.location.href =
+      "https://www.dangil-artisticsw.site/auth/google/login";
+  }; //해당코드는 현재 url을 지정된 url로 바꾸는 기능을 가진다. 이 코드를 실행하면 브라우저가 새로운 URL로 리디렉션됨.
+  //2. 버튼 클릭시 해당 사이트(이게 구글 로그인 사이트임)로 리디렉션된다.
+
   const [desks, setDesks] = useState([]);
   const fakeData = Array.from({ length: 20 }, (_, i) => ({ id: i + 1 })); // 예시 데이터 20개
   const fieldRef = useRef(null);
@@ -76,15 +82,18 @@ export default function MainPage() {
   }, []);
 
   return (
-    <div ref={fieldRef} className="field">
-      {desks.map((box) => (
-        <div
-          id={box.id}
-          key={box.id}
-          className={box.id === 1 ? "main-box" : "box"}
-          style={{ left: box.x, top: box.y, position: "absolute" }}
-        />
-      ))}
+    <div>
+      <div ref={fieldRef} className="field">
+        {desks.map((box) => (
+          <div
+            id={box.id}
+            key={box.id}
+            className={box.id === 1 ? "main-box" : "box"}
+            style={{ left: box.x, top: box.y, position: "absolute" }}
+          />
+        ))}
+      </div>
+      <button onClick={handleLogin}>Login with Google</button>
     </div>
   );
 }
