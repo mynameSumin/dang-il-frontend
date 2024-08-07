@@ -6,12 +6,10 @@ export default function MainPage() {
     window.location.href =
       "https://www.dangil-artisticsw.site/auth/google/login";
   }; //해당코드는 현재 url을 지정된 url로 바꾸는 기능을 가진다. 이 코드를 실행하면 브라우저가 새로운 URL로 리디렉션됨.
-  //2. 버튼 클릭시 해당 사이트(이게 구글 로그인 사이트임)로 리디렉션된다.
 
   const [desks, setDesks] = useState([]);
   const fakeData = Array.from({ length: 20 }, (_, i) => ({ id: i + 1 })); // 예시 데이터 20개
   const fieldRef = useRef(null);
-
   // 각 데스크의 위치를 설정 (위, 오른쪽 위, 오른쪽 아래, 아래, 왼쪽 아래, 왼쪽 위 순서)
   const translateBox = [
     { dx: 80, dy: -230 },
@@ -21,7 +19,6 @@ export default function MainPage() {
     { dx: -400, dy: 190 },
     { dx: -400, dy: -130 },
   ];
-
   // 주어진 중심 데스크를 기준으로 6개의 데스크 위치를 생성하는 함수
   const createSurroundingDesks = (centerDesk, startId, existingDesks) => {
     return translateBox
@@ -50,11 +47,9 @@ export default function MainPage() {
     const fieldHeight = window.innerHeight;
     const middleOfWidth = fieldWidth / 2 - 237.5;
     const middleOfHeight = fieldHeight / 2 - 133.5;
-
     // 초기 중심 데스크 설정
     let allDesks = [{ id: 1, x: middleOfWidth, y: middleOfHeight }];
     let deskQueue = [{ id: 1, x: middleOfWidth, y: middleOfHeight }];
-
     // 나머지 데스크들 위치 설정
     let currentId = 1;
     while (allDesks.length < fakeData.length && deskQueue.length > 0) {
@@ -68,7 +63,6 @@ export default function MainPage() {
       deskQueue = [...deskQueue, ...newDesks];
       currentId += 6;
     }
-
     // 설정된 위치를 데스크 배열에 맞게 조정
     const adjustedDesks = allDesks
       .slice(0, fakeData.length)
@@ -93,7 +87,14 @@ export default function MainPage() {
           />
         ))}
       </div>
-      <button onClick={handleLogin}>Login with Google</button>
+      <div className="login-container">
+        <button onClick={handleLogin}>Login with Google</button>
+      </div>
     </div>
   );
 }
+
+
+
+
+
