@@ -9,8 +9,29 @@ export default function MainPage() {
   //2. 버튼 클릭시 해당 사이트(이게 구글 로그인 사이트임)로 리디렉션된다.
 
   const [desks, setDesks] = useState([]);
-  const fakeData = Array.from({ length: 20 }, (_, i) => ({ id: i + 1 })); // 예시 데이터 20개
   const fieldRef = useRef(null);
+
+  const fakeData = Array.from({ length: 20 }, (_, i) => ({ id: i + 1 })); // 예시 데이터 20개
+
+  //사용자 데이터 fetch해오기
+  const fetchUserData = () => {
+    fetch(`https://dangil-artisticsw.site/guestmode/mainpage`, {
+      method: "GET",
+    })
+      .then((response) => console.log(response))
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  let scrollWidth = Math.max(
+    document.body.scrollWidth,
+    document.documentElement.scrollWidth,
+    document.body.offsetWidth,
+    document.documentElement.offsetWidth,
+    document.body.clientWidth,
+    document.documentElement.clientWidth
+  );
 
   // 각 데스크의 위치를 설정 (위, 오른쪽 위, 오른쪽 아래, 아래, 왼쪽 아래, 왼쪽 위 순서)
   const translateBox = [
@@ -46,7 +67,16 @@ export default function MainPage() {
   };
 
   useEffect(() => {
-    const fieldWidth = window.innerWidth;
+    fetchUserData();
+
+    const fieldWidth = Math.max(
+      document.body.scrollWidth,
+      document.documentElement.scrollWidth,
+      document.body.offsetWidth,
+      document.documentElement.offsetWidth,
+      document.body.clientWidth,
+      document.documentElement.clientWidth
+    );
     const fieldHeight = window.innerHeight;
     const middleOfWidth = fieldWidth / 2 - 237.5;
     const middleOfHeight = fieldHeight / 2 - 133.5;
