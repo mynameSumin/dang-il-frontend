@@ -24,10 +24,10 @@ export default function MainPage() {
       setShowPopup(true);
       localStorage.removeItem('showPopup');
       
-      // 3초 후 팝업 숨기기
-      // setTimeout(() => {
-      //   setShowPopup(false);
-      // }, 3000);
+      //3초 후 팝업 숨기기
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 3000);
     }
   }, []);
 
