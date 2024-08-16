@@ -144,7 +144,7 @@ export default function MainPage() {
             <p>Connect to your space now</p>
             <div className="user-info">
               <div className="user-icon">MK</div>
-              <div className="user-name">User name</div>
+              <div className="user-name">{userName}</div>
               <div className="user-time">2 days ago</div>
             </div>
           </div>

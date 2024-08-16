@@ -19,4 +19,3 @@ const App = () => {
 export default App;
 
 //1. npm start하면 위의 route에서 path="/"에 해당하는 mainpage로 이동함.
-
