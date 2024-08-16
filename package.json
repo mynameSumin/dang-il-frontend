@@ -13,16 +13,11 @@
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
     "jwt-decode": "^4.0.0",
-<<<<<<< HEAD
     "nth-check": "^2.0.1",
     "postcss": "^8.4.31",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.3.0",
-=======
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
->>>>>>> eece22d86a16426f6e2a3ddb6203b779f3b2a250
     "react-kakao-login": "^2.1.1",
     "react-router-dom": "^6.24.0",
     "react-scripts": "5.0.1",

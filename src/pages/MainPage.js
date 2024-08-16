@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/mainPage.css";
+import "../styles/popup.css";
 import { FaUserCircle } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
@@ -24,9 +25,9 @@ export default function MainPage() {
       localStorage.removeItem('showPopup');
       
       // 3초 후 팝업 숨기기
-      setTimeout(() => {
-        setShowPopup(false);
-      }, 3000);
+      // setTimeout(() => {
+      //   setShowPopup(false);
+      // }, 3000);
     }
   }, []);
 
@@ -140,8 +141,9 @@ export default function MainPage() {
         <div className="popup">
           <div className="popup-content">
           <img src="/images/send.png" className="send-img" />
-            <h2>Welcome!</h2>
-            <p>Connect to your space now</p>
+            <p className="popup_t1">다시 힘내볼까요?</p>
+            <p className="popup_t2">나만의 스페이스로</p>
+            <p className="popup_t3">이동 중입니다.</p>
             <div className="user-info">
               <div className="user-icon">MK</div>
               <div className="user-name">{userName}</div>
