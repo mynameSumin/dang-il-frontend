@@ -22,9 +22,10 @@ const LoginGoogle = () => {
         .then(response => response.json())
         .then(data => {
           console.log('Google Token and user data:', data);
-          console.log('User Name:', data.userName);
+
+          const userName = data.name;
           localStorage.setItem('token', data.id_token);
-          localStorage.setItem('userName', data.userName);  // 유저 이름 저장
+          localStorage.setItem('userName', userName);  // 유저 이름 저장
           localStorage.setItem('showPopup', 'true'); // 팝업 표시 플래그 설정
           navigate('/');
         })
