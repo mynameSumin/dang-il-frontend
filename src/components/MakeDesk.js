@@ -6,6 +6,7 @@ export default function MakeDesk({ fakeData }) {
   const fieldRef = useRef(null);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const [isClickedDesk, setIsClickedDesk] = useState(0);
 
   // 각 데스크의 위치를 설정 (위, 오른쪽 위, 오른쪽 아래, 아래, 왼쪽 아래, 왼쪽 위 순서)
   const translateBox = [
@@ -152,10 +153,10 @@ export default function MakeDesk({ fakeData }) {
     const fieldHeight = window.innerHeight;
 
     return (
-      desk.x < 10 ||
+      desk.x < -150 ||
       desk.x > fieldWidth - 10 ||
-      desk.y < 10 ||
-      desk.y > fieldHeight
+      desk.y < -80 ||
+      desk.y > fieldHeight - 200
     );
   };
 
@@ -176,7 +177,11 @@ export default function MakeDesk({ fakeData }) {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      style={{ width: "100vw", height: "100vh", position: "relative" }}
+      style={{
+        width: "100vw",
+        height: "100vh",
+        position: "relative",
+      }}
     >
       {desks.map((box) => (
         <svg
@@ -188,14 +193,20 @@ export default function MakeDesk({ fakeData }) {
           xmlns="http://www.w3.org/2000/svg"
           className={box.id === 1 ? "main-box" : "box"}
           onClick={() => {
-            console.log(box.id);
+            setIsClickedDesk(box.id);
           }}
           style={{
             position: "absolute",
             left: `${box.x}px`,
             top: `${box.y}px`,
             opacity: isOutsideViewport(box) ? 0.3 : 1,
+            transform: isClickedDesk == box.id ? "scale(1.2)" : "scale(1)",
+            transition: "0.3s ease",
             cursor: "pointer",
+            filter:
+              isClickedDesk == box.id
+                ? "drop-shadow(0px 0px 10px rgba(0, 136, 210, 1))"
+                : "none",
           }}
         >
           <g opacity="0.8" filter="url(#filter0_d_141_1315)">
