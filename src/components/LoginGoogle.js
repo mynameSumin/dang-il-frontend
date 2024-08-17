@@ -14,7 +14,7 @@ const LoginGoogle = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        // credentials: 'include',  // 쿠키를 포함하고 저장하도록 설정
+        credentials: 'include',  // 쿠키를 포함하고 저장하도록 설정
         body: JSON.stringify({ code }),
       };
 
