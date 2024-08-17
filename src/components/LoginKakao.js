@@ -23,7 +23,11 @@ const LoginKakao = () => {
         .then(response => response.json()) // fetch 요청이 완료되면 응답이 response에 담김. response안의 json이란 함수를 실행하여 json형식으로 응답을 파싱함.
         .then(data => {
           console.log('Kakao Token and user data:', data);
+
+          const userName = data.name;
           localStorage.setItem('token', data.id_token);
+          localStorage.setItem('userName', userName);  // 유저 이름 저장
+          localStorage.setItem('showPopup', 'true'); // 팝업 표시 플래그 설정
           navigate('/');
         })
         .catch(error => {
@@ -34,7 +38,7 @@ const LoginKakao = () => {
     }
   }, [navigate]); // useEffect함수의 2번째 파라미터에 값을 넣으면 그 값이 변경될때마다 useEffect함수가 실행됨. 만약 아무값도 넣지 않으면 렌더링될때마다 실행됨.
 
-  return <div>로딩중입니다. 조금만 기다려주세요</div>;
+  return null;
 };
 
 export default LoginKakao;
