@@ -1,5 +1,4 @@
 import DeskField from "../components/MakeDesk"; // 생성한 DeskField 컴포넌트
-
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/mainPage.css";
 import "../styles/popup.css";
@@ -64,7 +63,7 @@ export default function MainPage() {
 
   return (
     <div>
-      <DeskField fakeData={fakeData} />
+      <DeskField fakeData={fakeData} fieldRef={fieldRef} />
       <div ref={loginContainerRef} className="login-container">
         <button onClick={handleLogin} className="login-button">
           <FaUserCircle className="login-icon" />
