@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LoginKakao = () => {
@@ -25,7 +25,7 @@ const LoginKakao = () => {
           console.log('Kakao Token and user data:', data);
 
           const userName = data.name;
-          localStorage.setItem('token', data.id_token);
+          localStorage.setItem('token', data.id_token); //setItem은 localStorage에 값을 저장하는 메서드이다. token은 키고 data.id_token은 값이다.
           localStorage.setItem('userName', userName);  // 유저 이름 저장
           localStorage.setItem('showPopup', 'true'); // 팝업 표시 플래그 설정
           navigate('/');
