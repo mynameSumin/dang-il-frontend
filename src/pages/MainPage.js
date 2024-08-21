@@ -116,17 +116,17 @@ export default function MainPage() {
       <div ref={loginContainerRef} className="login-container">
         {userName === "Guest" ? (
           <button onClick={handleLogin} className="login-button">
-            <FaUserCircle className="login-icon" />
-            <span className="login-text">Guest</span>
+            <FaUserCircle className="guest-icon" />
+            <span className="text-Guest">Guest</span>
             <span className="login-divider">|</span>
-            <span className="login-text">Log in</span>
-            <FiMenu className="login-icon" />
+            <span className="text-Login">Log in</span>
+            <FiMenu className="list-icon" />
           </button>
         ) : (
           <button className="login-button">
             <img src="/images/search.png" alt="Search" className="search-img"/>
-            <FaUserCircle className="login-icon" />
-            <span className="login-text">{userName}</span>
+            <FaUserCircle className="user-icon" />
+            <span className="username">{userName}</span>
             <span className="dropdown-button" onClick={toggleDropdown}>▼</span>
             {isDropdownOpen && (
               <div className="dropdown-content" ref={dropdownRef}>
@@ -136,7 +136,7 @@ export default function MainPage() {
                 <button onClick={handleLogout}>로그아웃</button>
               </div>
             )}
-            <FiMenu className="login-icon" />
+            <FiMenu className="list-icon" />
           </button>
         )}
       </div>
