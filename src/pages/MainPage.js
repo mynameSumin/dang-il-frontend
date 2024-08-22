@@ -126,7 +126,7 @@ export default function MainPage() {
           <button className="login-button-user">
             <img src="/images/search.png" alt="Search" className="search-img"/>
             <FaUserCircle className="user-icon" />
-            <span className="username">{userName}</span>
+            <span className="user-name">{userName}</span>
             <span className="dropdown-button" onClick={toggleDropdown}>▼</span>
             {isDropdownOpen && (
               <div className="dropdown-content" ref={dropdownRef}>
@@ -143,7 +143,7 @@ export default function MainPage() {
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
-            <img src="/images/send.png" className="send-img" />
+            <img src="/images/send.png" alt="send" className="send-img" />
             <p className="popup_t1">다시 힘내볼까요?</p>
             <p className="popup_t2">나만의 스페이스로</p>
             <p className="popup_t3">이동 중입니다.</p>
