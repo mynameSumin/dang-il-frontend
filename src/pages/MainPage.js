@@ -70,13 +70,11 @@ export default function MainPage() {
   };
 
   const handleKakaoLogin = () => {
-    window.location.href =
-      "https://www.dangil-artisticsw.site/auth/kakao/login";
+    window.location.href = "https://dangil-artisticsw.site/auth/kakao/login";
   };
 
   const handleGoogleLogin = () => {
-    window.location.href =
-      "https://www.dangil-artisticsw.site/auth/google/login";
+    window.location.href = "https://dangil-artisticsw.site/auth/google/login";
   };
 
   const handleLogout = (e) => {
