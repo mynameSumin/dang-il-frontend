@@ -10,8 +10,10 @@ export default function MainPage() {
   const [showModal, setShowModal] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [userName, setUserName] = useState("Guest"); // 초기 값은 'Guest'
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 드롭다운 상태 추가
   const fieldRef = useRef(null);
   const loginContainerRef = useRef(null);
+  const dropdownRef = useRef(null); // 드롭다운 메뉴의 참조
 
   useEffect(() => {
     const storedUserName = localStorage.getItem("userName");
@@ -41,8 +43,26 @@ export default function MainPage() {
     }
   }, [showPopup, showModal]);
 
+  useEffect(() => {
+    // 화면 어디든 클릭했을 때 호출되는 이벤트 핸들러
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    // 전역 클릭 이벤트 등록
+    document.addEventListener("click", handleClickOutside);
+
+    // 컴포넌트 언마운트 시 이벤트 제거
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
   const handleLogin = () => {
     setShowModal(true);
+    setIsDropdownOpen(false); // 모달 열리면 드롭다운은 닫음
   };
 
   const handleCloseModal = () => {
@@ -57,20 +77,66 @@ export default function MainPage() {
     window.location.href = "https://dangil-artisticsw.site/auth/google/login";
   };
 
+  const handleLogout = (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
+    fetch('https://www.dangil-artisticsw.site/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    })
+    .then(response => {
+      if (response.ok) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userName');
+        window.location.href = '/login'; // 로그아웃 후 로그인 페이지로 리디렉션
+      } else {
+        console.error('Logout failed');
+      }
+    })
+    .catch(error => {
+      console.error('An error occurred during logout:', error);
+    });
+  };
+
+  const toggleDropdown = (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleDropdownItemClick = (e) => {
+    e.stopPropagation(); // 드롭다운 항목 클릭 시 이벤트 전파 방지
+  };
+
   const fakeData = Array.from({ length: 20 }, (_, i) => ({ id: i + 1 })); // 예시 데이터 20개
 
   return (
     <div>
       <DeskField fakeData={fakeData} fieldRef={fieldRef} />
       <div ref={loginContainerRef} className="login-container">
-        <button onClick={handleLogin} className="login-button">
-          <FaUserCircle className="login-icon" />
-          <span className="login-text">{userName}</span>{" "}
-          {/* 여기에 유저 이름 표시 */}
-          <span className="login-divider">|</span>
-          <span className="login-text">Log in</span>
-          <FiMenu className="login-icon" />
-        </button>
+        {userName === "Guest" ? (
+          <button onClick={handleLogin} className="login-button-guest">
+            <FaUserCircle className="guest-icon" />
+            <span className="text-Guest">Guest</span>
+            <span className="login-divider">|</span>
+            <span className="text-Login">Log in</span>
+            <FiMenu className="list-icon" />
+          </button>
+        ) : (
+          <button className="login-button-user">
+            <img src="/images/search.png" alt="Search" className="search-img"/>
+            <FaUserCircle className="user-icon" />
+            <span className="username">{userName}</span>
+            <span className="dropdown-button" onClick={toggleDropdown}>▼</span>
+            {isDropdownOpen && (
+              <div className="dropdown-content" ref={dropdownRef}>
+                <a href="/friends" onClick={handleDropdownItemClick}>친구 목록</a>
+                <a href="/guestbook" onClick={handleDropdownItemClick}>방명록</a>
+                <a href="/settings" onClick={handleDropdownItemClick}>설정</a>
+                <button onClick={handleLogout}>로그아웃</button>
+              </div>
+            )}
+            <FiMenu className="list-icon" />
+          </button>
+        )}
       </div>
       {showPopup && (
         <div className="popup">
