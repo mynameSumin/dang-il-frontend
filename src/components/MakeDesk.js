@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import DeskSVG from "../assets/deskPlain.svg";
+import React, { useState, useEffect } from "react";
+import "../styles/makeDesk.css";
 
 export default function MakeDesk({ fakeData, fieldRef }) {
   const [desks, setDesks] = useState([]);
@@ -120,7 +120,6 @@ export default function MakeDesk({ fakeData, fieldRef }) {
   const handleMouseDown = (e) => {
     setDragStart({ x: e.clientX, y: e.clientY });
     setIsDragging(true);
-    console.log("드래그 시작", isDragging);
   };
 
   const handleMouseMove = (e) => {
@@ -142,7 +141,6 @@ export default function MakeDesk({ fakeData, fieldRef }) {
 
   //마우스를 떼면 드래그 끝
   const handleMouseUp = () => {
-    console.log(isDragging);
     setIsDragging(false);
     // 드래그가 끝난 후 부드럽게 이동하는 모션 추가
   };
@@ -159,15 +157,6 @@ export default function MakeDesk({ fakeData, fieldRef }) {
     );
   };
 
-  // const isMainDesk = (desk) => {
-  //   const fieldWidth = window.innerWidth;
-  //   const fieldHeight = window.innerHeight;
-  //   return (
-  //     Math.abs(fieldWidth - desk.x) < 40 &&
-  //     Math.abs(fieldHeight.)
-  //   );
-  //  }
-
   return (
     <div
       ref={fieldRef}
@@ -176,11 +165,6 @@ export default function MakeDesk({ fakeData, fieldRef }) {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      style={{
-        width: "100vw",
-        height: "100vh",
-        position: "relative",
-      }}
     >
       {desks.map((box) => (
         <svg
@@ -199,11 +183,10 @@ export default function MakeDesk({ fakeData, fieldRef }) {
             left: `${box.x}px`,
             top: `${box.y}px`,
             opacity: isOutsideViewport(box) ? 0.3 : 1,
-            transform: isClickedDesk == box.id ? "scale(1.2)" : "scale(1)",
-            transition: "0.3s ease",
+            transform: isClickedDesk === box.id ? "scale(1.2)" : "scale(1)",
             cursor: "pointer",
             filter:
-              isClickedDesk == box.id
+              isClickedDesk === box.id
                 ? "drop-shadow(0px 0px 10px rgba(0, 136, 210, 1))"
                 : "none",
           }}
