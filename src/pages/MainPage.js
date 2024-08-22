@@ -115,7 +115,7 @@ export default function MainPage() {
       <DeskField fakeData={fakeData} fieldRef={fieldRef} />
       <div ref={loginContainerRef} className="login-container">
         {userName === "Guest" ? (
-          <button onClick={handleLogin} className="login-button">
+          <button onClick={handleLogin} className="login-button-guest">
             <FaUserCircle className="guest-icon" />
             <span className="text-Guest">Guest</span>
             <span className="login-divider">|</span>
@@ -123,7 +123,7 @@ export default function MainPage() {
             <FiMenu className="list-icon" />
           </button>
         ) : (
-          <button className="login-button">
+          <button className="login-button-user">
             <img src="/images/search.png" alt="Search" className="search-img"/>
             <FaUserCircle className="user-icon" />
             <span className="username">{userName}</span>
