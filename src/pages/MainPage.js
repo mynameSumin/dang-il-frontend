@@ -123,7 +123,7 @@ export default function MainPage() {
         ) : (
           <button className="login-button-user">
             <img src="/images/search.png" alt="Search" className="search-img"/>
-            <FaUserCircle className="user-icon" />
+            <FaUserCircle className="user-icon1" />
             <span className="user-name">{userName}</span>
             <span className="dropdown-button" onClick={toggleDropdown}>▼</span>
             {isDropdownOpen && (
@@ -146,7 +146,7 @@ export default function MainPage() {
             <p className="popup_t2">나만의 스페이스로</p>
             <p className="popup_t3">이동 중입니다.</p>
             <div className="user-info">
-              <div className="user-icon">MK</div>
+              <div className="user-icon2">MK</div>
               <div className="user-name">{userName}</div>
               <div className="user-time">2 days ago</div>
             </div>
