@@ -79,22 +79,22 @@ export default function MainPage() {
 
   const handleLogout = (e) => {
     e.stopPropagation(); // 이벤트 전파 방지
-    fetch('https://www.dangil-artisticsw.site/auth/logout', {
-      method: 'POST',
-      credentials: 'include',
+    fetch("https://www.dangil-artisticsw.site/auth/logout", {
+      method: "POST",
+      credentials: "include",
     })
-    .then(response => {
-      if (response.ok) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('userName');
-        window.location.href = '/login'; // 로그아웃 후 로그인 페이지로 리디렉션
-      } else {
-        console.error('Logout failed');
-      }
-    })
-    .catch(error => {
-      console.error('An error occurred during logout:', error);
-    });
+      .then((response) => {
+        if (response.ok) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userName");
+          window.location.href = "/login"; // 로그아웃 후 로그인 페이지로 리디렉션
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("An error occurred during logout:", error);
+      });
   };
 
   const toggleDropdown = (e) => {
@@ -122,15 +122,23 @@ export default function MainPage() {
           </button>
         ) : (
           <button className="login-button-user">
-            <img src="/images/search.png" alt="Search" className="search-img"/>
+            <img src="/images/search.png" alt="Search" className="search-img" />
             <FaUserCircle className="user-icon" />
             <span className="user-name">{userName}</span>
-            <span className="dropdown-button" onClick={toggleDropdown}>▼</span>
+            <span className="dropdown-button" onClick={toggleDropdown}>
+              ▼
+            </span>
             {isDropdownOpen && (
               <div className="dropdown-content" ref={dropdownRef}>
-                <a href="/friends" onClick={handleDropdownItemClick}>친구 목록</a>
-                <a href="/guestbook" onClick={handleDropdownItemClick}>방명록</a>
-                <a href="/settings" onClick={handleDropdownItemClick}>설정</a>
+                <a href="/friends" onClick={handleDropdownItemClick}>
+                  친구 목록
+                </a>
+                <a href="/guestbook" onClick={handleDropdownItemClick}>
+                  방명록
+                </a>
+                <a href="/settings" onClick={handleDropdownItemClick}>
+                  설정
+                </a>
                 <button onClick={handleLogout}>로그아웃</button>
               </div>
             )}

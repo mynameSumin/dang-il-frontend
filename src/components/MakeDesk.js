@@ -4,6 +4,7 @@ import "../styles/makeDesk.css";
 export default function MakeDesk({ fakeData, fieldRef }) {
   const [desks, setDesks] = useState([]);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [howDrag, setHowDrag] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [isClickedDesk, setIsClickedDesk] = useState(0);
 
@@ -43,7 +44,7 @@ export default function MakeDesk({ fakeData, fieldRef }) {
       .filter((desk) => desk !== null); // null이 아닌 객체들만 반환
   };
 
-  // 화면 밖으로 나가는지를 체크하고 필요한 만큼 이동하는 함수
+  // 드래그 가능한 공간을 제한하는 함수
   const adjustIfOutOfBounds = (desks) => {
     const fieldWidth = window.innerWidth;
     const fieldHeight = window.innerHeight;
@@ -67,14 +68,14 @@ export default function MakeDesk({ fakeData, fieldRef }) {
     const offsetY =
       minY < 0 ? -minY : maxY > fieldHeight ? fieldHeight - maxY : 0;
 
-    if (offsetX !== 0 || offsetY !== 0) {
-      return desks.map((desk) => ({
-        ...desk,
-        x: desk.x + offsetX,
-        y: desk.y + offsetY,
-      }));
-    }
-    return desks;
+    // if (offsetX !== 0 || offsetY !== 0) {
+    //   return desks.map((desk) => ({
+    //     ...desk,
+    //     x: desk.x + offsetX,
+    //     y: desk.y + offsetY,
+    //   }));
+    // }
+    return offsetX > offsetY ? offsetX + desks[0].x : offsetY + desks[0].y;
   };
 
   useEffect(() => {
@@ -98,7 +99,7 @@ export default function MakeDesk({ fakeData, fieldRef }) {
       );
       allDesks = [...allDesks, ...newDesks];
       deskQueue = [...deskQueue, ...newDesks];
-      currentId += 6; // 1부터 6 사이의 숫자를 생성
+      currentId += 6;
     }
 
     // 설정된 위치를 데스크 배열에 맞게 조정
@@ -109,9 +110,6 @@ export default function MakeDesk({ fakeData, fieldRef }) {
         x: desk.x,
         y: desk.y,
       }));
-
-    // 화면 밖으로 나간 경우 전체 데스크를 이동시킴
-    adjustedDesks = adjustIfOutOfBounds(adjustedDesks);
 
     setDesks(adjustedDesks);
   }, [fakeData]);
@@ -127,14 +125,20 @@ export default function MakeDesk({ fakeData, fieldRef }) {
       const deltaX = e.clientX - dragStart.x;
       const deltaY = e.clientY - dragStart.y;
 
-      setDesks((prevDesks) =>
-        prevDesks.map((desk) => ({
-          ...desk,
-          x: desk.x + deltaX,
-          y: desk.y + deltaY,
-        }))
-      );
-
+      //데스크가 없는 화면에서는 드래그 막기
+      if (
+        Math.abs(howDrag.x + deltaX) < Math.abs(adjustIfOutOfBounds(desks)) &&
+        Math.abs(howDrag.y + deltaY) < Math.abs(adjustIfOutOfBounds(desks))
+      ) {
+        setHowDrag({ x: howDrag.x + deltaX, y: howDrag.y + deltaY });
+        setDesks((prevDesks) =>
+          prevDesks.map((desk) => ({
+            ...desk,
+            x: desk.x + deltaX,
+            y: desk.y + deltaY,
+          }))
+        );
+      }
       setDragStart({ x: e.clientX, y: e.clientY });
     }
   };
@@ -142,7 +146,6 @@ export default function MakeDesk({ fakeData, fieldRef }) {
   //마우스를 떼면 드래그 끝
   const handleMouseUp = () => {
     setIsDragging(false);
-    // 드래그가 끝난 후 부드럽게 이동하는 모션 추가
   };
 
   const isOutsideViewport = (desk) => {
@@ -175,6 +178,7 @@ export default function MakeDesk({ fakeData, fieldRef }) {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className={box.id === 1 ? "main-box" : "box"}
+          id={box.id === 1 ? "my-Box" : ""}
           onClick={() => {
             setIsClickedDesk(box.id);
           }}
