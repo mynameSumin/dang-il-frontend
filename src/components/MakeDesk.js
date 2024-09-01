@@ -7,6 +7,7 @@ export default function MakeDesk({ fakeData, fieldRef }) {
   const [howDrag, setHowDrag] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [isClickedDesk, setIsClickedDesk] = useState(0);
+  const [initialBound, setInitialBound] = useState(0);
 
   // 각 데스크의 위치를 설정 (위, 오른쪽 위, 오른쪽 아래, 아래, 왼쪽 아래, 왼쪽 위 순서)
   const translateBox = [
@@ -68,13 +69,6 @@ export default function MakeDesk({ fakeData, fieldRef }) {
     const offsetY =
       minY < 0 ? -minY : maxY > fieldHeight ? fieldHeight - maxY : 0;
 
-    // if (offsetX !== 0 || offsetY !== 0) {
-    //   return desks.map((desk) => ({
-    //     ...desk,
-    //     x: desk.x + offsetX,
-    //     y: desk.y + offsetY,
-    //   }));
-    // }
     return offsetX > offsetY ? offsetX + desks[0].x : offsetY + desks[0].y;
   };
 
@@ -112,6 +106,8 @@ export default function MakeDesk({ fakeData, fieldRef }) {
       }));
 
     setDesks(adjustedDesks);
+    const initialBoundValue = adjustIfOutOfBounds(adjustedDesks);
+    setInitialBound(initialBoundValue);
   }, [fakeData]);
 
   //마우스 드래그
@@ -125,10 +121,14 @@ export default function MakeDesk({ fakeData, fieldRef }) {
       const deltaX = e.clientX - dragStart.x;
       const deltaY = e.clientY - dragStart.y;
 
+      console.log("bound", initialBound);
+      console.log("x", howDrag.x);
+      console.log("y", howDrag.y);
+
       //데스크가 없는 화면에서는 드래그 막기
       if (
-        Math.abs(howDrag.x + deltaX) < Math.abs(adjustIfOutOfBounds(desks)) &&
-        Math.abs(howDrag.y + deltaY) < Math.abs(adjustIfOutOfBounds(desks))
+        Math.abs(howDrag.x + deltaX) < initialBound &&
+        Math.abs(howDrag.y + deltaY) < initialBound
       ) {
         setHowDrag({ x: howDrag.x + deltaX, y: howDrag.y + deltaY });
         setDesks((prevDesks) =>
