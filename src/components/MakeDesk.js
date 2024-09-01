@@ -69,7 +69,7 @@ export default function MakeDesk({ fakeData, fieldRef }) {
     const offsetY =
       minY < 0 ? -minY : maxY > fieldHeight ? fieldHeight - maxY : 0;
 
-    return offsetX > offsetY ? offsetX + desks[0].x : offsetY + desks[0].y;
+    return offsetX > offsetY ? offsetX : offsetY;
   };
 
   useEffect(() => {
