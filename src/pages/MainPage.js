@@ -7,6 +7,16 @@ import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
 
 export default function MainPage() {
+  //user 정보
+  const [user, setUser] = useState([
+    {
+      _id: "0",
+      name: "guest",
+      email: "test",
+      tag: "test",
+      accessibility: false,
+    },
+  ]);
   const [showModal, setShowModal] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [userName, setUserName] = useState("Guest"); // 초기 값은 'Guest'
@@ -15,11 +25,28 @@ export default function MainPage() {
   const loginContainerRef = useRef(null);
   const dropdownRef = useRef(null); // 드롭다운 메뉴의 참조
 
+  const getUserDataBeforeLogin = async (storedUserName) => {
+    const response = await fetch(
+      "https://dangil-artisticsw.site/guestmode/mainpage"
+    );
+    if (response.ok) {
+      const fetchedData = await response.json();
+      const userData = fetchedData.data.user_data.unknown_user_data;
+      console.log(fetchedData.data.user_data.unknown_user_data);
+      // storedUserName이 있는 경우 첫 번째 사용자 데이터의 name을 userName으로 덮어씌움
+      if (storedUserName && userData.length > 0) {
+        userData[0].name = storedUserName;
+      }
+      setUser((prevUsers) => [...prevUsers, ...userData]);
+    }
+  };
+
   useEffect(() => {
     const storedUserName = localStorage.getItem("userName");
     if (storedUserName) {
       setUserName(storedUserName);
     }
+    getUserDataBeforeLogin(storedUserName);
 
     const shouldShowPopup = localStorage.getItem("showPopup");
     if (shouldShowPopup === "true") {
@@ -60,8 +87,10 @@ export default function MainPage() {
     };
   }, [isDropdownOpen]);
 
-  const handleLogin = () => {
+  const handleLogin = (event) => {
+    event.preventDefault();
     setShowModal(true);
+
     setIsDropdownOpen(false); // 모달 열리면 드롭다운은 닫음
   };
 
@@ -106,11 +135,9 @@ export default function MainPage() {
     e.stopPropagation(); // 드롭다운 항목 클릭 시 이벤트 전파 방지
   };
 
-  const fakeData = Array.from({ length: 20 }, (_, i) => ({ id: i + 1 })); // 예시 데이터 20개
-
   return (
     <div>
-      <DeskField fakeData={fakeData} fieldRef={fieldRef} />
+      <DeskField userData={user} fieldRef={fieldRef} />
       <div ref={loginContainerRef} className="login-container">
         {userName === "Guest" ? (
           <button onClick={handleLogin} className="login-button-guest">
