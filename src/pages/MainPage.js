@@ -4,6 +4,8 @@ import "../styles/mainPage.css";
 import "../styles/popup.css";
 import { FaUserCircle } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom"; // 페이지 전환을 위해 추가
 
@@ -164,7 +166,7 @@ export default function MainPage() {
             <FaUserCircle className="user-icon1" />
             <span className="user-name">{userName}</span>
             <span className={`dropdown-button ${isDropdownOpen ? 'active' : ''}`} onClick={toggleDropdown}>
-              ▼
+              <FontAwesomeIcon className="toggle" icon={faCaretDown} />
             </span>
             <div className={`dropdown-content ${isDropdownOpen ? 'active' : ''}`} ref={dropdownRef}>
               <button onClick={() => handleNavigation("/friends")}>친구 목록</button>
@@ -172,14 +174,6 @@ export default function MainPage() {
               <button onClick={() => handleNavigation("/settings")}>설정</button>
               <button onClick={handleLogout}>로그아웃</button>
             </div>
-
-            {/* {isDropdownOpen && (
-              <div className="dropdown-content" ref={dropdownRef}>
-              <button onClick={() => handleNavigation("/friends")}>친구 목록</button>
-              <button onClick={() => handleNavigation("/guestbook")}>방명록</button>
-              <button onClick={() => handleNavigation("/settings")}>설정</button>
-              <button onClick={handleLogout}>로그아웃</button>
-            </div>)} */}
             <FiMenu className="list-icon" />
           </button>
         )}
