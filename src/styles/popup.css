@@ -179,11 +179,17 @@ body {
   cursor: pointer;
   margin-left: 20px;
   display: inline-block; /* 블록 요소로 설정하여 변형이 가능하게 함 */
-  transition: transform 0.3s ease-in-out; /* 변형에 대한 부드러운 전환 설정 */
+  transition: transform 0.3s ease-in-out; 
 }
 
 .dropdown-button.active {
   transform: rotate(180deg); /* 180도 회전 */
+  
+}
+
+.dropdown-content.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .dropdown-content {
@@ -202,6 +208,9 @@ body {
   margin-bottom : 280px;
   margin-left : 120px;
   text-align : center;
+  opacity: 0; 
+  visibility: hidden; 
+  transition: opacity 0.3s ease, visibility 0.3s; 
 }
 
 .dropdown-content button {

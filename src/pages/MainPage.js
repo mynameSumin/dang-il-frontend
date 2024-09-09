@@ -163,25 +163,23 @@ export default function MainPage() {
             <img src="/images/search.png" alt="Search" className="search-img" />
             <FaUserCircle className="user-icon1" />
             <span className="user-name">{userName}</span>
-            {/* <span className="dropdown-button" onClick={toggleDropdown}> */}
             <span className={`dropdown-button ${isDropdownOpen ? 'active' : ''}`} onClick={toggleDropdown}>
               ▼
             </span>
-            {isDropdownOpen && (
+            <div className={`dropdown-content ${isDropdownOpen ? 'active' : ''}`} ref={dropdownRef}>
+              <button onClick={() => handleNavigation("/friends")}>친구 목록</button>
+              <button onClick={() => handleNavigation("/guestbook")}>방명록</button>
+              <button onClick={() => handleNavigation("/settings")}>설정</button>
+              <button onClick={handleLogout}>로그아웃</button>
+            </div>
+
+            {/* {isDropdownOpen && (
               <div className="dropdown-content" ref={dropdownRef}>
-                <button onClick={() => handleNavigation("/friends")}>
-                  친구 목록
-                  
-                </button>
-                <button onClick={() => handleNavigation("/guestbook")}>
-                  방명록
-                </button>
-                <button onClick={() => handleNavigation("/settings")}>
-                  설정
-                </button>
-                <button onClick={handleLogout}>로그아웃</button>
-              </div>
-            )}
+              <button onClick={() => handleNavigation("/friends")}>친구 목록</button>
+              <button onClick={() => handleNavigation("/guestbook")}>방명록</button>
+              <button onClick={() => handleNavigation("/settings")}>설정</button>
+              <button onClick={handleLogout}>로그아웃</button>
+            </div>)} */}
             <FiMenu className="list-icon" />
           </button>
         )}
