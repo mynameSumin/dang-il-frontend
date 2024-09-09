@@ -200,7 +200,7 @@ body {
   z-index: 1;  /* 드롭다운 메뉴가 다른 요소 위에 표시되도록 함 */
   border-radius: 23px;
   margin-bottom : 270px;
-  margin-left : 140px;
+  margin-left : 120px;
   text-align : center;
 }
 
