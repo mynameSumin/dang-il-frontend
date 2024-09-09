@@ -27,6 +27,10 @@ export default function MainPage() {
   const dropdownRef = useRef(null); // 드롭다운 메뉴의 참조
   const navigate = useNavigate(); // useNavigate 훅을 사용하여 페이지 전환 구현
 
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
   const getUserDataBeforeLogin = async (storedUserName) => {
     const response = await fetch(
       "https://dangil-artisticsw.site/guestmode/mainpage"
@@ -127,14 +131,10 @@ export default function MainPage() {
         console.error("An error occurred during logout:", error);
       });
   };
-
+  
   const toggleDropdown = (e) => {
     e.stopPropagation(); // 이벤트 전파 방지
     setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const handleDropdownItemClick = (e) => {
-    e.stopPropagation(); // 드롭다운 항목 클릭 시 이벤트 전파 방지
   };
 
   const handleDoubleClick = (userId) => {
@@ -163,20 +163,22 @@ export default function MainPage() {
             <img src="/images/search.png" alt="Search" className="search-img" />
             <FaUserCircle className="user-icon1" />
             <span className="user-name">{userName}</span>
-            <span className="dropdown-button" onClick={toggleDropdown}>
+            {/* <span className="dropdown-button" onClick={toggleDropdown}> */}
+            <span className={`dropdown-button ${isDropdownOpen ? 'active' : ''}`} onClick={toggleDropdown}>
               ▼
             </span>
             {isDropdownOpen && (
               <div className="dropdown-content" ref={dropdownRef}>
-                <a href="/friends" onClick={handleDropdownItemClick}>
+                <button onClick={() => handleNavigation("/friends")}>
                   친구 목록
-                </a>
-                <a href="/guestbook" onClick={handleDropdownItemClick}>
+                  
+                </button>
+                <button onClick={() => handleNavigation("/guestbook")}>
                   방명록
-                </a>
-                <a href="/settings" onClick={handleDropdownItemClick}>
+                </button>
+                <button onClick={() => handleNavigation("/settings")}>
                   설정
-                </a>
+                </button>
                 <button onClick={handleLogout}>로그아웃</button>
               </div>
             )}

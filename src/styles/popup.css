@@ -12,7 +12,7 @@ body {
   font-family: "Roboto";
   src: url("../fonts/Roboto-Bold.eot");
   font-weight: 800;
-  font-style: normal;
+  font-style: Bold;
 }
 
 @font-face {
@@ -178,32 +178,50 @@ body {
   border: none;
   cursor: pointer;
   margin-left: 20px;
+  display: inline-block; /* 블록 요소로 설정하여 변형이 가능하게 함 */
+  transition: transform 0.3s ease-in-out; /* 변형에 대한 부드러운 전환 설정 */
+}
+
+.dropdown-button.active {
+  transform: rotate(180deg); /* 180도 회전 */
 }
 
 .dropdown-content {
+  padding : 7px 0px;
   display: flex;
   flex-direction: column;
   position: absolute;
   background-color: white;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  width : 130.16px;
+  height: 178.18px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 4px 10px rgba(0, 6, 60, 0.25);
+  backdrop-filter: blur(2px);
+  z-index: 1;  /* 드롭다운 메뉴가 다른 요소 위에 표시되도록 함 */
+  border-radius: 23px;
+  margin-bottom : 270px;
+  margin-left : 140px;
+  text-align : center;
 }
 
-.dropdown-content a,
 .dropdown-content button {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  background: none;
-  border: none;
-  text-align: left;
+  width: 80%; /* 전체 너비 사용 */
+  padding: 0; /* 상하 패딩 설정 */
+  margin: auto; /* 마진 제거 */
+  border: none; /* 버튼 간 경계선 제거 */
+  background: none; /* 기본 배경 제거 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  display: block; /* 블록 레벨 요소로 표시 */
+  height: 20%; /* 컨테이너 높이의 25% 차지 */
+  font-size : 16px;
 }
-
-.dropdown-content a:hover,
 .dropdown-content button:hover {
   background-color: #f1f1f1;
+  background: #FFFFFF;
+  text-align : center;
+  border-radius: 50px;
+  font-size:16px;
+  font-weight: bold;
 } 
 
 /* 위에는 user mode css임 */
@@ -378,5 +396,7 @@ body {
 .login-container.blurred {
   filter: blur(5px); 
 }
+
+
 
 
