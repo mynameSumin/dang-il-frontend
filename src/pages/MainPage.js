@@ -5,6 +5,7 @@ import "../styles/popup.css";
 import { FaUserCircle } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
+import { useNavigate } from "react-router-dom"; // 페이지 전환을 위해 추가
 
 export default function MainPage() {
   //user 정보
@@ -24,6 +25,7 @@ export default function MainPage() {
   const fieldRef = useRef(null);
   const loginContainerRef = useRef(null);
   const dropdownRef = useRef(null); // 드롭다운 메뉴의 참조
+  const navigate = useNavigate(); // useNavigate 훅을 사용하여 페이지 전환 구현
 
   const getUserDataBeforeLogin = async (storedUserName) => {
     const response = await fetch(
@@ -135,9 +137,18 @@ export default function MainPage() {
     e.stopPropagation(); // 드롭다운 항목 클릭 시 이벤트 전파 방지
   };
 
+  const handleDoubleClick = (userId) => {
+    navigate(`/user/${userId}`);
+  };
+
   return (
     <div>
-      <DeskField userData={user} fieldRef={fieldRef} />
+      <DeskField
+        userData={user}
+        fieldRef={fieldRef}
+        onDoubleClick={handleDoubleClick}
+      />
+
       <div ref={loginContainerRef} className="login-container">
         {userName === "Guest" ? (
           <button onClick={handleLogin} className="login-button-guest">

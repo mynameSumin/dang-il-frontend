@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/makeDesk.css";
 import "../index.css";
 
-export default function MakeDesk({ userData, fieldRef }) {
+export default function MakeDesk({ userData, fieldRef, onDoubleClick }) {
   const [desks, setDesks] = useState([]);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [howDrag, setHowDrag] = useState({ x: 0, y: 0 });
@@ -185,6 +185,7 @@ export default function MakeDesk({ userData, fieldRef }) {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className={box.id === 0 ? "main-box" : "box"}
+            onDoubleClick={() => onDoubleClick(box.id)} // 더블클릭 이벤트 추가
             id={box.id === 0 ? "my-Box" : ""}
             onClick={() => {
               if (isClickedDesk === box.id) {
@@ -401,9 +402,9 @@ export default function MakeDesk({ userData, fieldRef }) {
                 width="418.693"
                 height="285"
                 filterUnits="userSpaceOnUse"
-                colorInterpolationFilters="sRGB"
+                color-interpolation-filters="sRGB"
               >
-                <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
                 <feColorMatrix
                   in="SourceAlpha"
                   type="matrix"
@@ -437,8 +438,8 @@ export default function MakeDesk({ userData, fieldRef }) {
                 y2="166.832"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="#616182" />
-                <stop offset="1" stopColor="#2E2E36" />
+                <stop stop-color="#616182" />
+                <stop offset="1" stop-color="#2E2E36" />
               </linearGradient>
               <linearGradient
                 id="paint1_linear_141_1315"
@@ -448,8 +449,8 @@ export default function MakeDesk({ userData, fieldRef }) {
                 y2="235.186"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="#8C9DD5" />
-                <stop offset="1" stopColor="#BAC6F8" />
+                <stop stop-color="#8C9DD5" />
+                <stop offset="1" stop-color="#BAC6F8" />
               </linearGradient>
               <linearGradient
                 id="paint2_linear_141_1315"
@@ -459,8 +460,8 @@ export default function MakeDesk({ userData, fieldRef }) {
                 y2="244.831"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="#8C9DD5" />
-                <stop offset="1" stopColor="#BAC6F8" />
+                <stop stop-color="#8C9DD5" />
+                <stop offset="1" stop-color="#BAC6F8" />
               </linearGradient>
               <linearGradient
                 id="paint3_linear_141_1315"
@@ -470,8 +471,8 @@ export default function MakeDesk({ userData, fieldRef }) {
                 y2="218.903"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="#B6C2F5" />
-                <stop offset="1" stopColor="#8D9DD6" />
+                <stop stop-color="#B6C2F5" />
+                <stop offset="1" stop-color="#8D9DD6" />
               </linearGradient>
             </defs>
           </svg>
