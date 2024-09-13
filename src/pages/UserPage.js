@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Clock from '../components/Clock.js';
+import Book from '../components/Book.js';
+import PDF from '../components/PDF.js';
+import Memo from '../components/Memo.js';
 import "../styles/UserPage.css";
 import { FiEdit } from "react-icons/fi"
 
@@ -11,6 +14,9 @@ const UserPage = () => {
   const dropdownRef = useRef(null); // 드롭다운 메뉴의 참조
   const minUserId = 0; // 최소 사용자 ID 설정 
   const maxUserId = 8; // 최대 사용자 ID 설정
+  const [isPDFOpen, setIsPDFOpen] = useState(false);
+  const [isBookOpen, setIsBookOpen] = useState(false);
+  const [isMemoOpen, setIsMemoOpen] = useState(false); // 메모 창의 상태
 
   // 이전 사용자로 이동하는 함수
   const handlePrevUser = () => {
@@ -43,6 +49,9 @@ const UserPage = () => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
+        setIsBookOpen(false);
+        setIsPDFOpen(false);
+        setIsMemoOpen(false);
       }
     };
 
@@ -54,6 +63,25 @@ const UserPage = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [isDropdownOpen]);
+
+    // 메모
+    const memoclick = () => { // 메모 창 토글 함수
+      setIsMemoOpen(true);
+      setIsDropdownOpen(false); // 메모 창을 열 때 드롭다운 메뉴를 숨김
+    };
+
+    //책
+    const Bookclick = () => { // 메모 창 토글 함수
+      setIsBookOpen(true);
+      setIsDropdownOpen(false); // 메모 창을 열 때 드롭다운 메뉴를 숨김
+    };
+
+    //PDF
+    const PDFclick = () => { // 메모 창 토글 함수
+      setIsPDFOpen(true);
+      setIsDropdownOpen(false); // 메모 창을 열 때 드롭다운 메뉴를 숨김
+    };
+
 
   return (
     <div style={{ padding: '20px' }}>
@@ -81,10 +109,10 @@ const UserPage = () => {
             <FiEdit/>
           </span>
             <div className={`dropdown-content ${isDropdownOpen ? 'active' : ''}`} ref={dropdownRef}>
-              <button>책</button>
-              <button>PDF</button>
+              <button onClick={Bookclick}>책</button>
+              <button onClick={PDFclick}>PDF</button>
               <button>스탠드</button>
-              <button>메모</button>
+              <button onClick={memoclick}> 메모</button> 
             </div>
           {/* 다음 사용자로 이동하는 버튼, 최대 사용자 ID를 초과하면 비활성화 */}
           <button
@@ -95,6 +123,9 @@ const UserPage = () => {
             <span className="icon">＞</span>
           </button>
         </div>
+        {isBookOpen && <Book />}
+        {isPDFOpen && <PDF />}
+        {isMemoOpen && <Memo />}
         
         {/* 메인 페이지로 이동하는 버튼 */}
         <button onClick={handleGoHome} className="home-button">Go to Home</button>
