@@ -197,3 +197,6 @@ body {
 .login-container.blurred {
   filter: blur(5px); /* 메인 페이지가 흐리게 보이도록 블러 효과 적용 */
 }
+
+
+
