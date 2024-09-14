@@ -1,76 +1,94 @@
-import DeskField from "../components/MakeDesk"; // 생성한 DeskField 컴포넌트
+import DeskField from "../components/MakeDesk";
 import React, { useState, useEffect, useRef } from "react";
-import "../styles/mainPage.css";
-import "../styles/popup.css";
+import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
-import { AiOutlineClose } from "react-icons/ai";
-import { useNavigate } from "react-router-dom"; // 페이지 전환을 위해 추가
+import "../styles/popup.css";
+import "../styles/mainPage.css";
 
 export default function MainPage() {
-  //user 정보
-  const [user, setUser] = useState([
-    {
-      _id: "0",
-      name: "guest",
-      email: "test",
-      tag: "test",
-      accessibility: false,
-    },
-  ]);
-  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const loginContainerRef = useRef(null);
+  const userName = null;
+  //사용자 정보 관련
+  const [userData, setUserData] = useState([{ id: 0, name: "민수민" }]); // 사용자 데이터
+  const [friendData, setFriendData] = useState(null); //사용자 친구 데이터
+  const [unknownData, setUnknownData] = useState(null); //모르는 사용자 데이터
+
+  //로그인 완료 팝업 관련
   const [showPopup, setShowPopup] = useState(false);
-  const [userName, setUserName] = useState("Guest"); // 초기 값은 'Guest'
+
+  //드롭 다운 관련
+  const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 드롭다운 상태 추가
   const fieldRef = useRef(null);
-  const loginContainerRef = useRef(null);
-  const dropdownRef = useRef(null); // 드롭다운 메뉴의 참조
-  const navigate = useNavigate(); // useNavigate 훅을 사용하여 페이지 전환 구현
 
-  const getUserDataBeforeLogin = async (storedUserName) => {
-    const response = await fetch(
-      "https://dangil-artisticsw.site/guestmode/mainpage"
-    );
+  //로그인을 했을 경우 사용자 위주로 보여줄 정보 가져오기
+  const getUserDataAfterLogin = async () => {
+    let allData = [];
+    const response = await fetch("https://dangil-artisticsw.site/mainPage");
+
     if (response.ok) {
       const fetchedData = await response.json();
-      const userData = fetchedData.data.user_data.unknown_user_data;
-      console.log(fetchedData.data.user_data.unknown_user_data);
-      // storedUserName이 있는 경우 첫 번째 사용자 데이터의 name을 userName으로 덮어씌움
-      if (storedUserName && userData.length > 0) {
-        userData[0].name = storedUserName;
-      }
-      setUser((prevUsers) => [...prevUsers, ...userData]);
+      const userData = fetchedData.data.user_data.my_data;
+      allData.push(userData);
+      console.log("로그인 된 상태의 데이터", allData);
     }
   };
 
+  const toggleDropdown = (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
+    console.log(isDropdownOpen);
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleDropdownItemClick = (e) => {
+    e.stopPropagation(); // 드롭다운 항목 클릭 시 이벤트 전파 방지
+  };
+
+  //두 번 클릭 시 다른 사용자 페이지로 이동
+  const handleDoubleClick = (userId) => {
+    navigate(`/user/${userId}`);
+  };
+
+  const handleLogout = (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
+    fetch("https://www.dangil-artisticsw.site/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    })
+      .then((response) => {
+        if (response.ok) {
+          localStorage.removeItem("token");
+          window.location.href = "/"; // 로그아웃 후 게스트 모드로 이동
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("An error occurred during logout:", error);
+      });
+  };
+
+  //로그인 후 모달창 띄우기
   useEffect(() => {
-    const storedUserName = localStorage.getItem("userName");
-    if (storedUserName) {
-      setUserName(storedUserName);
-    }
-    getUserDataBeforeLogin(storedUserName);
-
-    const shouldShowPopup = localStorage.getItem("showPopup");
-    if (shouldShowPopup === "true") {
-      setShowPopup(true);
-      localStorage.removeItem("showPopup");
-
-      //3초 후 팝업 숨기기
-      setTimeout(() => {
-        setShowPopup(false);
-      }, 3000);
-    }
+    setShowPopup(true);
+    //3초 후 팝업 숨기기
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 3000);
   }, []);
 
+  //로그인 완료 모달이 뜰 경우 배경 블러처리
   useEffect(() => {
-    if (showPopup || showModal) {
+    if (showPopup) {
       fieldRef.current.classList.add("blurred");
       loginContainerRef.current.classList.add("blurred");
     } else {
       fieldRef.current.classList.remove("blurred");
       loginContainerRef.current.classList.remove("blurred");
     }
-  }, [showPopup, showModal]);
+  }, [showPopup]);
 
   useEffect(() => {
     // 화면 어디든 클릭했을 때 호출되는 이벤트 핸들러
@@ -89,101 +107,14 @@ export default function MainPage() {
     };
   }, [isDropdownOpen]);
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    setShowModal(true);
-
-    setIsDropdownOpen(false); // 모달 열리면 드롭다운은 닫음
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  const handleKakaoLogin = () => {
-    window.location.href = "https://dangil-artisticsw.site/auth/kakao/login";
-  };
-
-  const handleGoogleLogin = () => {
-    window.location.href = "https://dangil-artisticsw.site/auth/google/login";
-  };
-
-  const handleLogout = (e) => {
-    e.stopPropagation(); // 이벤트 전파 방지
-    fetch("https://www.dangil-artisticsw.site/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) {
-          localStorage.removeItem("token");
-          localStorage.removeItem("userName");
-          window.location.href = "/login"; // 로그아웃 후 로그인 페이지로 리디렉션
-        } else {
-          console.error("Logout failed");
-        }
-      })
-      .catch((error) => {
-        console.error("An error occurred during logout:", error);
-      });
-  };
-
-  const toggleDropdown = (e) => {
-    e.stopPropagation(); // 이벤트 전파 방지
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const handleDropdownItemClick = (e) => {
-    e.stopPropagation(); // 드롭다운 항목 클릭 시 이벤트 전파 방지
-  };
-
-  const handleDoubleClick = (userId) => {
-    navigate(`/user/${userId}`);
-  };
-
   return (
     <div>
       <DeskField
-        userData={user}
+        userData={userData}
         fieldRef={fieldRef}
         onDoubleClick={handleDoubleClick}
       />
-
-      <div ref={loginContainerRef} className="login-container">
-        {userName === "Guest" ? (
-          <button onClick={handleLogin} className="login-button-guest">
-            <FaUserCircle className="guest-icon" />
-            <span className="text-Guest">Guest</span>
-            <span className="login-divider">|</span>
-            <span className="text-Login">Log in</span>
-            <FiMenu className="list-icon" />
-          </button>
-        ) : (
-          <button className="login-button-user">
-            <img src="/images/search.png" alt="Search" className="search-img" />
-            <FaUserCircle className="user-icon1" />
-            <span className="user-name">{userName}</span>
-            <span className="dropdown-button" onClick={toggleDropdown}>
-              ▼
-            </span>
-            {isDropdownOpen && (
-              <div className="dropdown-content" ref={dropdownRef}>
-                <a href="/friends" onClick={handleDropdownItemClick}>
-                  친구 목록
-                </a>
-                <a href="/guestbook" onClick={handleDropdownItemClick}>
-                  방명록
-                </a>
-                <a href="/settings" onClick={handleDropdownItemClick}>
-                  설정
-                </a>
-                <button onClick={handleLogout}>로그아웃</button>
-              </div>
-            )}
-            <FiMenu className="list-icon" />
-          </button>
-        )}
-      </div>
+      <div>hi</div>
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
@@ -199,42 +130,31 @@ export default function MainPage() {
           </div>
         </div>
       )}
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <button className="close-button" onClick={handleCloseModal}>
-              <AiOutlineClose size={20} />
-            </button>
-            <div className="TotalText">
-              <div className="login-text1">
-                <h2 className="you">당신이</h2>
-                <h2 className="work">일하는 시간</h2>
-              </div>
-
-              <div className="login-text2">
-                <p className="workspace">나만의 워크 스페이스로</p>
-                <p className="invite"> 여러분을 초대합니다.</p>
-              </div>
+      <div ref={loginContainerRef} className="login-container">
+        <button className="login-button-user">
+          <img src="/images/search.png" alt="Search" className="search-img" />
+          <FaUserCircle className="user-icon1" />
+          <span className="user-name">{userName}</span>
+          <span className="dropdown-button" onClick={toggleDropdown}>
+            ▼
+          </span>
+          {isDropdownOpen && (
+            <div className="dropdown-content" ref={dropdownRef}>
+              <a href="/friends" onClick={handleDropdownItemClick}>
+                친구 목록
+              </a>
+              <a href="/guestbook" onClick={handleDropdownItemClick}>
+                방명록
+              </a>
+              <a href="/settings" onClick={handleDropdownItemClick}>
+                설정
+              </a>
+              <button onClick={handleLogout}>로그아웃</button>
             </div>
-            <button className="kakao-login-button" onClick={handleKakaoLogin}>
-              <img
-                src="/images/kakao.png"
-                alt="Kakao"
-                className="login-kakao-img"
-              />
-              카카오로 시작
-            </button>
-            <button className="google-login-button" onClick={handleGoogleLogin}>
-              <img
-                src="/images/google.png"
-                alt="Google"
-                className="login-google-img"
-              />
-              구글로 시작
-            </button>
-          </div>
-        </div>
-      )}
+          )}
+          <FiMenu className="list-icon" />
+        </button>
+      </div>
     </div>
   );
 }

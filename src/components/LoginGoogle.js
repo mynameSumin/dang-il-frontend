@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const LoginGoogle = () => {
+const LoginGoogle = (props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,9 +25,9 @@ const LoginGoogle = () => {
 
           const userName = data.name;
           localStorage.setItem("token", data.id_token);
-          localStorage.setItem("userName", userName); // 유저 이름 저장
           localStorage.setItem("showPopup", "true"); // 팝업 표시 플래그 설정
-          navigate("/");
+          props.loginHandler();
+          navigate("/mainPage");
         })
         .catch((error) => {
           console.error("Google Login Error:", error);
