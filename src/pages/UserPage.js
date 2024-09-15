@@ -4,7 +4,7 @@ import Clock from "../components/Clock.js";
 import Book from "../components/Book.js";
 import PDF from "../components/PDF.js";
 import Memo from "../components/Memo.js";
-import "../styles/UserPage.css";
+import "../styles/userPage.css";
 import { FiEdit } from "react-icons/fi";
 
 const UserPage = () => {

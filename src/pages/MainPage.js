@@ -6,11 +6,6 @@ import { FiMenu } from "react-icons/fi";
 import "../styles/popup.css";
 import "../styles/mainPage.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { AiOutlineClose } from "react-icons/ai";
-import { useNavigate } from "react-router-dom"; // 페이지 전환을 위해 추가
-
 export default function MainPage() {
   const navigate = useNavigate();
   const loginContainerRef = useRef(null);
@@ -115,25 +110,6 @@ export default function MainPage() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [isDropdownOpen]);
-
-  const handleLogin = (event) => {
-    event.preventDefault();
-    setShowModal(true);
-
-    setIsDropdownOpen(false); // 모달 열리면 드롭다운은 닫음
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  const handleKakaoLogin = () => {
-    window.location.href = "https://dangil-artisticsw.site/auth/kakao/login";
-  };
-
-  const handleGoogleLogin = () => {
-    window.location.href = "https://dangil-artisticsw.site/auth/google/login";
-  };
 
   return (
     <div>
