@@ -4,9 +4,8 @@ import { RiHomeLine } from "react-icons/ri";
 import { RiDownloadLine } from "react-icons/ri";
 import { RxPencil1 } from "react-icons/rx";
 import { LuEraser } from "react-icons/lu";
-
-
-
+import { LiaHighlighterSolid } from "react-icons/lia";
+import { FaRegFile } from "react-icons/fa6";
 
 
 const Book = () => {
@@ -40,17 +39,25 @@ const Book = () => {
      <img src="/path/to/book.jpg" alt="Book Image" onClick={handleBookClick} style={{ cursor: 'pointer'}}/>
         <div className={`book-page ${editBook ? 'visible': ''}`}>
           <div className="book-name-box">
-            <RiHomeLine className="gray-colline" />
-            <RiDownloadLine />
-            <RxPencil1 />
-            <LuEraser />
+            <div className="icon-box">
+              <RiHomeLine style={{marginLeft: "20", marginRight: "2"}}/>
+              <div className="gray-colline"></div>
+              <RiDownloadLine />
+              <FaRegFile />
+              <RxPencil1 />
+              <LiaHighlighterSolid />
+              <LuEraser />
+            </div>
             <p className="book-name">Book name 01</p>
           </div>
+          
           <div className="gray-rowline"></div>
 
           <div className="book-content">
+          
 
           </div>
+          <button classNaem="book-button">hi</button>
         </div>
     
     </div>

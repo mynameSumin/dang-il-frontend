@@ -7,10 +7,7 @@
     background: #D3DEEE;
     border-radius: 22px;
     box-shadow: 0px 0px 50px rgba(0, 16, 73, 0.5);
-    transition: transform 0.3s ease;
     transform: translateX(200%); /* 초기에는 보이지 않음 */
-
-
   }
   
   .book-page.visible {
@@ -18,30 +15,59 @@
   }
 
   .book-name-box {
-    /* text-align: center; */
-    display:inline-block;
+    display: flex; 
+    align-items: center;
+    justify-content: left;
+    margin-top:15px;
+    margin-bottom: 10px;
+  }
+
+  .icon-box {
+    display: flex;
+    align-items: center;
+  }
+
+  .icon-box > * {
+    margin-right: 15px;
+   }
+
+  .icon-box > *:list-child {
+    margin-right: 0px;
   }
 
   .gray-colline {
-    padding: 8px;
-    border-right: 1px solid #ccc;
+    padding: 5px;
+    border-right: 2px solid #ccc;
   }
 
   .book-name {
-    font-size:32px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    font-size:20px;
+    position: absolute;
+    width: 100%;
+    text-align: center; 
   }
 
   .gray-rowline {
     border-bottom: 2px solid #ccc; /* 회색 구분선 */
+    margin-bottom: 15px;
+    margin-left:20px;
+    width:1200px;
+    display:flex;
+    justify-content: center;
+    
   }
 
   .book-content {
     margin: 0 auto;
     width: 1200px;
-    height: 600px;
+    height: 620px;
     background: #FFFFFF;
     border-radius: 20px;
 
+  }
+
+  .book-button {
+    width :40px;
+    height: 40px;
+    margin-right: 100px;
   }
