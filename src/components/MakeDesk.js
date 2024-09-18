@@ -3,7 +3,6 @@ import "../styles/makeDesk.css";
 import "../index.css";
 
 export default function MakeDesk({ userData, fieldRef, onDoubleClick }) {
-  console.log("넘어온 데이터", userData);
   const [desks, setDesks] = useState([]);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [howDrag, setHowDrag] = useState({ x: 0, y: 0 });

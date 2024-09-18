@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const LoginGoogle = (props) => {
   const navigate = useNavigate();
@@ -21,10 +22,9 @@ const LoginGoogle = (props) => {
       fetch("https://dangil-artisticsw.site/auth/google/callback", fetchOptions)
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           console.log("Google Token and user data:", data);
 
-          const userName = data.name;
-          localStorage.setItem("token", data.id_token);
           localStorage.setItem("showPopup", "true"); // 팝업 표시 플래그 설정
           props.loginHandler();
           navigate("/mainPage");
