@@ -190,24 +190,30 @@ export default function MainPage() {
           </div>
         </div>
       )}
+
       <div ref={loginContainerRef} className="login-container">
         <button className="login-button-user">
           <img src="/images/search.png" alt="Search" className="search-img" />
           <FaUserCircle className="user-icon1" />
-          <span className="user-name">{userData.name}</span>
+          <div className="user-name-box">
+            <span className="user-name">{userData.name}</span>
+            <div className="tag-hover">tag : {userData.tag}</div>
+          </div>
+
           <span
             className={`dropdown-button ${isDropdownOpen ? "active" : ""}`}
             onClick={toggleDropdown}
           >
             ▼
           </span>
+
           {isDropdownOpen && (
             <div
               className={`dropdown-content ${isDropdownOpen ? "active" : ""}`}
               ref={dropdownRef}
             >
               <button onClick={() => navigate("/friends")}>친구 목록</button>
-              <button onClick={() => navigate("/guestbook")}>방명록</button>
+
               <button onClick={() => navigate("/settings")}>설정</button>
               <button onClick={handleLogout}>로그아웃</button>
             </div>
