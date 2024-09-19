@@ -173,9 +173,6 @@ export default function MainPage() {
         fieldRef={fieldRef}
         onDoubleClick={handleDoubleClick}
       />
-
-      <div>hi</div>
-
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
@@ -201,23 +198,22 @@ export default function MainPage() {
           </div>
 
           <span
-            className={`dropdown-button ${isDropdownOpen ? "active" : ""}`}
+            className={`dropdown-button ${isDropdownOpen ? "active" : null}`}
             onClick={toggleDropdown}
           >
             ▼
           </span>
 
-          {isDropdownOpen && (
-            <div
-              className={`dropdown-content ${isDropdownOpen ? "active" : ""}`}
-              ref={dropdownRef}
-            >
-              <button onClick={() => navigate("/friends")}>친구 목록</button>
+          <div
+            className={`dropdown-content ${isDropdownOpen ? "active" : null}`}
+            ref={dropdownRef}
+          >
+            <button onClick={() => navigate("/friends")}>친구 목록</button>
 
-              <button onClick={() => navigate("/settings")}>설정</button>
-              <button onClick={handleLogout}>로그아웃</button>
-            </div>
-          )}
+            <button onClick={() => navigate("/settings")}>설정</button>
+            <button onClick={handleLogout}>로그아웃</button>
+          </div>
+
           <FiMenu className="list-icon" />
         </button>
       </div>

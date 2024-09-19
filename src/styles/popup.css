@@ -166,11 +166,6 @@ body {
   opacity: 0.5;
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
 .dropdown-button {
   background-color: transparent;
   border: none;
@@ -189,11 +184,6 @@ body {
   transform: rotate(180deg); /* 180도 회전 */
 }
 
-.dropdown-content.active {
-  opacity: 1;
-  visibility: visible;
-}
-
 .dropdown-content {
   padding: 7px 0px;
   display: flex;
@@ -201,18 +191,22 @@ body {
   position: absolute;
   background-color: white;
   width: 130.16px;
-  height: 178.18px;
+  height: 140px;
   background: rgba(255, 255, 255, 0.7);
   box-shadow: 0px 4px 10px rgba(0, 6, 60, 0.25);
   backdrop-filter: blur(2px);
-  z-index: 1; /* 드롭다운 메뉴가 다른 요소 위에 표시되도록 함 */
+  z-index: 1;
   border-radius: 23px;
-  margin-bottom: 280px;
+  margin-bottom: 240px;
   margin-left: 120px;
   text-align: center;
   opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s;
+  transition: opacity 0.4s ease-in;
+}
+
+.dropdown-content.active {
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out;
 }
 
 .dropdown-content button {
@@ -222,21 +216,8 @@ body {
   border: none; /* 버튼 간 경계선 제거 */
   background: none; /* 기본 배경 제거 */
   text-align: center; /* 텍스트 중앙 정렬 */
-  display: block; /* 블록 레벨 요소로 표시 */
-  height: 20%; /* 컨테이너 높이의 25% 차지 */
-  font-size: 16px;
-}
-
-.dropdown-content div {
-  width: 80%;
-  padding: 10px;
-  margin: auto;
-  border-radius: 50px;
-  border: none; /* 버튼 간 경계선 제거 */
-  background-color: #fff; /* 기본 배경 제거 */
-  text-align: center; /* 텍스트 중앙 정렬 */
-  display: block; /* 블록 레벨 요소로 표시 */
-  height: fit-content; /* 컨테이너 높이의 25% 차지 */
+  display: block;
+  height: 20%;
   font-size: 16px;
 }
 

@@ -1,7 +1,7 @@
 import DeskField from "../components/MakeDesk";
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/mainPage.css";
-
+import "../styles/popup.css";
 import { FaUserCircle } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
