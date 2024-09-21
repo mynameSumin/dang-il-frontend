@@ -1,51 +1,70 @@
+/* test code */
 .settings {
-    position: absolute; /* 절대 위치 지정 */
-    bottom: 20px; /* 하단에서 20px 위쪽 */
-    left: 20px; /* 왼쪽에서 20px 오른쪽 */
-    width: 200px;
-    height: 50px;
-    display: flex; 
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    border-radius:50px;
-  }
-  
-  .control-button {
-    border: none;
-    background: transparent;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .control-button .icon {
-    display: block;
-    text-align: center;
-  }
-  
-  .control-button:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Light hover effect */
-  }
+  position: absolute; /* 절대 위치 지정 */
+  bottom: 20px; /* 하단에서 20px 위쪽 */
+  left: 20px; /* 왼쪽에서 20px 오른쪽 */
+  width: 200px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-radius: 50px;
+}
 
-  .control-button.disabled {
-    color: #ccc; /* 회색으로 표시 */
-    cursor: not-allowed; /* 커서를 not-allowed로 변경 */
-    background: #eee; /* 배경색 변경 */
-  }
+.control-button {
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-  .list-panel {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 20%; /* 전체 화면의 1/5 크기 */
-    height: 100%;
-    background-color: #f8f9fa;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    transform: translateX(-100%); /* 초기에는 보이지 않음 */
-  }
-  
-  .list-panel.visible {
-    transform: translateX(0); /* 화면에 나타남 */
-  }
-  
+.control-button .icon {
+  display: block;
+  text-align: center;
+}
+
+.control-button:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Light hover effect */
+}
+
+.control-button.disabled {
+  color: #ccc; /* 회색으로 표시 */
+  cursor: not-allowed; /* 커서를 not-allowed로 변경 */
+  background: #eee; /* 배경색 변경 */
+}
+
+.list-panel {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 20%; /* 전체 화면의 1/5 크기 */
+  height: 100%;
+  background-color: #f8f9fa;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  transform: translateX(-100%); /* 초기에는 보이지 않음 */
+}
+
+.list-panel.visible {
+  transform: translateX(0); /* 화면에 나타남 */
+}
+
+/* body code css */
+.background {
+  height: 100vh;
+  background: linear-gradient(to right, #dbe1f8 0%, #9aaddc 80%) left / 15% 100%
+      no-repeat,
+    /* 왼쪽: 좌우 그라데이션 */
+      linear-gradient(to bottom, #d8dff7 0%, #9eafde 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#stand {
+  height: 92%;
+  position: fixed;
+  bottom: 0;
+  left: 6%;
+}
