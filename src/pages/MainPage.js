@@ -21,7 +21,6 @@ export default function MainPage() {
 
   //로그인 관련 팝업
   const [showPopup, setShowPopup] = useState(false);
-  const [showLogout, setShowLogOut] = useState(false);
 
   //드롭 다운 관련
   const dropdownRef = useRef(null);
@@ -125,7 +124,7 @@ export default function MainPage() {
 
   const handleLogout = (e) => {
     e.stopPropagation(); // 이벤트 전파 방지
-    fetch("https://www.dangil-artisticsw.site/logout", {
+    fetch("https://dangil-artisticsw.site/auth/logout", {
       method: "POST",
       credentials: "include",
     })
