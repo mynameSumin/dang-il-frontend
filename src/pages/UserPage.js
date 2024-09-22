@@ -9,7 +9,7 @@ const UserPage = () => {
   const { userId } = useParams(); // URL에서 userId를 받아옴
   const navigate = useNavigate();
   const minUserId = 0; // 최소 사용자 ID 설정
-  const maxUserId = 8; // 최대 사용자 ID 설정
+  const maxUserId = 17; // 최대 사용자 ID 설정
   const [isListVisible, setIsListVisible] = useState(false);
   const panelRef = useRef(null);
 

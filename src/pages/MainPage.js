@@ -5,6 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
 import "../styles/popup.css";
 import "../styles/mainPage.css";
+import "../styles/settingsPopup.css"
 import { useCookies } from "react-cookie";
 
 export default function MainPage() {
@@ -25,6 +26,10 @@ export default function MainPage() {
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 드롭다운 상태 추가
   const fieldRef = useRef(null);
+
+  //설정 팝업 관련
+  const [showSettings, setShowSettings] = useState(false);
+  const SettingRef = useRef(null);
 
   //로그인을 했을 경우 사용자 위주로 보여줄 정보 가져오기
   const getUserDataAfterLogin = async () => {
@@ -100,10 +105,6 @@ export default function MainPage() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleDropdownItemClick = (e) => {
-    e.stopPropagation(); // 드롭다운 항목 클릭 시 이벤트 전파 방지
-  };
-
   //두 번 클릭 시 다른 사용자 페이지로 이동
   const handleDoubleClick = (userId) => {
     navigate(`/user/${userId}`);
@@ -128,14 +129,31 @@ export default function MainPage() {
       });
   };
 
-  //로그인 후 모달창 띄우기
+  const handleSettings = (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
+    setShowSettings(!showSettings); // 설정 팝업 상태를 true로 설정하여 팝업 표시
+    setIsDropdownOpen(false); // 드롭다운 메뉴 닫기
+  };
+
+  // 체크 로직: sessionStorage에서 팝업 표시 여부 확인
+  useEffect(() => {
+    const hasPopupShown = sessionStorage.getItem("hasPopupShown");
+    // "hasPopupShown" 키에 해당하는 값을 가져옴. 값이 존재하지 않으면 (null), 팝업을 표시해야 함을 의미.
+
+
+    if (!hasPopupShown) {
+      setShowPopup(true);
+      sessionStorage.setItem("hasPopupShown", "true");
+      // 팝업 표시여부 세션 스토리지에 저장. 브라우저 탭을 닫기 전까지 정보유지, 탭을 재시작하면 사라짐.
+
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 3000);
+    }
+  }, []);
+
   useEffect(() => {
     fetchData();
-    setShowPopup(true);
-    //3초 후 팝업 숨기기
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 3000);
   }, []);
 
   //로그인 완료 모달이 뜰 경우 배경 블러처리
@@ -143,17 +161,27 @@ export default function MainPage() {
     if (showPopup) {
       fieldRef.current.classList.add("blurred");
       loginContainerRef.current.classList.add("blurred");
-    } else {
+    } 
+
+    else if (showSettings) {
+      fieldRef.current.classList.add("blurred");
+    }
+    
+    else {
       fieldRef.current.classList.remove("blurred");
       loginContainerRef.current.classList.remove("blurred");
+      SettingRef.current.classList.remove("blurred");
     }
-  }, [showPopup]);
+  }, [showPopup, showSettings]);
 
+      // 화면 어디든 클릭했을 때 호출되는 이벤트 핸들러
   useEffect(() => {
-    // 화면 어디든 클릭했을 때 호출되는 이벤트 핸들러
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
+      }
+      if (SettingRef.current && !SettingRef.current.contains(event.target)){
+        setShowSettings(false);
       }
     };
 
@@ -164,7 +192,7 @@ export default function MainPage() {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [isDropdownOpen]);
+  }, []);
 
   return (
     <div>
@@ -188,7 +216,39 @@ export default function MainPage() {
         </div>
       )}
 
-      <div ref={loginContainerRef} className="login-container">
+      {showSettings && (
+        <div className="settings-popup">
+          <div className="settings-content">
+            <div className="settings-header">
+              <h3>설정</h3>
+              <button onClick={() => setShowSettings(false)} className="close-button">x</button>
+            </div>
+            <form>
+              <div className="form-group">
+                <label htmlFor="user-name">이름 변경</label>
+                <input type="text" id="user-name" placeholder="User name" />
+              </div>
+              <div className="form-group">
+                <label>권한</label>
+                <div className="checkbox-group">
+                  <label>
+                    <input type="checkbox" /> 알림 전체에서 숨기기
+                  </label>
+                  <label>
+                    <input type="checkbox" /> 프로필 사진 변경하기
+                  </label>
+                  <label>
+                    <input type="checkbox" /> 설정 저장하기
+                  </label>
+                </div>
+              </div>
+              <button type="submit" className="submit-button">저장하기</button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      <div ref={loginContainerRef}  className="login-container">
         <button className="login-button-user">
           <img src="/images/search.png" alt="Search" className="search-img" />
           <FaUserCircle className="user-icon1" />
@@ -206,11 +266,11 @@ export default function MainPage() {
 
           <div
             className={`dropdown-content ${isDropdownOpen ? "active" : null}`}
-            ref={dropdownRef}
+            ref={dropdownRef} 
           >
-            <button onClick={() => navigate("/friends")}>친구 목록</button>
 
-            <button onClick={() => navigate("/settings")}>설정</button>
+            <button onClick={() => navigate("/friends")}>친구 목록</button>
+            <button onClick={handleSettings} ref={SettingRef}>설정</button>
             <button onClick={handleLogout}>로그아웃</button>
           </div>
 
