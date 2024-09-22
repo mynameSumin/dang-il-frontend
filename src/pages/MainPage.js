@@ -19,8 +19,9 @@ export default function MainPage() {
   const [unknownData, setUnknownData] = useState(null); //모르는 사용자 데이터
   const [allData, setAllData] = useState(null); //모든 사용자 데이터
 
-  //로그인 관련 팝업
+  //팝업 관련
   const [showPopup, setShowPopup] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   //드롭 다운 관련
   const dropdownRef = useRef(null);
@@ -202,7 +203,6 @@ export default function MainPage() {
 
       <div ref={loginContainerRef} className="login-container">
         <button className="login-button-user">
-          {/* <img src="/images/search.png" alt="Search" className="search-img" /> */}
           <FaUserCircle className="user-icon1" />
           <div className="user-name-box">
             <span className="user-name">{userData.name}</span>
@@ -231,7 +231,13 @@ export default function MainPage() {
               로그아웃
             </button>
           </div>
-          <img className="list-icon" src={alram} />
+          <img
+            onClick={() => {
+              setShowAlert(!showAlert);
+            }}
+            className="list-icon"
+            src={alram}
+          />
         </button>
       </div>
       <div className="logout-modal" ref={modalRef}>
@@ -251,37 +257,45 @@ export default function MainPage() {
           </div>
         </div>
       </div>
-      <div class="chat-window">
-        <img class="close-icon" src={close} />
-        <div class="chat-title-container">
-          <span className="message-num">알림(0)</span>
-          <div class="chat-title"></div>
+      {showAlert && (
+        <div class="chat-window">
+          <img
+            class="close-icon"
+            src={close}
+            onClick={() => {
+              setShowAlert(false);
+            }}
+          />
+          <div class="chat-title-container">
+            <span className="message-num">알림(0)</span>
+            <div class="chat-title"></div>
+          </div>
+          <div className="messages">
+            <div class="message">dangil 님이 친구 요청을 보냈습니다.</div>
+            <div class="message">123456aaa 님이 친구 요청을 보냈습니다.</div>
+            <div class="message">
+              내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+              보여주세요.
+            </div>
+            <div class="message">
+              내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+              보여주세요.
+            </div>
+            <div class="message">
+              내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+              보여주세요.
+            </div>
+            <div class="message">
+              내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+              보여주세요.
+            </div>
+            <div class="message">
+              내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+              보여주세요.
+            </div>
+          </div>
         </div>
-        <div className="messages">
-          <div class="message">dangil 님이 친구 요청을 보냈습니다.</div>
-          <div class="message">123456aaa 님이 친구 요청을 보냈습니다.</div>
-          <div class="message">
-            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
-            보여주세요.
-          </div>
-          <div class="message">
-            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
-            보여주세요.
-          </div>
-          <div class="message">
-            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
-            보여주세요.
-          </div>
-          <div class="message">
-            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
-            보여주세요.
-          </div>
-          <div class="message">
-            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
-            보여주세요.
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

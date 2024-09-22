@@ -60,9 +60,6 @@ const UserPage = () => {
   return (
     <div className="background">
       <img src={stand} id="stand" />
-      {/* <div style={{ padding: "20px" }}>
-      <h1>User Page</h1>
-      <p>Welcome to the user page for user with ID: {userId}</p>
       <Clock userId={userId} /> {/* userId를 Clock에 전달 */}
       <div>
         <h2>User Details</h2>
@@ -113,8 +110,7 @@ const UserPage = () => {
         >
           Go to Home
         </button>
-      </div>{" "}
-      */}
+      </div>
     </div>
   );
 };
