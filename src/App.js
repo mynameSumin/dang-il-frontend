@@ -27,13 +27,21 @@ const App = () => {
   };
 
   const ProtectedRoute = ({ isLogin, children }) => {
-    return isLogin ? children : <Navigate to="/" />;
+    return isLogin ? children : <Navigate to="/mainPage" />;
   };
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPageBeforeLogin />} />
+        {/* 로그인된 경우엔 바로 메인페이지로 이동 */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute isLogin={isLogin}>
+              <MainPageBeforeLogin />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/auth/google/callback"
           element={<LoginGoogle loginHandler={loginHandler} />}
@@ -42,7 +50,7 @@ const App = () => {
           path="/auth/kakao/callback"
           element={<LoginKakao loginHandler={loginHandler} />}
         />
-        {/* 로그인을 안했을 경우에는 게스트모드에서 벗어날 수 없음 */}
+
         <Route
           path="/mainPage"
           element={

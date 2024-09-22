@@ -2,11 +2,11 @@ import DeskField from "../components/MakeDesk";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
-import { FiMenu } from "react-icons/fi";
 import "../styles/popup.css";
 import "../styles/mainPage.css";
 import "../styles/settingsPopup.css"
 import { useCookies } from "react-cookie";
+import alram from "../assets/alram.png";
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -19,13 +19,15 @@ export default function MainPage() {
   const [unknownData, setUnknownData] = useState(null); //모르는 사용자 데이터
   const [allData, setAllData] = useState(null); //모든 사용자 데이터
 
-  //로그인 완료 팝업 관련
+  //로그인 관련 팝업
   const [showPopup, setShowPopup] = useState(false);
+  const [showLogout, setShowLogOut] = useState(false);
 
   //드롭 다운 관련
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // 드롭다운 상태 추가
   const fieldRef = useRef(null);
+  const modalRef = useRef(null);
 
   //설정 팝업 관련
   const [showSettings, setShowSettings] = useState(false);
@@ -118,7 +120,6 @@ export default function MainPage() {
     })
       .then((response) => {
         if (response.ok) {
-          localStorage.removeItem("token");
           window.location.href = "/"; // 로그아웃 후 게스트 모드로 이동
         } else {
           console.error("Logout failed");
@@ -250,7 +251,7 @@ export default function MainPage() {
 
       <div ref={loginContainerRef}  className="login-container">
         <button className="login-button-user">
-          <img src="/images/search.png" alt="Search" className="search-img" />
+          {/* <img src="/images/search.png" alt="Search" className="search-img" /> */}
           <FaUserCircle className="user-icon1" />
           <div className="user-name-box">
             <span className="user-name">{userData.name}</span>
@@ -263,7 +264,6 @@ export default function MainPage() {
           >
             ▼
           </span>
-
           <div
             className={`dropdown-content ${isDropdownOpen ? "active" : null}`}
             ref={dropdownRef} 
@@ -271,11 +271,35 @@ export default function MainPage() {
 
             <button onClick={() => navigate("/friends")}>친구 목록</button>
             <button onClick={handleSettings} ref={SettingRef}>설정</button>
-            <button onClick={handleLogout}>로그아웃</button>
+            <button
+              onClick={() => {
+                modalRef.current.classList.add("active");
+                setIsDropdownOpen(false);
+                fieldRef.current.classList.add("blurred");
+              }}
+            >
+              로그아웃
+            </button>
           </div>
-
-          <FiMenu className="list-icon" />
+          <img className="list-icon" src={alram} />
         </button>
+      </div>
+      <div className="logout-modal" ref={modalRef}>
+        <div className="logout-description">로그아웃 하시겠습니까?</div>
+        <div className="select-container">
+          <div
+            className="answer no"
+            onClick={() => {
+              modalRef.current.classList.remove("active");
+              fieldRef.current.classList.remove("blurred");
+            }}
+          >
+            아니오
+          </div>
+          <div className="answer" onClick={handleLogout}>
+            예
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -82,7 +82,6 @@ export default function MainPageBeforeLogin() {
           <span className="text-Guest">Guest</span>
           <span className="login-divider">|</span>
           <span className="text-Login">Log in</span>
-          <FiMenu className="list-icon" />
         </button>
       </div>
 
