@@ -192,11 +192,11 @@ export default function MakeDesk({ userData, fieldRef, onDoubleClick }) {
               }}
               style={{
                 position: "absolute",
+
                 left: `${box.x}px`,
                 top: `${box.y}px`,
                 opacity: isOutsideViewport(box) ? 0.3 : 1,
                 transform: isClickedDesk === box.id ? "scale(1.2)" : "scale(1)",
-
                 cursor: "pointer",
                 filter:
                   isClickedDesk === box.id
@@ -472,13 +472,14 @@ export default function MakeDesk({ userData, fieldRef, onDoubleClick }) {
               </defs>
             </svg>
             <div
+              onDoubleClick={() => onDoubleClick(box.id)}
               className="user-desk-name"
               id={box.id == 0 ? "my-name" : `name_ + ${box.id}`}
               style={{
                 opacity: isOutsideViewport(box) ? 0.3 : 0.7,
                 left: `${box.x + 120 - box.name.length * 6}px`,
                 top: `${box.y + 175}px`,
-
+                cursor: "pointer",
                 transform:
                   isClickedDesk === box.id
                     ? "scale(1.2) translateY(10px)"

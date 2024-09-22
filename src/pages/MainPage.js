@@ -7,6 +7,7 @@ import "../styles/mainPage.css";
 import "../styles/settingsPopup.css"
 import { useCookies } from "react-cookie";
 import alram from "../assets/alram.png";
+import close from "../assets/close.png";
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -21,7 +22,6 @@ export default function MainPage() {
 
   //로그인 관련 팝업
   const [showPopup, setShowPopup] = useState(false);
-  const [showLogout, setShowLogOut] = useState(false);
 
   //드롭 다운 관련
   const dropdownRef = useRef(null);
@@ -59,11 +59,23 @@ export default function MainPage() {
       const friendData = fetchedData.data.user_data.friend_data;
       const unknownData = fetchedData.data.user_data.unknown_user_data;
 
-      console.log("로그인 된 상태의 데이터", [
-        fetchedUserData,
-        friendData,
-        unknownData,
-      ]);
+      //sse 연결
+      // SSE 연결 (withCredentials 설정)
+      const eventSource = new EventSource(
+        "https://dangil-artisticsw.site/sse/connect",
+        {
+          withCredentials: true,
+        }
+      );
+
+      eventSource.onmessage = (event) => {
+        console.log("SSE 메시지:", event.data);
+      };
+
+      eventSource.onerror = (error) => {
+        console.error("SSE 연결 오류:", error);
+        eventSource.close();
+      };
 
       // 필요한 데이터를 반환
       return [fetchedUserData, friendData, unknownData];
@@ -103,7 +115,6 @@ export default function MainPage() {
 
   const toggleDropdown = (e) => {
     e.stopPropagation(); // 이벤트 전파 방지
-    console.log(isDropdownOpen);
     setIsDropdownOpen(!isDropdownOpen);
   };
 
@@ -114,7 +125,7 @@ export default function MainPage() {
 
   const handleLogout = (e) => {
     e.stopPropagation(); // 이벤트 전파 방지
-    fetch("https://www.dangil-artisticsw.site/auth/logout", {
+    fetch("https://dangil-artisticsw.site/auth/logout", {
       method: "POST",
       credentials: "include",
     })
@@ -298,6 +309,37 @@ export default function MainPage() {
           </div>
           <div className="answer" onClick={handleLogout}>
             예
+          </div>
+        </div>
+      </div>
+      <div class="chat-window">
+        <img class="close-icon" src={close} />
+        <div class="chat-title-container">
+          <span className="message-num">알림(0)</span>
+          <div class="chat-title"></div>
+        </div>
+        <div className="messages">
+          <div class="message">dangil 님이 친구 요청을 보냈습니다.</div>
+          <div class="message">123456aaa 님이 친구 요청을 보냈습니다.</div>
+          <div class="message">
+            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+            보여주세요.
+          </div>
+          <div class="message">
+            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+            보여주세요.
+          </div>
+          <div class="message">
+            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+            보여주세요.
+          </div>
+          <div class="message">
+            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+            보여주세요.
+          </div>
+          <div class="message">
+            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+            보여주세요.
           </div>
         </div>
       </div>

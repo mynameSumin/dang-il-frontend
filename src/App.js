@@ -27,7 +27,12 @@ const App = () => {
   };
 
   const ProtectedRoute = ({ isLogin, children }) => {
-    return isLogin ? children : <Navigate to="/mainPage" />;
+    if (!isLogin) {
+      return children;
+    } else {
+      window.location.href = "/mainPage"; // 새로고침하며 페이지 이동
+      return null;
+    }
   };
 
   return (
@@ -42,6 +47,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/auth/google/callback"
           element={<LoginGoogle loginHandler={loginHandler} />}
