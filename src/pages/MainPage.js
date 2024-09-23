@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import "../styles/popup.css";
 import "../styles/mainPage.css";
-import "../styles/settingsPopup.css"
+import "../styles/settingsPopup.css";
 import { useCookies } from "react-cookie";
 import alram from "../assets/alram.png";
 import close from "../assets/close.png";
@@ -20,8 +20,9 @@ export default function MainPage() {
   const [unknownData, setUnknownData] = useState(null); //모르는 사용자 데이터
   const [allData, setAllData] = useState(null); //모든 사용자 데이터
 
-  //로그인 관련 팝업
+  //팝업 관련
   const [showPopup, setShowPopup] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   //드롭 다운 관련
   const dropdownRef = useRef(null);
@@ -156,7 +157,6 @@ export default function MainPage() {
     const hasPopupShown = sessionStorage.getItem("hasPopupShown");
     // "hasPopupShown" 키에 해당하는 값을 가져옴. 값이 존재하지 않으면 (null), 팝업을 표시해야 함을 의미.
 
-
     if (!hasPopupShown) {
       setShowPopup(true);
       sessionStorage.setItem("hasPopupShown", "true");
@@ -177,20 +177,16 @@ export default function MainPage() {
     if (showPopup) {
       fieldRef.current.classList.add("blurred");
       loginContainerRef.current.classList.add("blurred");
-    } 
-
-    else if (showSettings) {
+    } else if (showSettings) {
       fieldRef.current.classList.add("blurred");
-    }
-    
-    else {
+    } else {
       fieldRef.current.classList.remove("blurred");
       loginContainerRef.current.classList.remove("blurred");
       SettingRef.current.classList.remove("blurred");
     }
   }, [showPopup, showSettings]);
 
-      // 화면 어디든 클릭했을 때 호출되는 이벤트 핸들러
+  // 화면 어디든 클릭했을 때 호출되는 이벤트 핸들러
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -272,9 +268,8 @@ export default function MainPage() {
         </div>
       )};
 
-      <div ref={loginContainerRef}  className="login-container">
+      <div ref={loginContainerRef} className="login-container">
         <button className="login-button-user">
-          {/* <img src="/images/search.png" alt="Search" className="search-img" /> */}
           <FaUserCircle className="user-icon1" />
           <div className="user-name-box">
             <span className="user-name">{userData.name}</span>
@@ -289,11 +284,12 @@ export default function MainPage() {
           </span>
           <div
             className={`dropdown-content ${isDropdownOpen ? "active" : null}`}
-            ref={dropdownRef} 
+            ref={dropdownRef}
           >
-
             <button onClick={() => navigate("/friends")}>친구 목록</button>
-            <button onClick={handleSettings} ref={SettingRef}>설정</button>
+            <button onClick={handleSettings} ref={SettingRef}>
+              설정
+            </button>
             <button
               onClick={() => {
                 modalRef.current.classList.add("active");
@@ -304,7 +300,13 @@ export default function MainPage() {
               로그아웃
             </button>
           </div>
-          <img className="list-icon" src={alram} />
+          <img
+            onClick={() => {
+              setShowAlert(!showAlert);
+            }}
+            className="list-icon"
+            src={alram}
+          />
         </button>
       </div>
       <div className="logout-modal" ref={modalRef}>
@@ -324,8 +326,14 @@ export default function MainPage() {
           </div>
         </div>
       </div>
-      <div class="chat-window">
-        <img class="close-icon" src={close} />
+      <div className={showAlert ? "chat-window active" : "chat-window"}>
+        <img
+          class="close-icon"
+          src={close}
+          onClick={() => {
+            setShowAlert(false);
+          }}
+        />
         <div class="chat-title-container">
           <span className="message-num">알림(0)</span>
           <div class="chat-title"></div>

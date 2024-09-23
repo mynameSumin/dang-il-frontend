@@ -452,6 +452,13 @@ body {
   backdrop-filter: blur(2px);
   overflow-y: hidden;
   z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.chat-window.active {
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .close-icon {
