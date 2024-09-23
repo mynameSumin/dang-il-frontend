@@ -8,21 +8,25 @@ import "../styles/settingsPopup.css";
 import { useCookies } from "react-cookie";
 import alram from "../assets/alram.png";
 import close from "../assets/close.png";
+import addFriend from "../assets/addFriend.png";
+import search from "../assets/search.png";
 
 export default function MainPage() {
   const navigate = useNavigate();
   const loginContainerRef = useRef(null);
   const userName = null;
   const [cookies] = useCookies(["session_id"]);
+
   //사용자 정보 관련
   const [userData, setUserData] = useState([{ id: 0, name: "" }]); // 사용자 데이터
-  const [friendData, setFriendData] = useState(null); //사용자 친구 데이터
-  const [unknownData, setUnknownData] = useState(null); //모르는 사용자 데이터
+  const [friendData, setFriendData] = useState([]); //사용자 친구 데이터
+  const [unknownData, setUnknownData] = useState([]); //모르는 사용자 데이터
   const [allData, setAllData] = useState(null); //모든 사용자 데이터
 
   //팝업 관련
   const [showPopup, setShowPopup] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [showFriend, setShowFriend] = useState(false);
 
   //드롭 다운 관련
   const dropdownRef = useRef(null);
@@ -33,6 +37,12 @@ export default function MainPage() {
   //설정 팝업 관련
   const [showSettings, setShowSettings] = useState(false);
   const SettingRef = useRef(null);
+
+  // 친구 검색
+  const [filter, setFilter] = useState("");
+  const filteredUsers = unknownData.filter((user) =>
+    user.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   //로그인을 했을 경우 사용자 위주로 보여줄 정보 가져오기
   const getUserDataAfterLogin = async () => {
@@ -281,7 +291,15 @@ export default function MainPage() {
             className={`dropdown-content ${isDropdownOpen ? "active" : null}`}
             ref={dropdownRef}
           >
-            <button onClick={() => navigate("/friends")}>친구 목록</button>
+            <button
+              onClick={() => {
+                setShowFriend(true);
+                setIsDropdownOpen(false);
+                setShowAlert(false);
+              }}
+            >
+              친구 목록
+            </button>
             <button onClick={handleSettings} ref={SettingRef}>
               설정
             </button>
@@ -298,6 +316,7 @@ export default function MainPage() {
           <img
             onClick={() => {
               setShowAlert(!showAlert);
+              setShowFriend(false);
             }}
             className="list-icon"
             src={alram}
@@ -321,7 +340,7 @@ export default function MainPage() {
           </div>
         </div>
       </div>
-      <div className={showAlert ? "chat-window active" : "chat-window"}>
+      <div className={showAlert ? "window active" : "window"}>
         <img
           class="close-icon"
           src={close}
@@ -329,9 +348,9 @@ export default function MainPage() {
             setShowAlert(false);
           }}
         />
-        <div class="chat-title-container">
-          <span className="message-num">알림(0)</span>
-          <div class="chat-title"></div>
+        <div class="title-container">
+          <span className="window-title">알림(0)</span>
+          <div class="title"></div>
         </div>
         <div className="messages">
           <div class="message">dangil 님이 친구 요청을 보냈습니다.</div>
@@ -356,6 +375,48 @@ export default function MainPage() {
             내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
             보여주세요.
           </div>
+        </div>
+      </div>
+      <div className="add-friend-window">
+        <img
+          class="close-icon"
+          src={close}
+          onClick={() => {
+            setShowFriend(false);
+          }}
+        />
+      </div>
+      <div className={showFriend ? "window active" : "window"}>
+        <img
+          class="close-icon"
+          src={close}
+          onClick={() => {
+            setShowFriend(false);
+          }}
+        />
+        <div class="title-container">
+          <form class="search-wrapper">
+            <input
+              type="search"
+              id="search"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+            />
+            <img className="search-icon" src={search} />
+          </form>
+          <img class="add-friend-icon" src={addFriend} />
+        </div>
+        <div class="title-container">
+          <span className="window-title">친구목록</span>
+          <div class="title"></div>
+        </div>
+        <div className="friend-list">
+          {filteredUsers.map((user) => (
+            <div key={user.id} className="friend-user">
+              <FaUserCircle className="user-icon1" />
+              <div>{user.name}</div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
