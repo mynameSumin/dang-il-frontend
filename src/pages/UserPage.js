@@ -114,7 +114,6 @@ const UserPage = () => {
           Go to Home
         </button>
       </div>{" "}
-      */}
     </div>
   );
 };
