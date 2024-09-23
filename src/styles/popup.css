@@ -35,11 +35,11 @@ body {
 
 .login-button-guest {
   width: 655px;
-  height: 70px;
+  height: 60px;
   background-color: #ffffff;
   border: none;
   border-radius: 58px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 40px 0px rgba(0, 6, 60, 0.30);
   font-size: 16px;
   cursor: pointer;
   display: flex;
@@ -89,11 +89,12 @@ body {
 /* 위에는 guest 모드의 css */
 .login-button-user {
   width: 655px;
-  height: 70px;
+  height: 60px;
   background-color: #ffffff;
   border: none;
   border-radius: 58px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+  box-shadow: 0px 0px 40px 0px rgba(0, 6, 60, 0.30);
   font-size: 16px;
   cursor: pointer;
   display: flex;

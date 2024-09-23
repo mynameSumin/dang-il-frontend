@@ -37,6 +37,14 @@ export default function MainPage() {
   //설정 팝업 관련
   const [showSettings, setShowSettings] = useState(false);
   const SettingRef = useRef(null);
+  // 설정-프로필 관련
+  const [profileSetting, setProfileSetting] = useState('');
+  // 설정-모드관련
+  const [modeSetting, setModeSetting] = useState('');
+  // 적용하기 & 이름변경 관련
+  const [inputValue, setInputValue] = useState('');
+  const [applySetting, setApplySetting] = useState(false);
+
 
   // 친구 검색
   const [filter, setFilter] = useState("");
@@ -129,6 +137,13 @@ export default function MainPage() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  //이름변경관련
+const handleInputChange = (event) => {
+  const newValue = event.target.value;
+  setInputValue(newValue);
+  setApplySetting(newValue.trim() !== ''); // 값이 비어있지 않으면 버튼 활성화
+};
+
   //두 번 클릭 시 다른 사용자 페이지로 이동
   const handleDoubleClick = (userId) => {
     navigate(`/user/${userId}`);
@@ -198,9 +213,6 @@ export default function MainPage() {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
-      if (SettingRef.current && !SettingRef.current.contains(event.target)) {
-        setShowSettings(false);
-      }
     };
 
     // 전역 클릭 이벤트 등록
@@ -211,6 +223,23 @@ export default function MainPage() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  const showProfileSettings = () => {
+    setProfileSetting(profileSetting === 'profile' ? '' : 'profile');
+    setModeSetting(''); // 모드 설정 비활성화
+  };
+
+  const showModeSettings = () => {
+    setModeSetting(modeSetting === 'mode' ? '' : 'mode');
+    setProfileSetting(''); // 모드 설정 비활성화
+  };
+
+  //적용하기 버튼 눌렀을때
+  const applyButton = () => {
+    setApplySetting(!applySetting)
+    console.log('good')
+  }
+
 
   return (
     <div>
@@ -236,42 +265,38 @@ export default function MainPage() {
 
       {showSettings && (
         <div className="settings-popup">
-          <div className="settings-content">
-            <div className="settings-header">
-              <h3>설정</h3>
-              <button
-                onClick={() => setShowSettings(false)}
-                className="close-button"
-              >
-                x
-              </button>
-            </div>
-            <form>
-              <div className="form-group">
-                <label htmlFor="user-name">이름 변경</label>
-                <input type="text" id="user-name" placeholder="User name" />
+          <button onClick={() => setShowSettings(false)} className="close-button">X</button>
+            <div className="setting-profile">
+              <div className="settings-header">
+                <h3>설정</h3>
+                <div className="settings-rowline"></div>
+                <p className={`settings-menu ${profileSetting === 'profile' ? "active" : ""}`} onClick={showProfileSettings}>프로필</p>
+                <p className={`settings-menu ${modeSetting=== 'mode' ? "active" : "" }`}onClick={showModeSettings}>모드</p>      
               </div>
-              <div className="form-group">
-                <label>권한</label>
-                <div className="checkbox-group">
-                  <label>
-                    <input type="checkbox" /> 알림 전체에서 숨기기
-                  </label>
-                  <label>
-                    <input type="checkbox" /> 프로필 사진 변경하기
-                  </label>
-                  <label>
-                    <input type="checkbox" /> 설정 저장하기
-                  </label>
+              {profileSetting === 'profile' && (
+                <div className="settings-profile">
+                  <p>이름변경</p>
+                  <input value={inputValue}
+                    onChange={handleInputChange} type="text" placeholder="이름 입력"/>
                 </div>
-              </div>
-              <button type="submit" className="submit-button">
-                저장하기
-              </button>
-            </form>
-          </div>
+              )}
+
+              {modeSetting === 'mode' && (
+                <div>
+                  <h2 className="ready-text"> 서비스 준비 중입니다... </h2>
+                </div>
+              )}
+            </div>
+
+          
+
+            <div>
+              <p className={`apply-button ${applySetting ? "active" : null}`}
+                  onClick={() => applySetting && applyButton()}>
+                    적용하기</p>
+            </div>
         </div>
-      )}
+      )};
 
       <div ref={loginContainerRef} className="login-container">
         <button className="login-button-user">

@@ -1,9 +1,8 @@
 .settings-popup {
-/* Rectangle 24 */
-width: 550px;
-height: 575px;
+width: 32%;
+height: 55%;
 position: fixed;
-top: 50%;
+top: 47%;
 left: 50%;
 transform: translate(-50%, -50%);
 background-color: white;
@@ -11,40 +10,72 @@ box-shadow: 0px 4px 40px rgba(0, 6, 60, 0.3);
 backdrop-filter: blur(2px);
 border-radius: 23px;
 margin-bottom : 50px;
-}
-
-.settings-content {
-   text-align: center;
+padding : 30px;
 }
 
 .settings-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .close-button {
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
-  
-  .form-group {
-    margin-bottom: 10px;
-  }
-  
-  .checkbox-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .submit-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+
+
+.settings-header h3 {
+  margin-bottom: 15px; 
+}
+
+.settings-header p {
+  margin-bottom: 15px; 
+  color: #6F7FB5;
+  cursor: pointer;
+}
+
+.settings-menu.active {
+  font-weight : bold;
+}
+
+.settings-rowline {
+  border-bottom: 2px solid #ccc; /* 회색 구분선 */
+  margin-bottom: 15px;
+  width:45px;
+  display:flex;
+}
+
+.setting-profile {
+  display:flex;
+  flex-direction: row;
+}
+
+.settings-profile {
+  margin-top:50px;
+  margin-left:50px;
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.settings-profile p {
+  margin-bottom: 15px;
+  color: #6F7FB5;
+  font-weight: bold;
+}
+
+.ready-text {
+  text-align: center;
+  margin-top: 160px;
+  margin-left: 120px;
+}
+
+.apply-button {
+  position: absolute;
+  bottom : 30px;
+  right: 45px;
+  color: #D9DDEC;
+}
+
+.apply-button.active {
+  text-align : right;
+  color: #6F7FB5;
+  font-weight : bold;
+  cursor: pointer;
+}
