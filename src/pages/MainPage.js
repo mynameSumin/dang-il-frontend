@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import "../styles/popup.css";
 import "../styles/mainPage.css";
-import "../styles/settingsPopup.css"
+import "../styles/settingsPopup.css";
 import { useCookies } from "react-cookie";
 import alram from "../assets/alram.png";
 import close from "../assets/close.png";
@@ -153,7 +153,6 @@ export default function MainPage() {
     const hasPopupShown = sessionStorage.getItem("hasPopupShown");
     // "hasPopupShown" 키에 해당하는 값을 가져옴. 값이 존재하지 않으면 (null), 팝업을 표시해야 함을 의미.
 
-
     if (!hasPopupShown) {
       setShowPopup(true);
       sessionStorage.setItem("hasPopupShown", "true");
@@ -174,26 +173,22 @@ export default function MainPage() {
     if (showPopup) {
       fieldRef.current.classList.add("blurred");
       loginContainerRef.current.classList.add("blurred");
-    } 
-
-    else if (showSettings) {
+    } else if (showSettings) {
       fieldRef.current.classList.add("blurred");
-    }
-    
-    else {
+    } else {
       fieldRef.current.classList.remove("blurred");
       loginContainerRef.current.classList.remove("blurred");
       SettingRef.current.classList.remove("blurred");
     }
   }, [showPopup, showSettings]);
 
-      // 화면 어디든 클릭했을 때 호출되는 이벤트 핸들러
+  // 화면 어디든 클릭했을 때 호출되는 이벤트 핸들러
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
-      if (SettingRef.current && !SettingRef.current.contains(event.target)){
+      if (SettingRef.current && !SettingRef.current.contains(event.target)) {
         setShowSettings(false);
       }
     };
@@ -234,7 +229,12 @@ export default function MainPage() {
           <div className="settings-content">
             <div className="settings-header">
               <h3>설정</h3>
-              <button onClick={() => setShowSettings(false)} className="close-button">x</button>
+              <button
+                onClick={() => setShowSettings(false)}
+                className="close-button"
+              >
+                x
+              </button>
             </div>
             <form>
               <div className="form-group">
@@ -255,13 +255,15 @@ export default function MainPage() {
                   </label>
                 </div>
               </div>
-              <button type="submit" className="submit-button">저장하기</button>
+              <button type="submit" className="submit-button">
+                저장하기
+              </button>
             </form>
           </div>
         </div>
       )}
 
-      <div ref={loginContainerRef}  className="login-container">
+      <div ref={loginContainerRef} className="login-container">
         <button className="login-button-user">
           <FaUserCircle className="user-icon1" />
           <div className="user-name-box">
@@ -277,11 +279,12 @@ export default function MainPage() {
           </span>
           <div
             className={`dropdown-content ${isDropdownOpen ? "active" : null}`}
-            ref={dropdownRef} 
+            ref={dropdownRef}
           >
-
             <button onClick={() => navigate("/friends")}>친구 목록</button>
-            <button onClick={handleSettings} ref={SettingRef}>설정</button>
+            <button onClick={handleSettings} ref={SettingRef}>
+              설정
+            </button>
             <button
               onClick={() => {
                 modalRef.current.classList.add("active");
@@ -318,45 +321,43 @@ export default function MainPage() {
           </div>
         </div>
       </div>
-      {showAlert && (
-        <div class="chat-window">
-          <img
-            class="close-icon"
-            src={close}
-            onClick={() => {
-              setShowAlert(false);
-            }}
-          />
-          <div class="chat-title-container">
-            <span className="message-num">알림(0)</span>
-            <div class="chat-title"></div>
+      <div className={showAlert ? "chat-window active" : "chat-window"}>
+        <img
+          class="close-icon"
+          src={close}
+          onClick={() => {
+            setShowAlert(false);
+          }}
+        />
+        <div class="chat-title-container">
+          <span className="message-num">알림(0)</span>
+          <div class="chat-title"></div>
+        </div>
+        <div className="messages">
+          <div class="message">dangil 님이 친구 요청을 보냈습니다.</div>
+          <div class="message">123456aaa 님이 친구 요청을 보냈습니다.</div>
+          <div class="message">
+            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+            보여주세요.
           </div>
-          <div className="messages">
-            <div class="message">dangil 님이 친구 요청을 보냈습니다.</div>
-            <div class="message">123456aaa 님이 친구 요청을 보냈습니다.</div>
-            <div class="message">
-              내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
-              보여주세요.
-            </div>
-            <div class="message">
-              내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
-              보여주세요.
-            </div>
-            <div class="message">
-              내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
-              보여주세요.
-            </div>
-            <div class="message">
-              내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
-              보여주세요.
-            </div>
-            <div class="message">
-              내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
-              보여주세요.
-            </div>
+          <div class="message">
+            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+            보여주세요.
+          </div>
+          <div class="message">
+            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+            보여주세요.
+          </div>
+          <div class="message">
+            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+            보여주세요.
+          </div>
+          <div class="message">
+            내 방명록에 글이 작성되었습니다. 여기에 방명록에 작성된 글을
+            보여주세요.
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
