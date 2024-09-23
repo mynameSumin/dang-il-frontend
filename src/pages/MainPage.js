@@ -37,6 +37,10 @@ export default function MainPage() {
   const [profileSetting, setProfileSetting] = useState('');
   // 설정-모드관련
   const [modeSetting, setModeSetting] = useState('');
+  // 적용하기 & 이름변경 관련
+  const [inputValue, setInputValue] = useState('');
+  const [applySetting, setApplySetting] = useState(false);
+
 
   //로그인을 했을 경우 사용자 위주로 보여줄 정보 가져오기
   const getUserDataAfterLogin = async () => {
@@ -122,6 +126,13 @@ export default function MainPage() {
     e.stopPropagation(); // 이벤트 전파 방지
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  //이름변경관련
+const handleInputChange = (event) => {
+  const newValue = event.target.value;
+  setInputValue(newValue);
+  setApplySetting(newValue.trim() !== ''); // 값이 비어있지 않으면 버튼 활성화
+};
 
   //두 번 클릭 시 다른 사용자 페이지로 이동
   const handleDoubleClick = (userId) => {
@@ -213,6 +224,12 @@ export default function MainPage() {
     setProfileSetting(''); // 모드 설정 비활성화
   };
 
+  //적용하기 버튼 눌렀을때
+  const applyButton = () => {
+    setApplySetting(!applySetting)
+    console.log('good')
+  }
+
 
   return (
     <div>
@@ -239,31 +256,34 @@ export default function MainPage() {
       {showSettings && (
         <div className="settings-popup">
           <button onClick={() => setShowSettings(false)} className="close-button">X</button>
-            <div className="settings-header">
-              <h3>설정</h3>
-              <div className="settings-rowline"></div>
-              <p className={`settings-menu ${profileSetting === 'profile' ? "active" : ""}`} onClick={showProfileSettings}>프로필</p>
-              <p className={`settings-menu ${modeSetting=== 'mode' ? "active" : "" }`}onClick={showModeSettings}>모드</p>      
-            </div>
-          {profileSetting == 'profile' && (
-            <div className="settings-profile">
-              <p>이름변경</p>
-              <p>긴박스 넣는데</p>
-              <p>프로필사진</p>
-              <p>연동된 계정에서 불러오기</p>
-              <p>프로필 사진 비우기</p>
-              <p>직접 설정하기</p>
-            </div>
-          )}
+            <div className="setting-profile">
+              <div className="settings-header">
+                <h3>설정</h3>
+                <div className="settings-rowline"></div>
+                <p className={`settings-menu ${profileSetting === 'profile' ? "active" : ""}`} onClick={showProfileSettings}>프로필</p>
+                <p className={`settings-menu ${modeSetting=== 'mode' ? "active" : "" }`}onClick={showModeSettings}>모드</p>      
+              </div>
+              {profileSetting === 'profile' && (
+                <div className="settings-profile">
+                  <p>이름변경</p>
+                  <input value={inputValue}
+                    onChange={handleInputChange} type="text" placeholder="이름 입력"/>
+                </div>
+              )}
 
-          {modeSetting === 'mode' && (
-            <div>
-              <h1> mode</h1>
+              {modeSetting === 'mode' && (
+                <div>
+                  <h2 className="ready-text"> 서비스 준비 중입니다... </h2>
+                </div>
+              )}
             </div>
-          )}
+
+          
 
             <div>
-              <p>적용하기</p>
+              <p className={`apply-button ${applySetting ? "active" : null}`}
+                  onClick={() => applySetting && applyButton()}>
+                    적용하기</p>
             </div>
         </div>
       )};

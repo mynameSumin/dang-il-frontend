@@ -40,3 +40,42 @@ padding : 30px;
   width:45px;
   display:flex;
 }
+
+.setting-profile {
+  display:flex;
+  flex-direction: row;
+}
+
+.settings-profile {
+  margin-top:50px;
+  margin-left:50px;
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.settings-profile p {
+  margin-bottom: 15px;
+  color: #6F7FB5;
+  font-weight: bold;
+}
+
+.ready-text {
+  text-align: center;
+  margin-top: 160px;
+  margin-left: 120px;
+}
+
+.apply-button {
+  position: absolute;
+  bottom : 30px;
+  right: 45px;
+  color: #D9DDEC;
+}
+
+.apply-button.active {
+  text-align : right;
+  color: #6F7FB5;
+  font-weight : bold;
+  cursor: pointer;
+}
