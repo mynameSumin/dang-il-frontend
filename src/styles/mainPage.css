@@ -36,6 +36,22 @@ body {
   align-items: center;
 }
 
+.login-button-guest {
+  width: 655px;
+  height: 60px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 58px;
+  box-shadow: 0px 0px 40px 0px rgba(0, 6, 60, 0.30);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
 .login-button {
   width: 655px;
   height: 70px;
@@ -70,6 +86,23 @@ body {
 .login-divider {
   margin: 0 10px;
 }
+
+.login-button-user {
+  width: 655px;
+  height: 60px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 58px;
+  box-shadow: 0px 0px 40px 0px rgba(0, 6, 60, 0.30);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
 
 .modal {
   position: fixed;
