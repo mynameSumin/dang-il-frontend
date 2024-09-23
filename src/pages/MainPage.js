@@ -128,15 +128,41 @@ export default function MainPage() {
   };
 
   //이름변경관련
-const handleInputChange = (event) => {
+  const handleInputChange = (event) => {
   const newValue = event.target.value;
   setInputValue(newValue);
   setApplySetting(newValue.trim() !== ''); // 값이 비어있지 않으면 버튼 활성화
-};
+  };
 
   //두 번 클릭 시 다른 사용자 페이지로 이동
   const handleDoubleClick = (userId) => {
     navigate(`/user/${userId}`);
+  };
+
+  // 로컬 상태 업데이트
+  const updateUserName = async () => {
+    
+    const updatedUserData = { ...userData, name: inputValue };
+    setUserData(updatedUserData);
+  
+    // 백엔드에 변경 요청
+    try {
+      const response = await fetch('https://dangil-artisticsw.site/updateUserName', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Cookie: 'session_id=' + cookies.session_id,
+        },
+        body: JSON.stringify({ name: inputValue }),
+        credentials: 'include',
+      });
+  
+      if (!response.ok) throw new Error('Failed to update user name');
+      // 서버 응답 처리
+      console.log('Name updated successfully on server');
+    } catch (error) {
+      console.error('Error updating name:', error);
+    }
   };
 
   const handleLogout = (e) => {
@@ -226,8 +252,12 @@ const handleInputChange = (event) => {
 
   //적용하기 버튼 눌렀을때
   const applyButton = () => {
-    setApplySetting(!applySetting)
-    console.log('good')
+    // setApplySetting(!applySetting)
+    // console.log('good')
+    if (inputValue.trim()) {
+      updateUserName();
+      setApplySetting(false); // 버튼 비활성화
+    }
   }
 
 
