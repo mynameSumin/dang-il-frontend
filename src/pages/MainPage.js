@@ -166,24 +166,6 @@ export default function MainPage() {
     }
   };
 
-  const handleLogout = (e) => {
-    e.stopPropagation(); // 이벤트 전파 방지
-    fetch("https://dangil-artisticsw.site/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) {
-          window.location.href = "/"; // 로그아웃 후 게스트 모드로 이동
-        } else {
-          console.error("Logout failed");
-        }
-      })
-      .catch((error) => {
-        console.error("An error occurred during logout:", error);
-      });
-  };
-
   const handleSettings = (e) => {
     e.stopPropagation(); // 이벤트 전파 방지
     setShowSettings(!showSettings); // 설정 팝업 상태를 true로 설정하여 팝업 표시
@@ -255,9 +237,9 @@ export default function MainPage() {
     eventSource.onmessage = function (event) {
       // 서버로부터 받은 데이터를 파싱
       const data = event.data.replace(/'/g, '"');
-      const correctedData = event.data
-        .replace(/\bTrue\b/g, "true")
-        .replace(/\bFalse\b/g, "false");
+      const correctedData = data
+        .replace(/\bTrue\b/g, true)
+        .replace(/\bFalse\b/g, false);
       const receiveData = JSON.parse(correctedData);
       setMessages((prevMessages) => [...prevMessages, receiveData]);
       console.log("messages", messages);
@@ -281,6 +263,13 @@ export default function MainPage() {
 
   useEffect(() => {
     console.log("messages", messages);
+    if (
+      messages.length !== 0 &&
+      messages[messages.length - 1].message ==
+        "Friend request accepted successfully"
+    ) {
+      setFriendData((prevData) => [...prevData, { _id: "test", name: "test" }]);
+    }
   }, [messages]);
 
   //로그인 완료 모달이 뜰 경우 배경 블러처리
