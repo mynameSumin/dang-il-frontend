@@ -178,6 +178,18 @@ export default function MainPage() {
     }
   };
 
+  const removeBySenderId = (senderId) => {
+    const updatedMessages = messages.filter((item) => {
+      if (item.data && item.data.sender_id) {
+        return item.data.sender_id !== senderId;
+      }
+      return true;
+    });
+
+    // 상태 업데이트
+    setMessages(updatedMessages);
+  };
+
   // 체크 로직: sessionStorage에서 팝업 표시 여부 확인
   useEffect(() => {
     const hasPopupShown = sessionStorage.getItem("hasPopupShown");
@@ -209,7 +221,7 @@ export default function MainPage() {
       const data = event.data.replace(/'/g, '"');
       const receiveData = JSON.parse(data);
       setMessages((prevMessages) => [...prevMessages, receiveData]);
-
+      console.log(messages);
       // 'source'와 'data' 필드 사용
       console.log("data:", receiveData);
       console.log("Source:", receiveData.source);
@@ -559,17 +571,19 @@ export default function MainPage() {
                   </div>
                   <div style={{ marginRight: "23px" }}>
                     <button
-                      onClick={() =>
-                        responseToInvitation(false, message.data.sender_id)
-                      }
+                      onClick={() => {
+                        responseToInvitation(false, message.data.sender_id);
+                        removeBySenderId(message.data.sender_id);
+                      }}
                       className="select-btn"
                     >
                       <img src={reject} />
                     </button>
                     <button
-                      onClick={() =>
-                        responseToInvitation(true, message.data.sender_id)
-                      }
+                      onClick={() => {
+                        responseToInvitation(true, message.data.sender_id);
+                        removeBySenderId(message.data.sender_id);
+                      }}
                       className="select-btn"
                     >
                       <img src={check} />
