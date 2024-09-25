@@ -102,6 +102,52 @@ export default function MainPage() {
     navigate(`/user/${userId}`);
   };
 
+  // 로컬 상태 업데이트
+  const updateUserName = async () => {
+    const updatedUserData = { ...userData, name: inputValue };
+    setUserData(updatedUserData);
+
+    // 백엔드에 변경 요청
+    try {
+      const response = await fetch(
+        "https://dangil-artisticsw.site/updateUserName",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: "session_id=" + cookies.session_id,
+          },
+          body: JSON.stringify({ name: inputValue }),
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to update user name");
+      // 서버 응답 처리
+      console.log("Name updated successfully on server");
+    } catch (error) {
+      console.error("Error updating name:", error);
+    }
+  };
+
+  const handleLogout = (e) => {
+    e.stopPropagation(); // 이벤트 전파 방지
+    fetch("https://dangil-artisticsw.site/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    })
+      .then((response) => {
+        if (response.ok) {
+          window.location.href = "/"; // 로그아웃 후 게스트 모드로 이동
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("An error occurred during logout:", error);
+      });
+  };
+
   const handleSettings = (e) => {
     e.stopPropagation(); // 이벤트 전파 방지
     setShowSettings(!showSettings); // 설정 팝업 상태를 true로 설정하여 팝업 표시
@@ -229,8 +275,12 @@ export default function MainPage() {
 
   //적용하기 버튼 눌렀을때
   const applyButton = () => {
-    setApplySetting(!applySetting);
-    console.log("good");
+    // setApplySetting(!applySetting)
+    // console.log('good')
+    if (inputValue.trim()) {
+      updateUserName();
+      setApplySetting(false); // 버튼 비활성화
+    }
   };
 
   return (
