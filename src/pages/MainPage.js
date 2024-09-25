@@ -40,6 +40,9 @@ export default function MainPage() {
   // 적용하기 & 이름변경 관련
   const [inputValue, setInputValue] = useState('');
   const [applySetting, setApplySetting] = useState(false);
+  //설정- 프로필사진
+  const [profilePicUrl, setProfilePicUrl] = useState('');
+
 
 
   //로그인을 했을 경우 사용자 위주로 보여줄 정보 가져오기
@@ -134,18 +137,47 @@ export default function MainPage() {
   setApplySetting(newValue.trim() !== ''); // 값이 비어있지 않으면 버튼 활성화
   };
 
+  //프로필사진정보 백엔드에서 가져오기
+  const fetchProfilePicture = async () => {
+    try {
+      const response = await fetch('https://dangil-artisticsw.site/getProfilePicture', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cookie': 'session_id=' + cookies.session_id
+        },
+        credentials: 'include',
+      });
+  
+      if (!response.ok) throw new Error('Failed to fetch profile picture');
+  
+      const data = await response.json();
+      setProfilePicUrl(data.pictureUrl); // 예상 응답: { pictureUrl: 'url_to_image' }
+    } catch (error) {
+      console.error('Error fetching profile picture:', error);
+    }
+  };
+  
+  // 체크박스 변경 이벤트 핸들러
+  const handleProfileFetchCheck = (event) => {
+    if (event.target.checked) {
+      fetchProfilePicture();
+    } else {
+      setProfilePicUrl(''); // 체크 해제시 미리보기 제거
+    }
+  };
+
   //두 번 클릭 시 다른 사용자 페이지로 이동
   const handleDoubleClick = (userId) => {
     navigate(`/user/${userId}`);
   };
 
-  // 로컬 상태 업데이트
+  //이름 변경 시 백엔드 변경요청 & 로컬상태 업데이트
   const updateUserName = async () => {
     
     const updatedUserData = { ...userData, name: inputValue };
     setUserData(updatedUserData);
   
-    // 백엔드에 변경 요청
     try {
       const response = await fetch('https://dangil-artisticsw.site/updateUserName', {
         method: 'POST',
@@ -216,7 +248,8 @@ export default function MainPage() {
       loginContainerRef.current.classList.add("blurred");
     } else if (showSettings) {
       fieldRef.current.classList.add("blurred");
-    } else {
+    } 
+    else {
       fieldRef.current.classList.remove("blurred");
       loginContainerRef.current.classList.remove("blurred");
       SettingRef.current.classList.remove("blurred");
@@ -240,11 +273,13 @@ export default function MainPage() {
     };
   }, []);
 
+  //프로필 눌렀을때 해당내용뜸
   const showProfileSettings = () => {
     setProfileSetting(profileSetting === 'profile' ? '' : 'profile');
     setModeSetting(''); // 모드 설정 비활성화
   };
 
+  //모드 눌렀을때 해당내용 뜸
   const showModeSettings = () => {
     setModeSetting(modeSetting === 'mode' ? '' : 'mode');
     setProfileSetting(''); // 모드 설정 비활성화
@@ -252,8 +287,6 @@ export default function MainPage() {
 
   //적용하기 버튼 눌렀을때
   const applyButton = () => {
-    // setApplySetting(!applySetting)
-    // console.log('good')
     if (inputValue.trim()) {
       updateUserName();
       setApplySetting(false); // 버튼 비활성화
@@ -298,8 +331,30 @@ export default function MainPage() {
                   <p>이름변경</p>
                   <input value={inputValue}
                     onChange={handleInputChange} type="text" placeholder="이름 입력"/>
+                  <p>프로필 사진</p>
+                  <div className="checkbox-texts">
+                    <input className="checkbox" type="checkbox" id="hideInAlram" name="settings"/>
+                    <label className="checkbox-text" for="hideInAlram" onChange={handleProfileFetchCheck}>연동된 계정에서 불러오기</label>
+                  </div>
+
+                 
+                    
+                  <div className="checkbox-texts">
+                    <input className="checkbox" type="checkbox" id="startWithComputer" name="settings"/>
+                    <label className="checkbox-text" for="startWithComputer">프로필 사진 비우기</label>
+                  </div>
+
+                  /*이코드 어디다 놔야할지모르겟*/
+                  <div className="profile-preview">
+                    {profilePicUrl && <img src={profilePicUrl} alt="Profile Preview" />}
+                  </div> 
+
+                  <div className="profile-see">
+                    <span className="before-see">미리보기</span>
+                  </div>
                 </div>
               )}
+              
 
               {modeSetting === 'mode' && (
                 <div>
