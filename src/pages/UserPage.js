@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import Clock from "../components/Clock.js";
 import Book from "../components/Book";
 import "../styles/userPage.css";
@@ -32,7 +32,7 @@ const UserPage = () => {
 
   // 메인 페이지로 이동하는 함수
   const handleGoHome = () => {
-    navigate("/"); // 메인 페이지로 이동
+    navigate("/mainpage"); // 메인 페이지로 이동
   };
 
   const LeftSettingtoggle = (e) => {
@@ -110,6 +110,7 @@ const UserPage = () => {
         >
           Go to Home
         </button>
+        <Link to={"/mainpage"}>go tp Home</Link>
       </div>
     </div>
   );
