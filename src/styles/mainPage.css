@@ -33,12 +33,12 @@ body {
   transform: translateX(-50%);
   z-index: 1000;
   display: flex;
-  width: 33.85%;
+  min-width: 33.85%;
   align-items: center;
 }
 
 .login-button-guest {
-  width: 33.85%;
+  width: 655px;
   height: 60px;
   background-color: #ffffff;
   border: none;

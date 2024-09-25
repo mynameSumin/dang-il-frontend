@@ -439,7 +439,7 @@ body {
 .messages {
   position: absolute;
   width: 86%;
-  height: 68%;
+  height: 70%;
   padding: 8px;
   overflow-y: scroll;
   margin: 0 10px 20px 10px;
@@ -458,6 +458,7 @@ body {
   border-radius: 30px;
   padding: 8px 10px;
   margin-bottom: 10px;
+  cursor: pointer;
   max-width: 100%;
   color: #6b78a9;
   font-size: small;
@@ -547,14 +548,29 @@ input[type="search"]::-webkit-search-cancel-button {
 .friend-invitation-list {
   overflow-y: scroll;
   bottom: 70px;
-  height: 17%;
+  height: fit-content;
+  margin-bottom: 10px;
+}
+/* 초대받은 친구 칸 */
+.friend-invitation-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.select-btn {
+  margin: 8px;
+  width: 10px;
+  border: none;
+  background-color: transparent;
 }
 
 /* 친구 추가 창 */
 .add-friend-window {
   position: fixed;
   width: 15.7%;
-  height: 16.6%;
+  min-height: 16.6%;
   border-radius: 23px;
   background: #fff;
   box-shadow: 0px 4px 40px 0px rgba(0, 6, 60, 0.3);
@@ -579,10 +595,26 @@ input[type="search"]::-webkit-search-cancel-button {
   margin: 8px auto;
 }
 
-.tag-friend {
+.tag-friend-container {
   width: 85%;
   margin: 8px auto;
   border-top: 2px #6f7fb54d solid;
+}
+
+.tag-friend {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-by-tag {
+  width: 20px;
+  height: 20px;
+}
+
+#tag-friend-user {
+  margin-left: 0;
 }
 
 .placeholder {

@@ -9,12 +9,20 @@ import { useCookies } from "react-cookie";
 import alram from "../assets/alram.png";
 import close from "../assets/close.png";
 import addFriend from "../assets/addFriend.png";
-import search from "../assets/search.png";
+import searchBtn from "../assets/search.png";
+import addByTag from "../assets/addByTag.png";
+import check from "../assets/check.png";
+import reject from "../assets/reject.png";
+import {
+  getUserDataAfterLogin,
+  handleLogout,
+  searchFriend,
+  inviteFriend,
+} from "../utils/data";
 
 export default function MainPage() {
   const navigate = useNavigate();
   const loginContainerRef = useRef(null);
-  const userName = null;
   const [cookies] = useCookies(["session_id"]);
 
   //사용자 정보 관련
@@ -50,48 +58,16 @@ export default function MainPage() {
   const [filter, setFilter] = useState("");
   const [tag, setTag] = useState("");
   const [messages, setMessages] = useState([]);
+  const [search, setSearch] = useState(null);
 
   const filteredUsers = friendData.filter((user) =>
     user.name.toLowerCase().includes(filter.toLowerCase())
   );
 
-  //로그인을 했을 경우 사용자 위주로 보여줄 정보 가져오기
-  const getUserDataAfterLogin = async () => {
-    try {
-      // Fetch 요청
-      const response = await fetch("https://dangil-artisticsw.site/mainpage", {
-        method: "GET",
-        credentials: "include", // 쿠키 포함
-        headers: {
-          Cookie: "session_id=" + cookies.session_id,
-        },
-      });
-
-      // 응답 확인
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // 응답 데이터를 JSON으로 변환
-      const fetchedData = await response.json();
-      console.log(fetchedData);
-
-      // 데이터 추출
-      const fetchedUserData = fetchedData.data.user_data.my_data;
-      const friendData = fetchedData.data.user_data.friend_data;
-      const unknownData = fetchedData.data.user_data.unknown_user_data;
-
-      // 필요한 데이터를 반환
-      return [fetchedUserData, friendData, unknownData];
-    } catch (error) {
-      console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
-    }
-  };
-
   // 함수 호출 시 데이터를 가져와 처리하는 예시
   const fetchData = async () => {
     const [fetchedUserData, friendData, unknownData] =
-      await getUserDataAfterLogin();
+      await getUserDataAfterLogin(cookies);
     const allDataArray = [];
 
     if (fetchedUserData) {
@@ -124,24 +100,6 @@ export default function MainPage() {
   //두 번 클릭 시 다른 사용자 페이지로 이동
   const handleDoubleClick = (userId) => {
     navigate(`/user/${userId}`);
-  };
-
-  const handleLogout = (e) => {
-    e.stopPropagation(); // 이벤트 전파 방지
-    fetch("https://dangil-artisticsw.site/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) {
-          window.location.href = "/"; // 로그아웃 후 게스트 모드로 이동
-        } else {
-          console.error("Logout failed");
-        }
-      })
-      .catch((error) => {
-        console.error("An error occurred during logout:", error);
-      });
   };
 
   const handleSettings = (e) => {
@@ -477,9 +435,38 @@ export default function MainPage() {
             value={tag}
             onChange={(e) => setTag(e.target.value)}
           />
-          <img className="search-icon" src={search} />
+          <img
+            onClick={async () => {
+              const copy = await searchFriend(tag);
+              console.log(copy);
+              setSearch(copy);
+              console.log("search", search);
+            }}
+            className="search-icon"
+            src={searchBtn}
+          />
         </form>
-        <div className="tag-friend"></div>
+        <div className="tag-friend-container">
+          {search && (
+            <div className="tag-friend">
+              <div
+                key={search[0].id}
+                className="friend-user"
+                id="tag-friend-user"
+              >
+                <FaUserCircle className="user-icon1" />
+                <div>{search[0].name}</div>
+              </div>
+              <img
+                src={addByTag}
+                onClick={() => {
+                  inviteFriend(userData._id, search[0].id);
+                }}
+                className="add-by-tag"
+              />
+            </div>
+          )}
+        </div>
       </div>
       <div className={showFriend ? "window active" : "window"}>
         <img
@@ -497,7 +484,7 @@ export default function MainPage() {
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
             />
-            <img className="search-icon" src={search} />
+            <img className="search-icon" src={searchBtn} />
           </form>
           <img
             onClick={() => {
@@ -515,23 +502,29 @@ export default function MainPage() {
           {messages.map((message) => {
             if (message.source == "/friend/apply") {
               return (
-                <div key={message.data.sender_id} className="friend-user">
-                  <FaUserCircle className="user-icon1" />
-                  <div>{message.data.sender_id}</div>
-                  <button
-                    onClick={() =>
-                      responseToInvitation(false, message.data.sender_id)
-                    }
-                  >
-                    거절
-                  </button>
-                  <button
-                    onClick={() =>
-                      responseToInvitation(true, message.data.sender_id)
-                    }
-                  >
-                    수락
-                  </button>
+                <div className="friend-invitation-container">
+                  <div key={message.data.sender_id} className="friend-user">
+                    <FaUserCircle className="user-icon1" />
+                    <div>{message.data.sender_id}</div>
+                  </div>
+                  <div style={{ marginRight: "23px" }}>
+                    <button
+                      onClick={() =>
+                        responseToInvitation(false, message.data.sender_id)
+                      }
+                      className="select-btn"
+                    >
+                      <img src={reject} />
+                    </button>
+                    <button
+                      onClick={() =>
+                        responseToInvitation(true, message.data.sender_id)
+                      }
+                      className="select-btn"
+                    >
+                      <img src={check} />
+                    </button>
+                  </div>
                 </div>
               );
             }
