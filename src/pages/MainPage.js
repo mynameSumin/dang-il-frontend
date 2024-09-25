@@ -255,9 +255,12 @@ export default function MainPage() {
     eventSource.onmessage = function (event) {
       // 서버로부터 받은 데이터를 파싱
       const data = event.data.replace(/'/g, '"');
-      const receiveData = JSON.parse(data);
+      const correctedData = event.data
+        .replace(/\bTrue\b/g, "true")
+        .replace(/\bFalse\b/g, "false");
+      const receiveData = JSON.parse(correctedData);
       setMessages((prevMessages) => [...prevMessages, receiveData]);
-      console.log(messages);
+      console.log("messages", messages);
       // 'source'와 'data' 필드 사용
       console.log("data:", receiveData);
       console.log("Source:", receiveData.source);
