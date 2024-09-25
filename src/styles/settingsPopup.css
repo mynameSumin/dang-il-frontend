@@ -13,6 +13,15 @@ margin-bottom : 50px;
 padding : 30px;
 }
 
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .settings-header {
     display: flex;
     flex-direction: column;
@@ -59,6 +68,42 @@ padding : 30px;
   margin-bottom: 18px;
   color: #6F7FB5;
   font-weight: bold;
+}
+
+.settings-profile input {
+  margin-bottom: 18px;
+}
+
+.checkbox-texts {
+  display:flex;
+  flex-direction:row;
+  color: #6F7FB5;
+}
+
+.checkbox {
+  box-shadow: 0px 0px 4px 0px rgba(140, 157, 213, 0.60);
+}
+
+.checkbox-text {
+  margin-left : 5px;
+}
+
+.profile-see {
+  width: 130px;
+  height: 130px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  background: #FFF;
+  margin-left: 25px;
+  box-shadow: 0px 0px 4px 0px rgba(140, 157, 213, 0.60);
+  display:flex;
+  justify-content: center;  /* 수평 중앙 */
+  align-items: center;    
+}
+
+.before-see {
+  font-size: 12px;
+  color: rgba(111, 127, 181, 0.50);
 }
 
 .ready-text {
