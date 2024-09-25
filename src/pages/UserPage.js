@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import YouTube from "react-youtube";
 import Clock from "../components/Clock.js";
 import Book from "../components/Book";
 import "../styles/userPage.css";
@@ -32,7 +33,7 @@ const UserPage = () => {
 
   // 메인 페이지로 이동하는 함수
   const handleGoHome = () => {
-    navigate("/mainpage"); // 메인 페이지로 이동
+    navigate(-1);
   };
 
   const LeftSettingtoggle = (e) => {
@@ -62,6 +63,23 @@ const UserPage = () => {
       <img src={stand} id="stand" />
       <Clock userId={userId} /> {/* userId를 Clock에 전달 */}
       <div>
+        <div>클릭</div>
+        <YouTube
+          videoId="SEL82m5Xjiw"
+          opts={{
+            width: "560",
+            height: "315",
+            playerVars: {
+              autoplay: 1, //자동재생 O
+              rel: 0,
+              modestbranding: 1, // 컨트롤 바에 youtube 로고를 표시하지 않음
+            },
+          }}
+          //이벤트 리스너
+          onEnd={(e) => {
+            e.target.stopVideo(0);
+          }}
+        />
         <h2>User Details</h2>
         <p>Name: [User Name]</p>
         <p>Email: [User Email]</p>
