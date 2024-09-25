@@ -139,12 +139,9 @@ export default function MainPage() {
   const updateUserName = async () => {
     const updatedUserData = { ...userData, name: inputValue };
     setUserData(updatedUserData);
-<<<<<<< HEAD
-  
-=======
 
     // 백엔드에 변경 요청
->>>>>>> 0937e18bbce8dd59cf0cfaaaa7c9d750291a4764
+  
     try {
       const response = await fetch(
         "https://dangil-artisticsw.site/updateUserName",
@@ -342,97 +339,58 @@ export default function MainPage() {
           </div>
         </div>
       )}
+
       {showSettings && (
         <div className="settings-popup">
-          <button
-            onClick={() => setShowSettings(false)}
-            className="close-button"
-          >
-            X
-          </button>
-          <div className="setting-profile">
-            <div className="settings-header">
-              <h3>설정</h3>
-              <div className="settings-rowline"></div>
-              <p
-                className={`settings-menu ${
-                  profileSetting === "profile" ? "active" : ""
-                }`}
-                onClick={showProfileSettings}
-              >
-                프로필
-              </p>
-              <p
-                className={`settings-menu ${
-                  modeSetting === "mode" ? "active" : ""
-                }`}
-                onClick={showModeSettings}
-              >
-                모드
-              </p>
-            </div>
-            {profileSetting === "profile" && (
-              <div className="settings-profile">
-                <p>이름변경</p>
-                <input
-                  value={inputValue}
-                  onChange={handleInputChange}
-                  type="text"
-                  placeholder="이름 입력"
-                />
+          <button onClick={() => setShowSettings(false)} className="close-button">X</button>
+            <div className="setting-profile">
+              <div className="settings-header">
+                <h3>설정</h3>
+                <div className="settings-rowline"></div>
+                <p className={`settings-menu ${profileSetting === 'profile' ? "active" : ""}`} onClick={showProfileSettings}>프로필</p>
+                <p className={`settings-menu ${modeSetting=== 'mode' ? "active" : "" }`}onClick={showModeSettings}>모드</p>      
               </div>
-<<<<<<< HEAD
               {profileSetting === 'profile' && (
                 <div className="settings-profile">
                   <p>이름변경</p>
                   <input value={inputValue}
                     onChange={handleInputChange} type="text" placeholder="이름 입력"/>
-                  <p>프로필 사진</p>
+                    <p>프로필 사진</p>
                   <div className="checkbox-texts">
                     <input className="checkbox" type="checkbox" id="hideInAlram" name="settings"/>
                     <label className="checkbox-text" for="hideInAlram" onChange={handleProfileFetchCheck}>연동된 계정에서 불러오기</label>
                   </div>
 
-                 
-                    
                   <div className="checkbox-texts">
                     <input className="checkbox" type="checkbox" id="startWithComputer" name="settings"/>
                     <label className="checkbox-text" for="startWithComputer">프로필 사진 비우기</label>
                   </div>
 
-                  /*이코드 어디다 놔야할지모르겟*/
-                  <div className="profile-preview">
-                    {profilePicUrl && <img src={profilePicUrl} alt="Profile Preview" />}
-                  </div> 
-
                   <div className="profile-see">
-                    <span className="before-see">미리보기</span>
+                    {profilePicUrl ? (
+                      <img src={profilePicUrl} alt="Profile Preview" className="profile-preview-image" />
+                    ) : (
+                      <span className="before-see">미리보기</span>
+                    )}
                   </div>
                 </div>
               )}
-              
-=======
-            )}
->>>>>>> 0937e18bbce8dd59cf0cfaaaa7c9d750291a4764
 
-            {modeSetting === "mode" && (
-              <div>
-                <h2 className="ready-text"> 서비스 준비 중입니다... </h2>
-              </div>
-            )}
-          </div>
+              {modeSetting === 'mode' && (
+                <div>
+                  <h2 className="ready-text"> 서비스 준비 중입니다... </h2>
+                </div>
+              )}
+            </div>
 
-          <div>
-            <p
-              className={`apply-button ${applySetting ? "active" : null}`}
-              onClick={() => applySetting && applyButton()}
-            >
-              적용하기
-            </p>
-          </div>
+            <div>
+              <p className={`apply-button ${applySetting ? "active" : null}`}
+                  onClick={() => applySetting && applyButton()}>
+                    적용하기</p>
+            </div>
         </div>
-      )}
-      ;
+      )};
+
       <div ref={loginContainerRef} className="login-container">
         <button className="login-button-user">
           <FaUserCircle className="user-icon1" />
@@ -501,17 +459,17 @@ export default function MainPage() {
           </div>
         </div>
       </div>
-      <div className={showAlert ? "window active" : "window"}>
+      <div className={showAlert ? "chat-window active" : "chat-window"}>
         <img
-          className="close-icon"
+          class="close-icon"
           src={close}
           onClick={() => {
             setShowAlert(false);
           }}
         />
-        <div className="title-container">
-          <span className="window-title">알림(0)</span>
-          <div className="title"></div>
+        <div class="chat-title-container">
+          <span className="message-num">알림(0)</span>
+          <div class="chat-title"></div>
         </div>
         <div className="messages">
           <div className="message">dangil 님이 친구 요청을 보냈습니다.</div>
