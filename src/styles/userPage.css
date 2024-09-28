@@ -1,7 +1,7 @@
 .settings {
   position: absolute; /* 절대 위치 지정 */
-  bottom: 20px; /* 하단에서 20px 위쪽 */
-  left: 20px; /* 왼쪽에서 20px 오른쪽 */
+  bottom: 5%; /* 하단에서 20px 위쪽 */
+  left: 6%; /* 왼쪽에서 20px 오른쪽 */
   width: 200px;
   height: 50px;
   display: flex;
@@ -66,4 +66,41 @@
   position: fixed;
   bottom: 0;
   left: 6%;
+}
+
+.player {
+  position: fixed;
+  left: 36.5%;
+  bottom: 31.5%;
+  border-radius: 8px;
+}
+.add-color {
+  position: fixed;
+  border-radius: px;
+  width: 25%;
+  height: 24.9%;
+  left: 36.5%;
+  bottom: 31.5%;
+  pointer-events: none;
+  background: linear-gradient(
+    109.77deg,
+    rgba(255, 255, 255, 0.215) 13.1%,
+    rgba(0, 27, 109, 0.43) 86.05%
+  );
+  z-index: 10;
+}
+
+.player-box {
+  position: fixed;
+  width: fit-content;
+  padding-bottom: 200px; /* 4:3 비율을 유지하기 위한 패딩 (3 / 4 = 75%) */
+  height: 0; /* 높이는 padding-bottom으로 결정됨 */
+}
+
+#desktop-bottom {
+  z-index: 1000;
+}
+
+#book1 {
+  opacity: 0;
 }
