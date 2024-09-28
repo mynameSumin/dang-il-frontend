@@ -16,12 +16,14 @@
   position: absolute;
   width: 475px;
   height: 267px;
+  z-index: 1;
 }
 
 .box {
   width: 316px;
   height: 177px;
   position: absolute;
+  z-index: 1;
 }
 
 .user-desk-name {
@@ -37,5 +39,5 @@
 }
 
 #my-name {
-  transform: translateY(200px);
+  z-index: 2;
 }
