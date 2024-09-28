@@ -15,18 +15,22 @@
   }
 
   .book-name-box {
-    width: 79.8%;
-    height:71%;
     display: flex; 
     align-items: center;
-    justify-content: left;
-    margin-top:15px;
-    margin-bottom: 10px;
+    justify-content: center;
+    margin-top:20px;
+    margin-bottom:10px;
   }
 
   .icon-box {
     display: flex;
     align-items: center;
+    position: absolute;
+    left: 0;
+  }
+
+  .icons {
+   width:27x;
   }
 
   .icon-box > * {
@@ -43,29 +47,32 @@
   }
 
   .book-name {
-    font-size:20px;
-    position: absolute;
-    width: 100%;
-    text-align: center; 
-  }
+    cursor: 'text';
+    background-color: #D3DEEE;
+    }
 
   .gray-rowline {
     border-bottom: 2px solid #ccc; /* 회색 구분선 */
     margin-bottom: 15px;
     margin-left:20px;
-    width:1200px;
+    width:97%;
     display:flex;
     justify-content: center;
     
   }
 
   .book-content {
-    margin: 0 auto;
-    width: 1200px;
-    height: 620px;
+    width:97%;
+    height:88%;
     background: #FFFFFF;
     border-radius: 20px;
+    margin : 0 auto;
+  }
 
+  .book-text {
+    width:100%;
+    height:100%;
+    resize:'none'; 
   }
 
   .book-button {
@@ -73,3 +80,35 @@
     height: 40px;
     margin-right: 100px;
   }
+
+  .plus-icon {
+    position: fixed;
+    top:83%;
+    right:2%;
+    cursor: pointer;
+    transform: translateX(500%); /* 초기에는 보이지 않음 */
+  }
+
+  .plus-icon.visible {
+    transform: translateX(0);
+  }
+
+  .side-buttons {
+    position: fixed;
+    top: 83%;
+    right:3.25%;
+    cursor: pointer;
+  }
+  /* .side-button1 {
+    position: fixed;
+    top: 13%;
+    right: 4%;
+    cursor: pointer;
+  }
+
+  .side-Vector {
+    position: fixed;
+    top: 80%;
+    right: 4%;
+    cursor: pointer;
+  } */

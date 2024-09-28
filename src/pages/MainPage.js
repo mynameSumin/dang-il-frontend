@@ -55,6 +55,7 @@ export default function MainPage() {
   const [applySetting, setApplySetting] = useState(false);
   //설정- 프로필사진
   const [profilePicUrl, setProfilePicUrl] = useState("");
+  const [clearProfilePic, setClearProfilePic] = useState(false);
 
   // 친구 관련
   const [filter, setFilter] = useState("");
@@ -120,6 +121,16 @@ export default function MainPage() {
       setProfilePicUrl(data.pictureUrl); // 예상 응답: { pictureUrl: 'url_to_image' }
     } catch (error) {
       console.error("Error fetching profile picture:", error);
+    }
+  };
+
+  //프로필사진 초기화
+  const handleClearProfilePicChange = (event) => {
+    const isChecked = event.target.checked;
+    setClearProfilePic(isChecked);
+    if (isChecked) {
+      // 프로필 사진 URL을 초기화합니다.
+      setProfilePicUrl('');
     }
   };
 
@@ -243,6 +254,11 @@ export default function MainPage() {
   }, []);
 
   useEffect(() => {
+    // 컴포넌트가 마운트될 때 프로필 섹션을 기본적으로 활성화
+    setProfileSetting('profile');
+  }, []);
+
+  useEffect(() => {
     fetchData();
     // SSE 연결 (withCredentials 설정)
     const eventSource = new EventSource(
@@ -255,9 +271,9 @@ export default function MainPage() {
     eventSource.onmessage = function (event) {
       // 서버로부터 받은 데이터를 파싱
       const data = event.data.replace(/'/g, '"');
-      const correctedData = event.data
-        .replace(/\bTrue\b/g, "true")
-        .replace(/\bFalse\b/g, "false");
+      const correctedData = data
+        .replace(/\bTrue\b/g, true)
+        .replace(/\bFalse\b/g, false);
       const receiveData = JSON.parse(correctedData);
       setMessages((prevMessages) => [...prevMessages, receiveData]);
       console.log("messages", messages);
@@ -416,6 +432,7 @@ export default function MainPage() {
                     type="checkbox"
                     id="startWithComputer"
                     name="settings"
+                    onChange={handleClearProfilePicChange}
                   />
                   <label className="checkbox-text" for="startWithComputer">
                     프로필 사진 비우기
@@ -423,7 +440,7 @@ export default function MainPage() {
                 </div>
 
                 <div className="profile-see">
-                  {profilePicUrl ? (
+                  {!clearProfilePic && profilePicUrl ? (
                     <img
                       src={profilePicUrl}
                       alt="Profile Preview"

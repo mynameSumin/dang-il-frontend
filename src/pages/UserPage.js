@@ -13,6 +13,8 @@ const UserPage = () => {
   const maxUserId = 17; // 최대 사용자 ID 설정
   const [isListVisible, setIsListVisible] = useState(false);
   const panelRef = useRef(null);
+  const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
+
 
   // 이전 사용자로 이동하는 함수
   const handlePrevUser = () => {
@@ -65,8 +67,8 @@ const UserPage = () => {
         <h2>User Details</h2>
         <p>Name: [User Name]</p>
         <p>Email: [User Email]</p>
-        <Book />
-        <div className="settings">
+        <Book editBook={editBook} setEditBook={setEditBook} />
+        <div className={`settings ${editBook ? 'hidden' : ''}`}>
           {/* 이전 사용자로 이동하는 버튼, 첫 번째 사용자일 경우 비활성화 */}
           <button
             onClick={handlePrevUser}

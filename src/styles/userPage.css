@@ -11,6 +11,10 @@
   border-radius: 50px;
 }
 
+.settings.hidden {
+  display: none;
+}
+
 .control-button {
   border: none;
   background: transparent;
@@ -67,3 +71,5 @@
   bottom: 0;
   left: 6%;
 }
+
+
