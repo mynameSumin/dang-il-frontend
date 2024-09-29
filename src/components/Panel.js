@@ -40,7 +40,7 @@ const Panel = forwardRef(({mode, isListVisible, LeftSettingtoggle, setIsListVisi
             <div ref={panelRef} className={`list-panel ${isListVisible ? "visible" : ""}`}>
                 <div className='panel-topdiv'>
                 <p className='deskDesign'>데스크 꾸미기</p>
-                <img src={Group43} id="Group43"/>
+                <img src={mode ? Group43 : Group43N} id="Group43"/>
                 </div>
                 <div className="rowline1"></div>
                 <div className="all-tag">
@@ -218,7 +218,7 @@ const Panel = forwardRef(({mode, isListVisible, LeftSettingtoggle, setIsListVisi
             </div>
 
             <div className={`backButton ${isListVisible ? "visible" : ""}`} onClick={backButtonClick}> 
-                <img src={LeftVector} id={LeftVector}/>
+                <img src={LeftVector} style={{ width: '50%', height: '40%' }}/>
             </div>
         </div>
     </div>
