@@ -22,9 +22,23 @@ const Book = ({editBook, setEditBook}) => {
   const [plusButton, setPlusButton] = useState(false);
 
   // 책 클릭시 편집화면 활성화
-  const bookImageClick = (e) => {
+  const bookImageClick = async (e) => {
     e.stopPropagation(); 
     setEditBook(!editBook);
+    try {
+      const response = await fetch("https://dangil-artisticsw.site/space/3661157737", {
+        method: "GET",
+        credentials: "include" // 쿠키 포함 설정
+      });
+
+      const bookNameData = await response.json();
+      const bookNameList = bookNameData.data.user_space_data.book_list;
+      
+      setBookName()
+    } catch (error) {
+      console.error('Error handling the book name:', error);
+    }
+
   };
 
 
@@ -51,29 +65,57 @@ const Book = ({editBook, setEditBook}) => {
     if (bookName === "") return; // bookName이 비어있으면 함수 종료
     if (e.key === 'Enter' || e.key === 'Escape' /*Escape은 Esc를 의미함*/) {
       setNameEditing(false); // 편집 상태 종료
+      // if (빈배열) {
+      //   createBook()
+      // }
+      // else {
+      //   updateBook(bookName, bookText);
+
+      // }
+      // try {
+      //   const response = await fetch("https://dangil-artisticsw.site/book/update", {
+      //     method: "PUT",
+      //     credentials: "include" // 쿠키 포함 설정
+      //   });
   
-      // GET 요청을 보냅니다.
-      try {
-        const response = await fetch("https://dangil-artisticsw.site/space/3661157737", {
-          method: "GET",
-          credentials: "include" // 쿠키 포함 설정
-        });
-  
-        const bookNameData = await response.json();
-        const bookNameList = bookNameData.data.user_space_data.book_list;
+      //   const bookNameData = await response.json();
+      //   const bookNameList = bookNameData.data.user_space_data.book_list;
         
-        if (bookNameList.length === 0){ // bookNameList의 길이 확인
-          createBook(bookName);
-          console.log('처음생성')
-        } else {
-          updateBook(bookName, "설명을 여기에 입력");
-          console.log('이미생성된기록있음')
-        }
-      } catch (error) {
-        console.error('Error handling the book name:', error);
-      }
+      //   if (bookNameList.length === 0){ // bookNameList의 길이 확인
+      //     createBook(bookName);
+      //     console.log('처음생성')
+      //   } else {
+      //     updateBook(bookName, "설명을 여기에 입력");
+      //     console.log('이미생성된기록있음')
+      //   }
+      // } catch (error) {
+      //   console.error('Error handling the book name:', error);
+      // }
     }
   };
+
+  // 책 정보 업데이트
+  const updateBook = async (newTitle, newDescription) => {
+    try {
+      const response = await fetch('https://dangil-artisticsw.site/book/update', {
+        method: 'PUT', // PUT 메소드 사용
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          note_title: bookName, // 기존 제목
+          new_note_title: newTitle, // 새 제목
+          new_note_description: newDescription // 새 설명
+        })
+      });
+      if (!response.ok) throw new Error('Failed to update book');
+      const data = await response.json();
+      console.log('Book updated:', data);
+    } catch (error) {
+      console.error('Failed to update book:', error);
+    }
+  };
+  
   // 책 이름 작성중일때 외부 클릭 차단 및 엔터 & esc로만 입력 완료 설정
   useEffect(() => {
     const handleDocumentClick = (event) => {
@@ -110,25 +152,26 @@ const Book = ({editBook, setEditBook}) => {
       setNoteDescription(newNote);  // 입력 필드 업데이트 (새 줄 추가)
     }
   };
-// 백엔드로 데이터 전송
-const saveNoteDescription = async (description) => {
-  try {
-    const response = await fetch('/book/update', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ new_note_description: description })  // 서버가 기대하는 형식에 맞춰 데이터 전송
-    });
-    if (!response.ok) throw new Error('Failed to save the note description');
-    console.log('Note description saved');
-  } catch (error) {
-    console.error('Error saving note description:', error);
-  }
-};
+  // 백엔드로 데이터 전송
+  const saveNoteDescription = async (description) => {
+    try {
+      const response = await fetch('/book/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ new_note_description: description })  // 서버가 기대하는 형식에 맞춰 데이터 전송
+      });
+      if (!response.ok) throw new Error('Failed to save the note description');
+      console.log('Note description saved');
+    } catch (error) {
+      console.error('Error saving note description:', error);
+    }
+  };
 
   const plusMenu = () => {
     setPlusButton(!plusButton);
   }
 
+  // 책편집화면 외부 클릭하면 책편집화면 사라짐
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (bookRef.current && !bookRef.current.contains(event.target)) {
@@ -143,27 +186,7 @@ const saveNoteDescription = async (description) => {
     };
   }, []);
 
-  // 책 정보 업데이트
-  const updateBook = async (newTitle, newDescription) => {
-    try {
-      const response = await fetch('/book/update', {
-        method: 'PUT', // PUT 메소드 사용
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          note_title: bookName, // 기존 제목
-          new_note_title: newTitle, // 새 제목
-          new_note_description: newDescription // 새 설명
-        })
-      });
-      if (!response.ok) throw new Error('Failed to update book');
-      const data = await response.json();
-      console.log('Book updated:', data);
-    } catch (error) {
-      console.error('Failed to update book:', error);
-    }
-  };
+  
   
   //책 생성시 백엔드에 저장
   const createBook = async (title) => {
@@ -204,7 +227,6 @@ const saveNoteDescription = async (description) => {
                 {NameEditing ? (
                   <input
                     ref={inputRef}  
-                    style={{textAlign:'center',  fontSize:'20px'}}
                     type="text"
                     value={bookName}
                     onChange={bookNameChange}
