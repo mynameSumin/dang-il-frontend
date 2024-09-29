@@ -38,7 +38,7 @@
     position: fixed;
     left: 1%;
     top: 2%;
-    width: 16.7%; /* 전체 화면의 1/5 크기 */
+    width: 16.7%; 
     height: 91%;
     background-color: #f8f9fa;
     box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
@@ -129,9 +129,16 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width:100%;
+    height: 100%;
   
   }
-  
+
+  /* .panel-textbox2 {
+    width: 80%;
+    height: 50%
+  }
+   */
   .panel-text {
     color: #6F7FB5;
     font-family: Roboto;
@@ -141,6 +148,7 @@
     line-height: normal;
     margin-bottom: 4px;
   }
+
 
   .panel-box {
     width: 134px;

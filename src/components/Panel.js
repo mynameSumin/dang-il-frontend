@@ -62,76 +62,76 @@ const Panel = forwardRef(({mode, isListVisible, LeftSettingtoggle, setIsListVisi
                 <div className='default-panel-design'>
                     <p className='all-items'>모든 아이템(9)</p>
                     <div className="panel-textbox">
-                    <div>
-                        <p className="panel-text">모던한 커텐</p>
-                        <div className="panel-box">
-                        {/*여기에 이미지 들어가야함*/}
+                        <div className="panel-textbox2">
+                            <p className="panel-text">모던한 커텐</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
                         </div>
-                    </div>
-    
-                    <div>
-                        <p className="panel-text">블라인드 커텐</p>
-                        <div className="panel-box">
-                        {/*여기에 이미지 들어가야함*/}
+        
+                        <div className="panel-textbox2">
+                            <p className="panel-text">블라인드 커텐</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
                         </div>
-                    </div>
                     </div>
     
                     <div className="panel-textbox">
-                    <div>
-                        <p className="panel-text">모던한 벽지</p>
-                        <div className="panel-box">
-                        {/*여기에 이미지 들어가야함*/}
+                        <div className="panel-textbox2">
+                            <p className="panel-text">모던한 벽지</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
                         </div>
-                    </div>
     
-                    <div>
-                        <p className="panel-text">별이 쏟아지는 벽지</p>
-                        <div className="panel-box">
-                        {/*여기에 이미지 들어가야함*/}
+                        <div className="panel-textbox2">
+                            <p className="panel-text">별이 쏟아지는 벽지</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
                         </div>
-                    </div>
-                    </div>
-    
-                    <div className="panel-textbox">
-                    <div>
-                        <p className="panel-text">모던한 게시판</p>
-                        <div className="panel-box">
-                        {/*여기에 이미지 들어가야함*/}
-                        </div>
-                    </div>
-    
-                    <div>
-                        <p className="panel-text">마구잡이 게시판</p>
-                        <div className="panel-box">
-                        {/*여기에 이미지 들어가야함*/}
-                        </div>
-                    </div>
                     </div>
     
                     <div className="panel-textbox">
-                    <div>
-                        <p className="panel-text">감성 옐로우 라이트</p>
-                        <div className="panel-box">
-                        {/*여기에 이미지 들어가야함*/}
+                        <div className="panel-textbox2">
+                            <p className="panel-text">모던한 게시판</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
                         </div>
-                    </div>
-    
-                    <div>
-                        <p className="panel-text">집중 화이트 라이트</p>
-                        <div className="panel-box">
-                        {/*여기에 이미지 들어가야함*/}
+        
+                        <div className="panel-textbox2">
+                            <p className="panel-text">마구잡이 게시판</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
                         </div>
-                    </div>
                     </div>
     
                     <div className="panel-textbox">
-                    <div>
-                        <p className="panel-text">총명 블루 라이트</p>
-                        <div className="panel-box">
-                        {/*여기에 이미지 들어가야함*/}
+                        <div className="panel-textbox2">
+                            <p className="panel-text">감성 옐로우 라이트</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
+                        </div>
+        
+                        <div className="panel-textbox2">
+                            <p className="panel-text">집중 화이트 라이트</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
                         </div>
                     </div>
+    
+                    <div className="panel-textbox">
+                        <div className="panel-textbox2">
+                            <p className="panel-text">총명 블루 라이트</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
+                        </div>
                     </div>
                 </div>)}
                 {activeTag === 'curtain' && (
