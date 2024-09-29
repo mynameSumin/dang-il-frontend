@@ -24,6 +24,53 @@ export default function MainPage() {
   const navigate = useNavigate();
   const loginContainerRef = useRef(null);
   const [cookies] = useCookies(["session_id"]);
+  const [mode, setMode] = useState(true);
+
+  // 별 10개를 생성해서 랜덤 위치에 배치하는 함수
+  function createStars() {
+    const starContainer = document.querySelector(".night");
+
+    for (let i = 0; i < 10; i++) {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.classList.add("twinkle");
+
+      // 랜덤 위치 계산 (0 ~ 100%)
+      const randomX = Math.random() * 200;
+      const randomY = Math.random() * 200;
+
+      // 랜덤 크기 설정
+      const randomSize = Math.random() * 5 + 1; // 2px ~ 5px 크기
+
+      // 별의 위치와 크기 설정
+      star.style.left = `${randomX}%`;
+      star.style.top = `${randomY}%`;
+      star.style.width = `${randomSize}px`;
+      star.style.height = `${randomSize}px`;
+
+      // 컨테이너에 별 추가
+      starContainer.appendChild(star);
+
+      star.addEventListener("mousedown", () => {
+        starContainer.classList.add("dragging");
+      });
+    }
+  }
+
+  // 별을 생성하는 로직을 useEffect로 변경
+  useEffect(() => {
+    if (!mode) {
+      // night 모드일 때만 별 생성
+      createStars();
+    }
+  }, [mode]);
+
+  useEffect(() => {
+    if (!mode) {
+      // night 모드일 때만 별 생성
+      createStars();
+    }
+  }, [mode]);
 
   //사용자 정보 관련
   const [userData, setUserData] = useState([{ id: 0, name: "" }]); // 사용자 데이터
@@ -177,24 +224,6 @@ export default function MainPage() {
     }
   };
 
-  const handleLogout = (e) => {
-    e.stopPropagation(); // 이벤트 전파 방지
-    fetch("https://dangil-artisticsw.site/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) {
-          window.location.href = "/"; // 로그아웃 후 게스트 모드로 이동
-        } else {
-          console.error("Logout failed");
-        }
-      })
-      .catch((error) => {
-        console.error("An error occurred during logout:", error);
-      });
-  };
-
   const handleSettings = (e) => {
     e.stopPropagation(); // 이벤트 전파 방지
     setShowSettings(!showSettings); // 설정 팝업 상태를 true로 설정하여 팝업 표시
@@ -297,6 +326,13 @@ export default function MainPage() {
 
   useEffect(() => {
     console.log("messages", messages);
+    if (
+      messages.length !== 0 &&
+      messages[messages.length - 1].message ==
+        "Friend request accepted successfully"
+    ) {
+      setFriendData((prevData) => [...prevData, { _id: "test", name: "test" }]);
+    }
   }, [messages]);
 
   //로그인 완료 모달이 뜰 경우 배경 블러처리
@@ -351,12 +387,21 @@ export default function MainPage() {
   };
 
   return (
-    <div>
+    <div className={mode ? "day" : "night"}>
       <DeskField
+        mode={mode}
         userData={allData ? allData : [{ id: 0, name: "sumin" }]}
         fieldRef={fieldRef}
         onDoubleClick={handleDoubleClick}
       />
+      <button
+        onClick={() => {
+          setMode(!mode);
+        }}
+        style={{ position: "fixed", bottom: "100px", top: "10px" }}
+      >
+        낮/밤
+      </button>
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
@@ -663,7 +708,7 @@ export default function MainPage() {
                 <div className="friend-invitation-container">
                   <div key={message.data.sender_id} className="friend-user">
                     <FaUserCircle className="user-icon1" />
-                    <div>{message.data.sender_id}</div>
+                    <div>{message.data.sender_name}</div>
                   </div>
                   <div style={{ marginRight: "23px" }}>
                     <button

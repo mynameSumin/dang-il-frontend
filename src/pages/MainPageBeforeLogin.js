@@ -69,8 +69,9 @@ export default function MainPageBeforeLogin() {
   };
 
   return (
-    <div>
+    <div className="day">
       <DeskField
+        mode="day"
         userData={user}
         fieldRef={fieldRef}
         onDoubleClick={handleDoubleClick}
