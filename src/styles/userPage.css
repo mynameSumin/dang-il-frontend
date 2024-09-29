@@ -64,7 +64,7 @@
 }
 .add-color {
   position: fixed;
-  border-radius: px;
+  border-radius: 10px;
   width: 25%;
   height: 24.9%;
   left: 36.5%;
@@ -267,4 +267,33 @@
 #active-night {
   animation: lightDay 4s ease 1 !important;
   background-size: cover;
+}
+
+/* 유튜브 관련 */
+.change-music {
+  position: fixed;
+  bottom: 35px;
+  right: 150px;
+}
+
+.change-music-window {
+  position: fixed;
+  width: 22%;
+  height: 20%;
+  top: 40%;
+  left: 38%;
+  gap: 0px;
+  border-radius: 23px;
+  opacity: 0px;
+  z-index: 300;
+  background: #ffffff;
+}
+
+.title {
+  color: #6f7fb5;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 21.09px;
+  text-align: left;
 }

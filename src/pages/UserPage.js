@@ -7,6 +7,8 @@ import "../styles/userPage.css";
 import windowFrame from "../assets/windowFrame.png";
 import sun from "../assets/sun.png";
 import moon from "../assets/moon.png";
+import changeMusic from "../assets/chageMusic.png";
+import closeBtn from "../assets/close.png";
 import Panel from "../components/Panel"; // 새로운 컴포넌트 import
 
 const UserPage = () => {
@@ -21,6 +23,7 @@ const UserPage = () => {
   const [animation, setAnimation] = useState(false);
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
   const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
+  const [key, setKey] = useState("bHvT0SNITuU");
 
   // 이전 사용자로 이동하는 함수
   const handlePrevUser = () => {
@@ -36,11 +39,6 @@ const UserPage = () => {
     if (nextId <= maxUserId) {
       navigate(`/user/${nextId}`);
     }
-  };
-
-  // 메인 페이지로 이동하는 함수
-  const handleGoHome = () => {
-    navigate(-1);
   };
 
   const LeftSettingtoggle = (e) => {
@@ -68,10 +66,12 @@ const UserPage = () => {
   return (
     <div className="background">
       <div className="add-color"></div>
+
+      {/* 유튜브 관련 파트 */}
       <div className="player-box">
         <YouTube
           iframeClassName="player"
-          videoId="FSugYv8kmeo"
+          videoId={key}
           opts={{
             width: "25%",
             height: "24.9%",
@@ -81,7 +81,7 @@ const UserPage = () => {
               loop: 1, // 반복재생
               modestbranding: 1, // YouTube 로고 숨김
               mute: 1, // 음소거 (브라우저 자동재생 정책으로 인해 필요)
-              playlist: "hJzDWzEvX5E", // 반복 재생을 위해 playlist에 videoId 추가
+              playlist: "bHvT0SNITuU", // 반복 재생을 위해 playlist에 videoId 추가
             },
           }}
           //이벤트 리스너
@@ -90,7 +90,12 @@ const UserPage = () => {
           }}
         />
       </div>
-
+      <div className="change-music-window">
+        <img src={closeBtn} />
+        <div className="title">유튜브 불러오기</div>
+        <input></input>
+        <div>적용하기</div>
+      </div>
       <div className="settings">
         {/* 이전 사용자로 이동하는 버튼, 첫 번째 사용자일 경우 비활성화 */}
         <button
@@ -107,7 +112,7 @@ const UserPage = () => {
           <span
             className="icon"
             onClick={() => {
-              navigate(-1);
+              navigate("/mainpage");
             }}
           >
             M
@@ -131,7 +136,8 @@ const UserPage = () => {
           <span className="icon">＞</span>
         </button>
       </div>
-
+      {/* 단축 버튼들 */}
+      <img src={changeMusic} className="change-music" />
       <div class="image-container">
         <img src={sun} id="sun" />
         <img src={moon} id="moon" />

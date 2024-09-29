@@ -1,153 +1,155 @@
 .panel-total {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-.night, .night p, .night div {
-    color: #0A266E;
+.night,
+.night p,
+.night div {
+  color: #0a266e;
 }
 
 .night .design-tag.active {
-    background: #0A266E;
-    color: white; /* 텍스트 색상을 흰색으로 변경 (선택 사항) */
+  background: #0a266e;
+  color: white; /* 텍스트 색상을 흰색으로 변경 (선택 사항) */
 }
 
 .backButton {
-    position: fixed;
-    left: 21%;
-    bottom: 5%;
-    width: 60px;
-    height: 60px;
-    border-radius: 50px;    
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor : pointer;
-    transition: transform 0.3s ease;
-    transform: translateX(-700%);
+  position: fixed;
+  left: 21%;
+  bottom: 5%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  transform: translateX(-700%);
 }
 
 .backButton.visible {
-    transform: translateX(0);
+  transform: translateX(0);
 }
 
-
 .list-panel {
-    position: fixed;
-    left: 1%;
-    top: 2%;
-    width: 16.7%; /* 전체 화면의 1/5 크기 */
-    height: 91%;
-    background-color: #f8f9fa;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.70);
-    backdrop-filter: blur(15px);
-    padding:20px;
-    transition: transform 0.3s ease;
-    transform: translateX(-200%); /* 초기에는 보이지 않음 */
-  }
-  
-  .list-panel.visible {
-    transform: translateX(0); /* 화면에 나타남 */
-  }
-  .panel-topdiv {
-    display: flex;
-    flex-direction: row;
-  }
-  .panel-topdiv p {
-    margin-right: 5px;
-  }
-  
-  .deskDesign {
-    color: #6F7FB5;
-    font-family: Roboto;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;  
-  }
-  
-  #Group43 {
-    height: 17px;
-    margin-top: 7px;
-  }
-  
-  .rowline1 {
-    border-bottom: 2px solid #ccc; /* 회색 구분선 */
-    margin-top: 10px;
-    width:100%;
-    display:flex;
-    justify-content: center;
-  }
-  
-  .all-tag {
-    display: flex;
-    flex-direction: row;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    justify-content: space-between;
-  }
-  
-  .design-tag {
-    padding: 8px 10px;
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .design-tag.active {
-    background-color: #6F7FB5;
-  }
-  
-  .design-tag p.active{
-    color: white;
-  }
-  
-  .design-tag p{
-    color: #6F7FB5;
-    font-size: 15px;
-    font-weight: 500;
-  }
-  
-  .all-items {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    color: #6F7FB5;
-    font-family: Roboto;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-  }
+  position: fixed;
+  left: 1%;
+  top: 2%;
+  width: 17%; /* 전체 화면의 1/5 크기 */
+  min-height: 91%;
+  background-color: #f8f9fa;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(15px);
+  padding: 20px;
+  transition: transform 0.3s ease;
+  transform: translateX(-200%); /* 초기에는 보이지 않음 */
+}
 
-  .panel-textbox {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  
-  }
-  
-  .panel-text {
-    color: #6F7FB5;
-    font-family: Roboto;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    margin-bottom: 4px;
-  }
+.list-panel.visible {
+  transform: translateX(0); /* 화면에 나타남 */
+}
+.panel-topdiv {
+  display: flex;
+  flex-direction: row;
+}
+.panel-topdiv p {
+  margin-right: 5px;
+}
 
-  .panel-box {
-    width: 134px;
-    height: 110px;
-    background: #FFF;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 2px 6.2px 0px rgba(140, 157, 213, 0.10);
-  }
+.deskDesign {
+  color: #6f7fb5;
+  font-family: Roboto;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+#Group43 {
+  height: 17px;
+  margin-top: 7px;
+}
+
+.rowline1 {
+  border-bottom: 2px solid #ccc; /* 회색 구분선 */
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.all-tag {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.design-tag {
+  padding: 8px 10px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.design-tag.active {
+  background-color: #6f7fb5;
+}
+
+.design-tag p.active {
+  color: white;
+}
+
+.design-tag p {
+  color: #6f7fb5;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.all-items {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #6f7fb5;
+  font-family: Roboto;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.panel-textbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-height: fit-content;
+  padding: 0 10px;
+}
+
+.panel-text {
+  color: #6f7fb5;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 4px;
+}
+
+.panel-box {
+  width: 100px;
+  min-height: 95px;
+  background: #fff;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 6.2px 0px rgba(140, 157, 213, 0.1);
+}
