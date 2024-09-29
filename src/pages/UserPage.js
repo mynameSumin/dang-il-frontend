@@ -65,13 +65,24 @@ const UserPage = () => {
     };
   }, []);
 
+  //tag 관련 
   const [activeTag, setActiveTag] = useState('');
+  const [defaultTag, setdefaultTag] = useState(true);
 
   const TagClick = (tag) => {
     setActiveTag(tag);
+    setdefaultTag(false);
   };
-
-
+  
+  // 패널이 열릴 때 초기 상태로 리셋
+  useEffect(() => {
+    if (isListVisible) {
+      setdefaultTag(true);
+      setActiveTag('');
+    }
+  }, [isListVisible]); 
+  
+  
   return (
     <div className="background">
       <div className="add-color"></div>
@@ -130,7 +141,83 @@ const UserPage = () => {
             <div className="design-tag" onClick={() => TagClick('lighting')}><p>#조명</p></div>
           </div>
           <div className="rowline1"></div>
-          <p className='all-items'>모든 아이템</p>
+          {defaultTag === true && (
+            <div className='default-panel-design'>
+              <p className='all-items'>모든 아이템(9)</p>
+              <div className="panel-textbox">
+                <div>
+                  <p className="panel-text">모던한 커텐</p>
+                  <div className="panel-box">
+                    {/*여기에 이미지 들어가야함*/}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="panel-text">블라인드 커텐</p>
+                  <div className="panel-box">
+                    {/*여기에 이미지 들어가야함*/}
+                  </div>
+                </div>
+              </div>
+
+              <div className="panel-textbox">
+                <div>
+                  <p className="panel-text">모던한 벽지</p>
+                  <div className="panel-box">
+                    {/*여기에 이미지 들어가야함*/}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="panel-text">별이 쏟아지는 벽지</p>
+                  <div className="panel-box">
+                    {/*여기에 이미지 들어가야함*/}
+                  </div>
+                </div>
+              </div>
+
+              <div className="panel-textbox">
+                <div>
+                  <p className="panel-text">모던한 게시판</p>
+                  <div className="panel-box">
+                    {/*여기에 이미지 들어가야함*/}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="panel-text">마구잡이 게시판</p>
+                  <div className="panel-box">
+                    {/*여기에 이미지 들어가야함*/}
+                  </div>
+                </div>
+              </div>
+
+              <div className="panel-textbox">
+                <div>
+                  <p className="panel-text">감성 옐로우 라이트</p>
+                  <div className="panel-box">
+                    {/*여기에 이미지 들어가야함*/}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="panel-text">집중 화이트 라이트</p>
+                  <div className="panel-box">
+                    {/*여기에 이미지 들어가야함*/}
+                  </div>
+                </div>
+              </div>
+
+              <div className="panel-textbox">
+                <div>
+                  <p className="panel-text">총명 블루 라이트</p>
+                  <div className="panel-box">
+                    {/*여기에 이미지 들어가야함*/}
+                  </div>
+                </div>
+              </div>
+            </div>)}
+
                   {activeTag === 'curtain' && (
                 <div id="curtain">
                   {/* 여기에 커텐 관련 내용 */}
