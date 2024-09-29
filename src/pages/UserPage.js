@@ -17,6 +17,7 @@ const UserPage = () => {
   const [isListVisible, setIsListVisible] = useState(false);
   const panelRef = useRef(null);
   const [mode, setMode] = useState(true);
+  const [click, setClick] = useState(false);
   const [animation, setAnimation] = useState(false);
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
   const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
@@ -103,7 +104,14 @@ const UserPage = () => {
         </button>
         {/* 중간 기능 버튼 */}
         <button className="control-button">
-          <span className="icon">M</span>
+          <span
+            className="icon"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            M
+          </span>
         </button>
         <Panel
           mode={mode}
@@ -130,7 +138,7 @@ const UserPage = () => {
       </div>
       <div
         className={mode ? "day-color" : "night-color"}
-        id={animation ? "active-day" : "active-night"}
+        id={animation ? "active-day" : click ? "active-night" : ""}
       />
       {mode ? (
         <svg
@@ -459,6 +467,7 @@ const UserPage = () => {
               className="stand-head"
               onClick={() => {
                 setAnimation(true);
+                setClick(true);
                 const sun = document.getElementById("sun");
                 const moon = document.getElementById("moon");
                 sun.classList.remove("night-day");
