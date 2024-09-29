@@ -107,7 +107,12 @@ const UserPage = () => {
         <button className="control-button">
           <span className="icon">M</span>
         </button>
-        <Panel isListVisible={isListVisible} LeftSettingtoggle={LeftSettingtoggle} />
+        <Panel 
+        mode={mode}
+        ref={panelRef} 
+        isListVisible={isListVisible} 
+        setIsListVisible={setIsListVisible}
+        LeftSettingtoggle={LeftSettingtoggle} />
 
         <button
           onClick={handleNextUser}

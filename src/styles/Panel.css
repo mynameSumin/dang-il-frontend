@@ -1,3 +1,38 @@
+.panel-total {
+    display: flex;
+    flex-direction: row;
+}
+
+.night, .night p, .night div {
+    color: #0A266E;
+}
+
+.night .design-tag.active {
+    background: #0A266E;
+    color: white; /* 텍스트 색상을 흰색으로 변경 (선택 사항) */
+}
+
+.backButton {
+    position: fixed;
+    left: 21%;
+    bottom: 5%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;    
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor : pointer;
+    transition: transform 0.3s ease;
+    transform: translateX(-700%);
+}
+
+.backButton.visible {
+    transform: translateX(0);
+}
+
+
 .list-panel {
     position: fixed;
     left: 1%;
@@ -33,15 +68,6 @@
     font-weight: 600;
     line-height: normal;  
   }
-  
-  .deskDesign-n {
-    color: #0A266E;
-    font-family: Roboto;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-    }
   
   #Group43 {
     height: 17px;
@@ -87,21 +113,6 @@
     font-weight: 500;
   }
   
-  .design-tag-n {
-    padding: 8px 10px;
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .design-tag-n p{
-    color: #0A266E;
-    font-size: 15px;
-    font-weight: 500;
-  }
-  
   .all-items {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -112,18 +123,7 @@
     font-weight: 600;
     line-height: normal;
   }
-  
-  .all-items-n {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    color: #0A266E;
-    font-family: Roboto;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-  }
-  
+
   .panel-textbox {
     display: flex;
     flex-direction: row;
@@ -140,17 +140,7 @@
     line-height: normal;
     margin-bottom: 4px;
   }
-  
-  .panel-text-n {
-    color: #0A266E;
-    font-family: Roboto;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    margin-bottom: 4px;
-  }
-  
+
   .panel-box {
     width: 134px;
     height: 110px;
