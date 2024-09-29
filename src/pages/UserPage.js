@@ -16,8 +16,8 @@ const UserPage = () => {
   const maxUserId = 17; // 최대 사용자 ID 설정
   const [isListVisible, setIsListVisible] = useState(false);
   const panelRef = useRef(null);
-  const [click, setClick] = useState(true);
   const [mode, setMode] = useState(true);
+  const [animation, setAnimation] = useState(false);
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
 
   // 이전 사용자로 이동하는 함수
@@ -64,93 +64,6 @@ const UserPage = () => {
   }, []);
 
   return (
-    // <div className="background">
-    //   <img src={stand} id="stand" />
-    //   <Clock userId={userId} /> {/* userId를 Clock에 전달 */}
-    //   <div>
-    //     <div>클릭</div>
-    //     <YouTube
-    //       videoId="SEL82m5Xjiw"
-    //       opts={{
-    //         width: "560",
-    //         height: "315",
-    //         playerVars: {
-    //           autoplay: 1, //자동재생 O
-    //           rel: 0,
-    //           modestbranding: 1, // 컨트롤 바에 youtube 로고를 표시하지 않음
-    //         },
-    //       }}
-    //       //이벤트 리스너
-    //       onEnd={(e) => {
-    //         e.target.stopVideo(0);
-    //       }}
-    //     />
-    //     <h2>User Details</h2>
-    //     <p>Name: [User Name]</p>
-    //     <p>Email: [User Email]</p>
-    //     <Book editBook={editBook} setEditBook={setEditBook} />
-    // <div className={`settings ${editBook ? 'hidden' : ''}`}>
-    // {/* 이전 사용자로 이동하는 버튼, 첫 번째 사용자일 경우 비활성화 */}
-    // <button
-    //   onClick={handlePrevUser}
-    //   disabled={parseInt(userId) === minUserId}
-    //   className={`control-button ${
-    //     parseInt(userId) === minUserId ? "invisible" : ""
-    //   }`}
-    // >
-    //   <span className="icon">＜</span>
-    // </button>
-    // {/* 중간 기능 버튼 */}
-    // <button className="control-button">
-    //   <span className="icon">M</span>
-    // </button>
-    // <div className="settings">
-    //   {/* 이전 사용자로 이동하는 버튼, 첫 번째 사용자일 경우 비활성화 */}
-    //   <button
-    //     onClick={handlePrevUser}
-    //     disabled={parseInt(userId) === minUserId}
-    //     className={`control-button ${
-    //       parseInt(userId) === minUserId ? "invisible" : ""
-    //     }`}
-    //   >
-    //     <span className="icon">＜</span>
-    //   </button>
-    //   {/* 중간 기능 버튼 */}
-    //   <button className="control-button">
-    //     <span className="icon">M</span>
-    //   </button>
-
-    //   <div
-    //     ref={panelRef}
-    //     className={`list-panel ${isListVisible ? "visible" : ""}`}
-    //   >
-    //     <button>메모</button>
-    //     <button>스탠드</button>
-    //     <button>책</button>
-    //   </div>
-    //   <FiEdit onClick={LeftSettingtoggle} style={{ cursor: "pointer" }} />
-
-    //   <button
-    //     onClick={handleNextUser}
-    //     disabled={parseInt(userId) === maxUserId}
-    //     className={`control-button ${
-    //       parseInt(userId) === maxUserId ? "invisible" : ""
-    //     }`}
-    //   >
-    //     <span className="icon">＞</span>
-    //   </button>
-    // </div>
-    //     {/* 메인 페이지로 이동하는 버튼 */}
-    //     <button
-    //       onClick={handleGoHome}
-    //       className="home-button"
-    //       style={{ marginTop: "30px" }}
-    //     >
-    //       Go to Home
-    //     </button>
-    //     <Link to={"/mainpage"}>go tp Home</Link>
-    //   </div>
-    // </div>
     <div className="background">
       <div className="add-color"></div>
       <div className="player-box">
@@ -223,9 +136,12 @@ const UserPage = () => {
         <img src={sun} id="sun" />
         <img src={moon} id="moon" />
       </div>
+      <div
+        className={mode ? "day-color" : "night-color"}
+        id={animation ? "active-day" : "active-night"}
+      />
       {mode ? (
         <svg
-          className="day"
           width="100%"
           height="100%"
           viewBox="0 0 1916 1080"
@@ -548,13 +464,19 @@ const UserPage = () => {
               fill="white"
             />
             <path
-              id="stand-head"
+              className="stand-head"
               onClick={() => {
-                setClick(false);
-                // setTimeout(() => {
-                //   setMode(!mode);
-                // }, 3000);
-                setMode(!mode);
+                setAnimation(true);
+                const sun = document.getElementById("sun");
+                const moon = document.getElementById("moon");
+                sun.classList.remove("night-day");
+                moon.classList.remove("night-day");
+                sun.classList.add("animate");
+                moon.classList.add("animate");
+
+                setTimeout(() => {
+                  setMode(!mode);
+                }, 3950);
               }}
               fill-rule="evenodd"
               clipRule="evenodd"
@@ -1477,8 +1399,18 @@ const UserPage = () => {
             <path
               fill-rule="evenodd"
               clipRule="evenodd"
+              className="stand-head"
               onClick={() => {
-                setMode(!mode);
+                setAnimation(false);
+                const sun = document.getElementById("sun");
+                const moon = document.getElementById("moon");
+                sun.classList.remove("animate");
+                moon.classList.remove("animate");
+                sun.classList.add("night-day");
+                moon.classList.add("night-day");
+                setTimeout(() => {
+                  setMode(!mode);
+                }, 1300);
               }}
               d="M264.361 265.024C258.23 279.246 259.056 322.299 277.422 353.118L309.023 314.232L340.623 275.347L340.623 275.347L372.006 236.728L404.093 197.245C370.05 185.717 327.418 194.106 314.606 203.195L288.937 234.781L288.938 234.781L264.361 265.024Z"
               fill="#100C0A"
@@ -1874,12 +1806,14 @@ const UserPage = () => {
             />
             <g filter="url(#filter1_f_2072_1393)">
               <path
+                style={{ visibility: animation ? "visible" : "hidden" }}
                 d="M493.457 922.229L275.599 352.991L401.544 197.014L1918.73 922.229H493.457Z"
                 fill="url(#paint13_linear_2072_1393)"
                 fillOpacity="0.5"
               />
             </g>
             <path
+              style={{ visibility: animation ? "visible" : "hidden" }}
               d="M495.694 922.229L277.835 352.991L403.78 197.014L1920.96 922.229H495.694Z"
               fill="url(#paint14_linear_2072_1393)"
               fillOpacity="0.8"
