@@ -16,10 +16,10 @@
 
 .backButton {
   position: fixed;
-  left: 21%;
-  bottom: 5%;
-  width: 60px;
-  height: 60px;
+  left: 22%;
+  bottom: 3%;
+  width: 45px;
+  height: 45px;
   border-radius: 50px;
   background-color: white;
   display: flex;
@@ -27,7 +27,7 @@
   align-items: center;
   cursor: pointer;
   transition: transform 0.3s ease;
-  transform: translateX(-700%);
+  transform: translateX(-1000%);
 }
 
 .backButton.visible {

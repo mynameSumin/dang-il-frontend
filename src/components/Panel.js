@@ -253,7 +253,7 @@ const Panel = forwardRef(
             className={`backButton ${isListVisible ? "visible" : ""}`}
             onClick={backButtonClick}
           >
-            <img src={LeftVector} id={LeftVector} />
+            <img src={LeftVector} style={{ width: "40%", height: "35%" }} />
           </div>
         </div>
       </div>
