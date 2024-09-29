@@ -4,11 +4,11 @@ import YouTube from "react-youtube";
 import Clock from "../components/Clock.js";
 import Book from "../components/Book";
 import "../styles/userPage.css";
-import { FiEdit } from "react-icons/fi";
 import windowFrame from "../assets/windowFrame.png";
 import sun from "../assets/sun.png";
 import moon from "../assets/moon.png";
-import Group43 from "../assets/Group 43.png";
+import Panel from "../components/Panel"; // 새로운 컴포넌트 import
+
 
 const UserPage = () => {
   const { userId } = useParams(); // URL에서 userId를 받아옴
@@ -20,6 +20,7 @@ const UserPage = () => {
   const [click, setClick] = useState(true);
   const [mode, setMode] = useState(true);
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
+  const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
 
 
   // 이전 사용자로 이동하는 함수
@@ -48,41 +49,23 @@ const UserPage = () => {
     setIsListVisible(!isListVisible);
   };
 
-  useEffect(() => {
-    //화면 바깥 클릭하면 토글 목록 닫힘
-    const handleClickOutside = (event) => {
-      if (panelRef.current && !panelRef.current.contains(event.target)) {
-        setIsListVisible(false); // 패널 외부 클릭 시 패널 숨김
-      }
-    };
+  // useEffect(() => {
+  //   //화면 바깥 클릭하면 토글 목록 닫힘
+  //   const handleClickOutside = (event) => {
+  //     if (panelRef.current && !panelRef.current.contains(event.target)) {
+  //       setIsListVisible(false); // 패널 외부 클릭 시 패널 숨김
+  //     }
+  //   };
 
-    // 전역 클릭 이벤트 등록
-    document.addEventListener("click", handleClickOutside);
+  //   // 전역 클릭 이벤트 등록
+  //   document.addEventListener("click", handleClickOutside);
 
-    //컴포넌트 언마운트 시 이벤트 제거
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  //   //컴포넌트 언마운트 시 이벤트 제거
+  //   return () => {
+  //     document.removeEventListener("click", handleClickOutside);
+  //   };
+  // }, []);
 
-  //tag 관련 
-  const [activeTag, setActiveTag] = useState('');
-  const [defaultTag, setdefaultTag] = useState(true);
-
-  const TagClick = (tag) => {
-    setActiveTag(tag);
-    setdefaultTag(false);
-  };
-  
-  // 패널이 열릴 때 초기 상태로 리셋
-  useEffect(() => {
-    if (isListVisible) {
-      setdefaultTag(true);
-      setActiveTag('');
-    }
-  }, [isListVisible]); 
-  
-  
   return (
     <div className="background">
       <div className="add-color"></div>
@@ -124,136 +107,7 @@ const UserPage = () => {
         <button className="control-button">
           <span className="icon">M</span>
         </button>
-
-        <div
-          ref={panelRef}
-          className={`list-panel ${isListVisible ? "visible" : ""}`}
-        >
-          <div className='panel-topdiv'>
-            <p className='deskDesign'>데스크 꾸미기</p>
-            <img src={Group43} id="Group43"/>
-          </div>
-          <div className="rowline1"></div>
-          <div className="all-tag">
-            <div className="design-tag" onClick={() => TagClick('curtain')}><p>#커텐</p></div>
-            <div className="design-tag" onClick={() => TagClick('wallpaper')}><p>#벽지</p></div>
-            <div className="design-tag" onClick={() => TagClick('board')}><p>#게시판</p></div>
-            <div className="design-tag" onClick={() => TagClick('lighting')}><p>#조명</p></div>
-          </div>
-          <div className="rowline1"></div>
-          {defaultTag === true && (
-            <div className='default-panel-design'>
-              <p className='all-items'>모든 아이템(9)</p>
-              <div className="panel-textbox">
-                <div>
-                  <p className="panel-text">모던한 커텐</p>
-                  <div className="panel-box">
-                    {/*여기에 이미지 들어가야함*/}
-                  </div>
-                </div>
-
-                <div>
-                  <p className="panel-text">블라인드 커텐</p>
-                  <div className="panel-box">
-                    {/*여기에 이미지 들어가야함*/}
-                  </div>
-                </div>
-              </div>
-
-              <div className="panel-textbox">
-                <div>
-                  <p className="panel-text">모던한 벽지</p>
-                  <div className="panel-box">
-                    {/*여기에 이미지 들어가야함*/}
-                  </div>
-                </div>
-
-                <div>
-                  <p className="panel-text">별이 쏟아지는 벽지</p>
-                  <div className="panel-box">
-                    {/*여기에 이미지 들어가야함*/}
-                  </div>
-                </div>
-              </div>
-
-              <div className="panel-textbox">
-                <div>
-                  <p className="panel-text">모던한 게시판</p>
-                  <div className="panel-box">
-                    {/*여기에 이미지 들어가야함*/}
-                  </div>
-                </div>
-
-                <div>
-                  <p className="panel-text">마구잡이 게시판</p>
-                  <div className="panel-box">
-                    {/*여기에 이미지 들어가야함*/}
-                  </div>
-                </div>
-              </div>
-
-              <div className="panel-textbox">
-                <div>
-                  <p className="panel-text">감성 옐로우 라이트</p>
-                  <div className="panel-box">
-                    {/*여기에 이미지 들어가야함*/}
-                  </div>
-                </div>
-
-                <div>
-                  <p className="panel-text">집중 화이트 라이트</p>
-                  <div className="panel-box">
-                    {/*여기에 이미지 들어가야함*/}
-                  </div>
-                </div>
-              </div>
-
-              <div className="panel-textbox">
-                <div>
-                  <p className="panel-text">총명 블루 라이트</p>
-                  <div className="panel-box">
-                    {/*여기에 이미지 들어가야함*/}
-                  </div>
-                </div>
-              </div>
-            </div>)}
-
-                  {activeTag === 'curtain' && (
-                <div id="curtain">
-                  {/* 여기에 커텐 관련 내용 */}
-                  <p>커텐 관련 내용이 표시됩니다.</p>
-                </div>
-              )}
-              {activeTag === 'wallpaper' && (
-                <div id="wallpaper">
-                  {/* 여기에 벽지 관련 내용 */}
-                  <p>벽지 관련 내용이 표시됩니다.</p>
-                </div>
-              )}
-              {activeTag === 'board' && (
-                <div id="board">
-                  {/* 여기에 게시판 관련 내용 */}
-                  <p>게시판 관련 내용이 표시됩니다.</p>
-                </div>
-              )}
-              {activeTag === 'lighting' && (
-                <div id="lighting">
-                  {/* 여기에 조명 관련 내용 */}
-                  <p>조명 관련 내용이 표시됩니다.</p>
-                </div>
-              )}
-          {/* <button>메모</button>
-          <button>스탠드</button>
-          <button>책</button>
-          <button
-            onClick={() => {
-              setMode(!mode);
-            }}
-          >
-            모드변경
-          </button> */}
-        </div>
-        <FiEdit onClick={LeftSettingtoggle} style={{ cursor: "pointer" }} />
+        <Panel isListVisible={isListVisible} LeftSettingtoggle={LeftSettingtoggle} />
 
         <button
           onClick={handleNextUser}
@@ -265,10 +119,12 @@ const UserPage = () => {
           <span className="icon">＞</span>
         </button>
       </div>
+
       <div class="image-container">
         <img src={sun} id="sun" />
         <img src={moon} id="moon" />
       </div>
+
       {mode ? (
         <svg
           className="day"
