@@ -77,10 +77,11 @@
   left: 36.5%;
   bottom: 31.5%;
   border-radius: 8px;
+  z-index: 100;
 }
 .add-color {
   position: fixed;
-  border-radius: px;
+  border-radius: 10px;
   width: 25%;
   height: 24.9%;
   left: 36.5%;
@@ -97,6 +98,7 @@
 .player-box {
   position: fixed;
   width: fit-content;
+
   padding-bottom: 200px; /* 4:3 비율을 유지하기 위한 패딩 (3 / 4 = 75%) */
   height: 0; /* 높이는 padding-bottom으로 결정됨 */
 }
@@ -105,6 +107,54 @@
   z-index: 1000;
 }
 
-#book1 {
-  opacity: 0;
+@keyframes sunSet {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: rotate(20deg) translateY(-400px);
+  }
+}
+
+@keyframes moonRise {
+  0% {
+    transform-box: fill-box;
+    transform: rotate(-40deg) translateY(-200px);
+  }
+  50% {
+  }
+  100% {
+    transform-box: fill-box;
+    opacity: 1;
+    transform: rotate(0deg) translateY(0px);
+  }
+}
+
+#sun {
+  position: relative;
+  top: -100px;
+  z-index: -2;
+  animation: sunSet 6s infinite;
+  transform-box: fill-box;
+  animation-delay: 1s;
+}
+
+#moon {
+  position: relative;
+  top: -70px;
+  left: 100px;
+  z-index: -2;
+  animation: moonRise 4s infinite;
+  animation-delay: 6s;
+}
+
+.image-container {
+  position: fixed;
+  overflow: hidden;
+  width: 500px;
+  height: 490px;
+  top: 72px;
+  right: 62px;
+  z-index: 0;
+  overflow: hidden;
 }

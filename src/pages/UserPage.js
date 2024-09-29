@@ -5,7 +5,9 @@ import Clock from "../components/Clock.js";
 import Book from "../components/Book";
 import "../styles/userPage.css";
 import { FiEdit } from "react-icons/fi";
-import stand from "../assets/stand.png";
+import windowFrame from "../assets/windowFrame.png";
+import sun from "../assets/sun.png";
+import moon from "../assets/moon.png";
 
 const UserPage = () => {
   const { userId } = useParams(); // URL에서 userId를 받아옴
@@ -14,6 +16,7 @@ const UserPage = () => {
   const maxUserId = 17; // 최대 사용자 ID 설정
   const [isListVisible, setIsListVisible] = useState(false);
   const panelRef = useRef(null);
+  const [click, setClick] = useState(true);
   const [mode, setMode] = useState(true);
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
 
@@ -216,11 +219,17 @@ const UserPage = () => {
           <span className="icon">＞</span>
         </button>
       </div>
+      <div class="image-container">
+        <img src={sun} id="sun" />
+        <img src={moon} id="moon" />
+      </div>
       {mode ? (
         <svg
+          className="day"
           width="100%"
           height="100%"
-          viewBox="0 0 1921 1080"
+          viewBox="0 0 1916 1080"
+          preserveAspectRatio="none"
           fill="none"
           preserveAspectRatio="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -440,7 +449,7 @@ const UserPage = () => {
             </g>
             <path
               fill-rule="evenodd"
-              clip-rule="evenodd"
+              clipRule="evenodd"
               d="M1149.16 68.8652H1863.16V734H1149.16V68.8652ZM1519.37 94.5942H1835.54V388.256H1519.37V94.5942ZM1519.37 414.609H1835.54V544.628H1519.37V414.609ZM1493.01 544.628V414.609H1176.78V544.628H1493.01ZM1176.78 570.98H1493.01V708.271H1176.78V570.98ZM1519.37 570.98H1835.54V708.271H1519.37V570.98ZM1493.01 94.5942V388.256H1176.78V94.5942H1493.01Z"
               fill="#808EBD"
             />
@@ -482,7 +491,7 @@ const UserPage = () => {
             />
             <path
               fill-rule="evenodd"
-              clip-rule="evenodd"
+              clipRule="evenodd"
               d="M303.762 562.435H338.929H770.309H805.476V597.602V751.163V786.33V939.892V975.059V1087.98H770.309V975.059H338.929V1087.98H303.762V975.059V939.892V786.33V751.163V597.602V562.435ZM770.309 939.892V786.33H338.929V939.892H770.309ZM770.309 751.163V597.602H338.929V751.163H770.309Z"
               fill="#8095CE"
             />
@@ -540,8 +549,16 @@ const UserPage = () => {
               fill="white"
             />
             <path
+              id="stand-head"
+              onClick={() => {
+                setClick(false);
+                // setTimeout(() => {
+                //   setMode(!mode);
+                // }, 3000);
+                setMode(!mode);
+              }}
               fill-rule="evenodd"
-              clip-rule="evenodd"
+              clipRule="evenodd"
               d="M263.861 265.024C257.73 279.246 258.556 322.299 276.922 353.118L308.523 314.232L340.123 275.347L340.123 275.347L371.506 236.728L403.593 197.245C369.55 185.717 326.918 194.106 314.106 203.195L288.437 234.781L288.438 234.781L263.861 265.024Z"
               fill="url(#paint4_linear_397_66)"
             />
@@ -583,7 +600,7 @@ const UserPage = () => {
             />
             <path
               fill-rule="evenodd"
-              clip-rule="evenodd"
+              clipRule="evenodd"
               d="M1364.56 786.593C1364.56 782.313 1368.03 778.844 1372.3 778.844C1376.58 778.844 1380.05 782.313 1380.05 786.593V871.504C1380.05 875.922 1383.63 879.504 1388.05 879.504L1715.84 879.504C1720.26 879.504 1723.84 875.922 1723.84 871.504V786.593C1723.84 782.313 1727.31 778.844 1731.59 778.844C1735.87 778.844 1739.34 782.313 1739.34 786.593V879.504V881V887C1739.34 891.418 1735.76 895 1731.34 895L1372.3 895C1368.03 895 1364.56 891.531 1364.56 887.252V879.504C1364.56 879.504 1364.56 879.504 1364.56 879.504C1364.56 879.504 1364.56 879.504 1364.56 879.504V786.593Z"
               fill="url(#paint7_linear_397_66)"
             />
@@ -594,21 +611,10 @@ const UserPage = () => {
               height="665.135"
               fill="url(#paint8_linear_397_66)"
             />
-            <g filter="url(#filter1_f_397_66)">
-              <path
-                d="M1256.25 93.292C1256.25 105.979 1258.75 118.542 1263.6 130.263C1268.46 141.984 1275.57 152.635 1284.54 161.606C1293.51 170.577 1304.16 177.693 1315.89 182.548C1327.61 187.403 1340.17 189.902 1352.86 189.902C1365.54 189.902 1378.11 187.403 1389.83 182.548C1401.55 177.693 1412.2 170.577 1421.17 161.606C1430.14 152.635 1437.26 141.984 1442.11 130.263C1446.97 118.542 1449.47 105.979 1449.47 93.292L1352.86 93.292L1256.25 93.292Z"
-                fill="white"
-                fill-opacity="0.5"
-              />
-            </g>
             <path
-              d="M1266.06 93.292C1266.06 104.691 1268.3 115.978 1272.66 126.509C1277.03 137.04 1283.42 146.609 1291.48 154.669C1299.54 162.729 1309.11 169.123 1319.64 173.485C1330.17 177.847 1341.46 180.092 1352.86 180.092C1364.26 180.092 1375.54 177.847 1386.07 173.485C1396.61 169.123 1406.17 162.729 1414.23 154.669C1422.29 146.609 1428.69 137.04 1433.05 126.509C1437.41 115.978 1439.66 104.691 1439.66 93.292L1352.86 93.292L1266.06 93.292Z"
-              fill="white"
-              fill-opacity="0.5"
-            />
-            <path
+              style={{ zIndex: "10" }}
               fill-rule="evenodd"
-              clip-rule="evenodd"
+              clipRule="evenodd"
               d="M1149 67.3652H1863V732.5H1149V67.3652ZM1519.21 93.0942H1835.38V386.756H1519.21V93.0942ZM1519.21 413.109H1835.38V543.128H1519.21V413.109ZM1492.85 543.128V413.109H1176.62V543.128H1492.85ZM1176.62 569.48H1492.85V706.771H1176.62V569.48ZM1519.21 569.48H1835.38V706.771H1519.21V569.48ZM1492.85 93.0942V386.756H1176.62V93.0942H1492.85Z"
               fill="#808EBD"
             />
@@ -863,7 +869,7 @@ const UserPage = () => {
                 d="M703 480H1176V732H703V480Z"
                 fill="white"
                 stroke="#1A1A1A"
-                stroke-width="2"
+                strokeWidth="2"
               />
               <path
                 d="M940 586C928.96 586 920 594.96 920 606C920 617.04 928.96 626 940 626C951.04 626 960 617.04 960 606C960 594.96 951.04 586 940 586ZM940 622C931.18 622 924 614.82 924 606C924 597.18 931.18 590 940 590C948.82 590 956 597.18 956 606C956 614.82 948.82 622 940 622ZM935 615L949 606L935 597V615Z"
@@ -873,7 +879,7 @@ const UserPage = () => {
             <path
               d="M703.233 479H1176.61V732.5H703.233V479Z"
               fill="url(#paint10_linear_397_66)"
-              fill-opacity="0.43"
+              fillOpacity="0.43"
             />
             <rect
               x="494.159"
@@ -911,157 +917,158 @@ const UserPage = () => {
             <path
               d="M1183.62 828.132V811.866L1185.51 810.023L1187.41 811.866V828.132L1185.51 829.975L1183.62 828.132Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1256.89 828.132V811.866L1258.79 810.023L1260.68 811.866V828.132L1258.79 829.975L1256.89 828.132Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1213.27 828.132V811.866L1215.17 810.023L1217.07 811.866V828.132L1215.17 829.975L1213.27 828.132Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1286.55 828.132V811.866L1288.44 810.023L1290.34 811.866V828.132L1288.44 829.975L1286.55 828.132Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1183.62 849.364V833.098L1185.51 831.255L1187.41 833.098V849.364L1185.51 851.207L1183.62 849.364Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1256.89 849.364V833.098L1258.79 831.255L1260.68 833.098V849.364L1258.79 851.207L1256.89 849.364Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1213.27 849.364V833.098L1215.17 831.255L1217.07 833.098V849.364L1215.17 851.207L1213.27 849.364Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1286.55 849.364V833.098L1288.44 831.255L1290.34 833.098V849.364L1288.44 851.207L1286.55 849.364Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1187.87 828.628L1204.14 828.628L1205.98 830.524L1204.14 832.42L1187.87 832.42L1186.03 830.524L1187.87 828.628Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1261.15 828.628L1277.41 828.628L1279.25 830.524L1277.41 832.42L1261.15 832.42L1259.3 830.524L1261.15 828.628Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1217.53 828.628L1233.79 828.628L1235.64 830.524L1233.79 832.42L1217.53 832.42L1215.68 830.524L1217.53 828.628Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1290.8 828.628L1307.07 828.628L1308.91 830.524L1307.07 832.42L1290.8 832.42L1288.96 830.524L1290.8 828.628Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1187.87 807.534L1204.14 807.534L1205.98 809.431L1204.14 811.327L1187.87 811.327L1186.03 809.431L1187.87 807.534Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1261.15 807.534L1277.41 807.534L1279.25 809.431L1277.41 811.327L1261.15 811.327L1259.3 809.431L1261.15 807.534Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1217.53 807.534L1233.79 807.534L1235.64 809.431L1233.79 811.327L1217.53 811.327L1215.68 809.431L1217.53 807.534Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1290.8 807.534L1307.07 807.534L1308.91 809.431L1307.07 811.327L1290.8 811.327L1288.96 809.431L1290.8 807.534Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1249.6 816.455L1249.6 819.53L1247.38 822.177L1245.15 819.53L1245.15 816.455L1247.38 813.808L1249.6 816.455Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1249.6 840.773L1249.6 843.848L1247.38 846.495L1245.15 843.848L1245.15 840.773L1247.38 838.126L1249.6 840.773Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1187.87 849.739L1204.14 849.739L1205.98 851.635L1204.14 853.531L1187.87 853.531L1186.03 851.635L1187.87 849.739Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1261.15 849.739L1277.41 849.739L1279.25 851.635L1277.41 853.531L1261.15 853.531L1259.3 851.635L1261.15 849.739Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1217.53 849.739L1233.79 849.739L1235.64 851.635L1233.79 853.531L1217.53 853.531L1215.68 851.635L1217.53 849.739Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1290.8 849.739L1307.07 849.739L1308.91 851.635L1307.07 853.531L1290.8 853.531L1288.96 851.635L1290.8 849.739Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1204.41 828.132V811.866L1206.31 810.023L1208.2 811.866V828.132L1206.31 829.975L1204.41 828.132Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1277.69 828.132V811.866L1279.58 810.023L1281.48 811.866V828.132L1279.58 829.975L1277.69 828.132Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1234.07 828.132V811.866L1235.96 810.023L1237.86 811.866V828.132L1235.96 829.975L1234.07 828.132Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1307.34 828.132V811.866L1309.24 810.023L1311.13 811.866V828.132L1309.24 829.975L1307.34 828.132Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1204.41 849.364V833.098L1206.31 831.255L1208.2 833.098V849.364L1206.31 851.207L1204.41 849.364Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1277.69 849.364V833.098L1279.58 831.255L1281.48 833.098V849.364L1279.58 851.207L1277.69 849.364Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1234.07 849.364V833.098L1235.96 831.255L1237.86 833.098V849.364L1235.96 851.207L1234.07 849.364Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1307.34 849.364V833.098L1309.24 831.255L1311.13 833.098V849.364L1309.24 851.207L1307.34 849.364Z"
               fill="white"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
+              style={{ pointerEvents: "none" }}
               d="M-31.0439 -32.7485H1948.04L1951.04 1112.75H-28.0439L-31.0439 -32.7485Z"
               fill="url(#paint14_radial_397_66)"
-              fill-opacity="0.2"
+              fillOpacity="0.2"
             />
           </g>
           <defs>
@@ -1072,9 +1079,9 @@ const UserPage = () => {
               width="704.801"
               height="659.028"
               filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
+              colorInterpolationFilters="sRGB"
             >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
               <feBlend
                 mode="normal"
                 in="SourceGraphic"
@@ -1093,9 +1100,9 @@ const UserPage = () => {
               width="233.22"
               height="136.61"
               filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
+              colorInterpolationFilters="sRGB"
             >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
               <feBlend
                 mode="normal"
                 in="SourceGraphic"
@@ -1114,9 +1121,9 @@ const UserPage = () => {
               width="704.8"
               height="659.028"
               filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
+              colorInterpolationFilters="sRGB"
             >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
               <feBlend
                 mode="normal"
                 in="SourceGraphic"
@@ -1135,9 +1142,9 @@ const UserPage = () => {
               width="1466"
               height="66"
               filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
+              colorInterpolationFilters="sRGB"
             >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
               <feBlend
                 mode="normal"
                 in="SourceGraphic"
@@ -1157,8 +1164,8 @@ const UserPage = () => {
               y2="1171.76"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#D8DFF7" />
-              <stop offset="1" stop-color="#9EAFDE" />
+              <stop stopColor="#D8DFF7" />
+              <stop offset="1" stopColor="#9EAFDE" />
             </linearGradient>
             <linearGradient
               id="paint1_linear_397_66"
@@ -1168,8 +1175,8 @@ const UserPage = () => {
               y2="540"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#DBE1F8" />
-              <stop offset="1" stop-color="#9AADDC" />
+              <stop stopColor="#DBE1F8" />
+              <stop offset="1" stopColor="#9AADDC" />
             </linearGradient>
             <linearGradient
               id="paint2_linear_397_66"
@@ -1179,8 +1186,8 @@ const UserPage = () => {
               y2="431.303"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#FDFEFF" />
-              <stop offset="1" stop-color="#CDD6F8" />
+              <stop stopColor="#FDFEFF" />
+              <stop offset="1" stopColor="#CDD6F8" />
             </linearGradient>
             <linearGradient
               id="paint3_linear_397_66"
@@ -1190,8 +1197,8 @@ const UserPage = () => {
               y2="240.127"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#A6B6EC" />
-              <stop offset="1" stop-color="#244C99" />
+              <stop stopColor="#A6B6EC" />
+              <stop offset="1" stopColor="#244C99" />
             </linearGradient>
             <linearGradient
               id="paint4_linear_397_66"
@@ -1201,8 +1208,8 @@ const UserPage = () => {
               y2="357.355"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#3C5CAF" />
-              <stop offset="1" stop-color="#131B45" />
+              <stop stopColor="#3C5CAF" />
+              <stop offset="1" stopColor="#131B45" />
             </linearGradient>
             <linearGradient
               id="paint5_linear_397_66"
@@ -1212,8 +1219,8 @@ const UserPage = () => {
               y2="380.596"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#A7B6F0" />
-              <stop offset="1" stop-color="#748BD5" />
+              <stop stopColor="#A7B6F0" />
+              <stop offset="1" stopColor="#748BD5" />
             </linearGradient>
             <linearGradient
               id="paint6_linear_397_66"
@@ -1223,8 +1230,8 @@ const UserPage = () => {
               y2="116.052"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#A7B6F0" />
-              <stop offset="1" stop-color="#748BD5" />
+              <stop stopColor="#A7B6F0" />
+              <stop offset="1" stopColor="#748BD5" />
             </linearGradient>
             <linearGradient
               id="paint7_linear_397_66"
@@ -1234,8 +1241,8 @@ const UserPage = () => {
               y2="889.941"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#7687C4" />
-              <stop offset="1" stop-color="#334584" />
+              <stop stopColor="#7687C4" />
+              <stop offset="1" stopColor="#334584" />
             </linearGradient>
             <linearGradient
               id="paint8_linear_397_66"
@@ -1245,8 +1252,8 @@ const UserPage = () => {
               y2="732.5"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#EEF4FF" />
-              <stop offset="1" stop-color="#B6C3F4" />
+              <stop stopColor="#EEF4FF" />
+              <stop offset="1" stopColor="#B6C3F4" />
             </linearGradient>
             <linearGradient
               id="paint9_linear_397_66"
@@ -1256,8 +1263,8 @@ const UserPage = () => {
               y2="895"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#9EA5CA" />
-              <stop offset="1" stop-color="#BCC6ED" />
+              <stop stopColor="#9EA5CA" />
+              <stop offset="1" stopColor="#BCC6ED" />
             </linearGradient>
             <linearGradient
               id="paint10_linear_397_66"
@@ -1267,8 +1274,8 @@ const UserPage = () => {
               y2="696.205"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="white" stop-opacity="0.5" />
-              <stop offset="1" stop-color="#001B6D" />
+              <stop stopColor="white" stopOpacity="0.5" />
+              <stop offset="1" stopColor="#001B6D" />
             </linearGradient>
             <linearGradient
               id="paint11_linear_397_66"
@@ -1278,8 +1285,8 @@ const UserPage = () => {
               y2="955.5"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#CAD5FF" />
-              <stop offset="1" stop-color="#172864" />
+              <stop stopColor="#CAD5FF" />
+              <stop offset="1" stopColor="#172864" />
             </linearGradient>
             <linearGradient
               id="paint12_linear_397_66"
@@ -1289,8 +1296,8 @@ const UserPage = () => {
               y2="934.658"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#B2C1E9" />
-              <stop offset="1" stop-color="#4851C1" />
+              <stop stopColor="#B2C1E9" />
+              <stop offset="1" stopColor="#4851C1" />
             </linearGradient>
             <linearGradient
               id="paint13_linear_397_66"
@@ -1300,8 +1307,8 @@ const UserPage = () => {
               y2="867.166"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#414141" />
-              <stop offset="1" stop-color="#010101" />
+              <stop stopColor="#414141" />
+              <stop offset="1" stopColor="#010101" />
             </linearGradient>
             <radialGradient
               id="paint14_radial_397_66"
@@ -1311,8 +1318,8 @@ const UserPage = () => {
               gradientUnits="userSpaceOnUse"
               gradientTransform="translate(988.793 547.363) rotate(90) scale(572.749 989.544)"
             >
-              <stop stop-color="white" stop-opacity="0" />
-              <stop offset="1" stop-color="#3F69F2" />
+              <stop stopColor="white" stopOpacity="0" />
+              <stop offset="1" stopColor="#3F69F2" />
             </radialGradient>
             <clipPath id="clip0_397_66">
               <rect
@@ -1334,8 +1341,9 @@ const UserPage = () => {
         </svg>
       ) : (
         <svg
-          width="1921"
-          height="1080"
+          width="100%"
+          height="100%"
+          preserveAspectRatio="none"
           viewBox="0 0 1921 1080"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -1386,7 +1394,7 @@ const UserPage = () => {
             />
             <path
               fill-rule="evenodd"
-              clip-rule="evenodd"
+              clipRule="evenodd"
               d="M339.429 562.435H770.809H805.976V597.602V751.163V786.33V939.892V975.059V1087.98H770.809V975.059L339.429 975.059V1087.98H304.262V975.059V939.892V786.33V751.163V597.602V562.435L339.429 562.435ZM770.809 939.892V786.33L339.429 786.33V939.892L770.809 939.892ZM770.809 751.163V597.602L339.429 597.602V751.163L770.809 751.163Z"
               fill="#180E2D"
             />
@@ -1419,43 +1427,18 @@ const UserPage = () => {
               />
             </g>
             <path
-              d="M495.694 922.229L277.835 352.991L403.78 197.014L1920.96 922.229H495.694Z"
-              fill="url(#paint3_linear_2072_1393)"
-              fill-opacity="0.8"
-            />
-            <g filter="url(#filter1_f_2072_1393)">
-              <path
-                d="M493.457 922.229L275.599 352.991L401.544 197.014L1918.73 922.229H493.457Z"
-                fill="url(#paint4_linear_2072_1393)"
-                fill-opacity="0.5"
-              />
-            </g>
-            <path
               d="M1149.66 68.8652H1863.66V734H1149.66V68.8652Z"
-              fill="url(#paint5_linear_2072_1393)"
+              fill="url(#paint3_linear_2072_1393)"
             />
             <path
               fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M1851.58 86.292H1805.72L1691.31 86.292C1691.31 101.316 1694.27 116.193 1700.02 130.074C1705.77 143.954 1714.2 156.566 1724.82 167.19C1735.44 177.813 1748.06 186.241 1761.94 191.99C1775.82 197.74 1790.69 200.699 1805.72 200.699C1820.74 200.699 1835.62 197.74 1849.5 191.99C1850.2 191.701 1850.89 191.405 1851.58 191.103V86.292Z"
-              fill="#C8A6C4"
-            />
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              clipRule="evenodd"
               d="M1149.66 68.8652H1863.66V734H1149.66V68.8652ZM1519.87 94.5942H1836.04V388.256H1519.87V94.5942ZM1519.87 414.609H1836.04V544.628H1519.87V414.609ZM1493.51 544.628V414.609H1177.28V544.628H1493.51ZM1177.28 570.98H1493.51V708.271H1177.28V570.98ZM1519.87 570.98H1836.04V708.271H1519.87V570.98ZM1493.51 94.5942V388.256H1177.28V94.5942H1493.51Z"
               fill="#452D67"
             />
-            <g filter="url(#filter2_f_2072_1393)">
-              <path
-                d="M1681.25 94.5652C1681.25 109.573 1684.2 124.434 1689.95 138.299C1695.69 152.164 1704.11 164.763 1714.72 175.375C1725.33 185.987 1737.93 194.405 1751.8 200.148C1765.66 205.891 1780.52 208.847 1795.53 208.847C1810.54 208.847 1825.4 205.891 1839.26 200.148C1853.13 194.405 1846.93 187.985 1846.93 175.375C1846.93 162.765 1846.93 156.246 1846.93 138.299C1846.93 125.513 1846.93 109.573 1846.93 94.5652L1795.53 94.5652L1681.25 94.5652Z"
-                fill="#FFE7E7"
-                fill-opacity="0.5"
-              />
-            </g>
             <path
               d="M494.659 921H1920.66V988H494.659V921Z"
-              fill="url(#paint6_linear_2072_1393)"
+              fill="url(#paint4_linear_2072_1393)"
             />
             <rect
               x="246.944"
@@ -1483,7 +1466,7 @@ const UserPage = () => {
             />
             <path
               d="M315.192 203.018L264.611 265.261L233.875 240.284C216.687 226.316 214.077 201.059 228.045 183.871C242.012 166.683 267.269 164.073 284.457 178.041L315.192 203.018Z"
-              fill="url(#paint7_linear_2072_1393)"
+              fill="url(#paint5_linear_2072_1393)"
             />
             <circle
               cx="333.622"
@@ -1494,7 +1477,10 @@ const UserPage = () => {
             />
             <path
               fill-rule="evenodd"
-              clip-rule="evenodd"
+              clipRule="evenodd"
+              onClick={() => {
+                setMode(!mode);
+              }}
               d="M264.361 265.024C258.23 279.246 259.056 322.299 277.422 353.118L309.023 314.232L340.623 275.347L340.623 275.347L372.006 236.728L404.093 197.245C370.05 185.717 327.418 194.106 314.606 203.195L288.937 234.781L288.938 234.781L264.361 265.024Z"
               fill="#100C0A"
             />
@@ -1627,73 +1613,21 @@ const UserPage = () => {
               height="137.34"
               fill="#170F36"
             />
-            <rect
-              x="665.659"
-              y="463"
-              width="563"
-              height="349"
-              rx="17"
-              fill="#221933"
-            />
-            <path
-              d="M658.659 480C658.659 470.611 666.27 463 675.659 463H1204.66C1214.05 463 1221.66 470.611 1221.66 480V795C1221.66 804.389 1214.05 812 1204.66 812H675.659C666.27 812 658.659 804.389 658.659 795V480Z"
-              fill="#6B5784"
-            />
-            <path
-              d="M665.659 749.77H1228.66V795C1228.66 804.389 1221.05 812 1211.66 812H682.659C673.27 812 665.659 804.389 665.659 795V749.77Z"
-              fill="#5B4865"
-            />
-            <path
-              d="M658.659 749.77H1221.66V795C1221.66 804.389 1214.05 812 1204.66 812H675.659C666.27 812 658.659 804.389 658.659 795V749.77Z"
-              fill="#C7A4B8"
-            />
-            <rect
-              x="887.659"
-              y="812"
-              width="108"
-              height="83"
-              fill="url(#paint8_linear_2072_1393)"
-            />
-            <rect
-              x="995.659"
-              y="812"
-              width="6.61523"
-              height="83"
-              fill="#9090BB"
-            />
             <path
               d="M380.618 377.632C380.618 373.213 384.2 369.632 388.618 369.632H901.576C905.994 369.632 909.576 373.213 909.576 377.632V383.561C909.576 387.979 905.994 391.561 901.576 391.561H388.618C384.2 391.561 380.618 387.979 380.618 383.561V377.632Z"
               fill="#190E38"
             />
-            <g clip-path="url(#clip1_2072_1393)">
-              <rect
-                width="533"
-                height="254"
-                transform="translate(673.659 479)"
-                fill="black"
-              />
-              <path
-                d="M674.659 480H1205.66V732H674.659V480Z"
-                fill="white"
-                stroke="#1A1A1A"
-                stroke-width="2"
-              />
-              <path
-                d="M940.659 586C929.619 586 920.659 594.96 920.659 606C920.659 617.04 929.619 626 940.659 626C951.699 626 960.659 617.04 960.659 606C960.659 594.96 951.699 586 940.659 586ZM940.659 622C931.839 622 924.659 614.82 924.659 606C924.659 597.18 931.839 590 940.659 590C949.479 590 956.659 597.18 956.659 606C956.659 614.82 949.479 622 940.659 622ZM935.659 615L949.659 606L935.659 597V615Z"
-                fill="#1A1A1A"
-              />
-            </g>
             <path
               d="M380.618 102.565C380.618 98.1469 384.2 94.5652 388.618 94.5652H901.576C905.994 94.5652 909.576 98.1469 909.576 102.565V129.539C909.576 133.957 905.994 137.539 901.576 137.539H388.618C384.2 137.539 380.618 133.957 380.618 129.539V102.565Z"
               fill="#190E38"
             />
             <path
               d="M376.395 377.632C376.395 373.213 379.976 369.632 384.395 369.632H897.353C901.771 369.632 905.353 373.213 905.353 377.632V383.561C905.353 387.979 901.771 391.561 897.353 391.561H384.395C379.976 391.561 376.395 387.979 376.395 383.561V377.632Z"
-              fill="url(#paint9_linear_2072_1393)"
+              fill="url(#paint6_linear_2072_1393)"
             />
             <path
               d="M376.395 102.565C376.395 98.1469 379.976 94.5652 384.395 94.5652H897.353C901.771 94.5652 905.353 98.1469 905.353 102.565V129.539C905.353 133.957 901.771 137.539 897.353 137.539H384.395C379.976 137.539 376.395 133.957 376.395 129.539V102.565Z"
-              fill="url(#paint10_linear_2072_1393)"
+              fill="url(#paint7_linear_2072_1393)"
             />
             <path
               d="M448.121 157.963L450.607 151.41H453.284L449.317 160.707L449.308 165.629H446.883L446.874 160.59L442.968 151.41H445.636L448.121 157.963Z"
@@ -1717,175 +1651,239 @@ const UserPage = () => {
             />
             <path
               fill-rule="evenodd"
-              clip-rule="evenodd"
+              clipRule="evenodd"
               d="M1365.06 786.593C1365.06 782.313 1368.53 778.844 1372.8 778.844C1377.08 778.844 1380.55 782.313 1380.55 786.593V871.504C1380.55 875.922 1384.13 879.504 1388.55 879.504L1716.34 879.504C1720.76 879.504 1724.34 875.922 1724.34 871.504V786.593C1724.34 782.313 1727.81 778.844 1732.09 778.844C1736.37 778.844 1739.84 782.313 1739.84 786.593V879.504V881V887C1739.84 891.418 1736.26 895 1731.84 895L1372.8 895C1368.53 895 1365.06 891.531 1365.06 887.252V879.504C1365.06 879.504 1365.06 879.504 1365.06 879.504C1365.06 879.504 1365.06 879.504 1365.06 879.504V786.593Z"
-              fill="url(#paint11_linear_2072_1393)"
+              fill="url(#paint8_linear_2072_1393)"
             />
             <path
               d="M1320.62 790.928L1411.45 839.904L1516.07 895H1320.62V790.928Z"
-              fill="url(#paint12_linear_2072_1393)"
+              fill="url(#paint9_linear_2072_1393)"
             />
+            <rect
+              x="693.492"
+              y="462"
+              width="506.421"
+              height="349"
+              rx="17"
+              fill="#221933"
+            />
+            <path
+              d="M687 479C687 469.611 694.611 462 704 462H1176.18C1185.57 462 1193.18 469.611 1193.18 479V794C1193.18 803.389 1185.57 811 1176.18 811H704C694.611 811 687 803.389 687 794V479Z"
+              fill="#6B5784"
+            />
+            <path
+              d="M693.492 748.77H1199.91V794C1199.91 803.389 1192.3 811 1182.91 811H710.492C701.103 811 693.492 803.389 693.492 794V748.77Z"
+              fill="#5B4865"
+            />
+            <path
+              d="M687 748.77H1193.18V794C1193.18 803.389 1185.57 811 1176.18 811H704C694.611 811 687 803.389 687 794V748.77Z"
+              fill="#C7A4B8"
+            />
+            <rect
+              x="897.387"
+              y="811"
+              width="89.5371"
+              height="83"
+              fill="url(#paint10_linear_2072_1393)"
+            />
+            <rect
+              x="986.924"
+              y="811"
+              width="5.48434"
+              height="83"
+              fill="#5B4865"
+            />
+            <g clip-path="url(#clip1_2072_1393)">
+              <rect
+                width="475"
+                height="254"
+                transform="translate(706 479)"
+                fill="black"
+              />
+              <path
+                d="M707 480H1180V732H707V480Z"
+                fill="white"
+                stroke="#1A1A1A"
+                strokeWidth="2"
+              />
+              <path
+                d="M944 586C932.96 586 924 594.96 924 606C924 617.04 932.96 626 944 626C955.04 626 964 617.04 964 606C964 594.96 955.04 586 944 586ZM944 622C935.18 622 928 614.82 928 606C928 597.18 935.18 590 944 590C952.82 590 960 597.18 960 606C960 614.82 952.82 622 944 622ZM939 615L953 606L939 597V615Z"
+                fill="#1A1A1A"
+              />
+            </g>
             <rect
               x="1148.06"
               y="789.741"
               width="199.641"
               height="105.259"
               rx="37"
-              fill="url(#paint13_linear_2072_1393)"
+              fill="url(#paint11_linear_2072_1393)"
             />
             <path
               d="M1151.87 830.533C1151.87 810.301 1168.27 793.9 1188.5 793.9H1307.25C1327.48 793.9 1343.88 810.301 1343.88 830.533C1343.88 850.765 1327.48 867.166 1307.25 867.166H1188.5C1168.27 867.166 1151.87 850.765 1151.87 830.533Z"
-              fill="url(#paint14_linear_2072_1393)"
+              fill="url(#paint12_linear_2072_1393)"
             />
             <path
               d="M1184.12 828.132V811.866L1186.01 810.023L1187.91 811.866V828.132L1186.01 829.975L1184.12 828.132Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1257.39 828.132V811.866L1259.29 810.023L1261.18 811.866V828.132L1259.29 829.975L1257.39 828.132Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1213.77 828.132V811.866L1215.67 810.023L1217.57 811.866V828.132L1215.67 829.975L1213.77 828.132Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1287.05 828.132V811.866L1288.94 810.023L1290.84 811.866V828.132L1288.94 829.975L1287.05 828.132Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1184.12 849.364V833.098L1186.01 831.255L1187.91 833.098V849.364L1186.01 851.207L1184.12 849.364Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1257.39 849.364V833.098L1259.29 831.255L1261.18 833.098V849.364L1259.29 851.207L1257.39 849.364Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1213.77 849.364V833.098L1215.67 831.255L1217.57 833.098V849.364L1215.67 851.207L1213.77 849.364Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1287.05 849.364V833.098L1288.94 831.255L1290.84 833.098V849.364L1288.94 851.207L1287.05 849.364Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1188.37 828.628L1204.64 828.628L1206.48 830.524L1204.64 832.42L1188.37 832.42L1186.53 830.524L1188.37 828.628Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1261.65 828.628L1277.91 828.628L1279.75 830.524L1277.91 832.42L1261.65 832.42L1259.8 830.524L1261.65 828.628Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1218.03 828.628L1234.29 828.628L1236.14 830.524L1234.29 832.42L1218.03 832.42L1216.18 830.524L1218.03 828.628Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1291.3 828.628L1307.57 828.628L1309.41 830.524L1307.57 832.42L1291.3 832.42L1289.46 830.524L1291.3 828.628Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1188.37 807.534L1204.64 807.534L1206.48 809.431L1204.64 811.327L1188.37 811.327L1186.53 809.431L1188.37 807.534Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1261.65 807.534L1277.91 807.534L1279.75 809.431L1277.91 811.327L1261.65 811.327L1259.8 809.431L1261.65 807.534Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1218.03 807.534L1234.29 807.534L1236.14 809.431L1234.29 811.327L1218.03 811.327L1216.18 809.431L1218.03 807.534Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1291.3 807.534L1307.57 807.534L1309.41 809.431L1307.57 811.327L1291.3 811.327L1289.46 809.431L1291.3 807.534Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1250.1 816.455L1250.1 819.53L1247.88 822.177L1245.65 819.53L1245.65 816.455L1247.88 813.808L1250.1 816.455Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1250.1 840.773L1250.1 843.848L1247.88 846.495L1245.65 843.848L1245.65 840.773L1247.88 838.126L1250.1 840.773Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1188.37 849.739L1204.64 849.739L1206.48 851.635L1204.64 853.531L1188.37 853.531L1186.53 851.635L1188.37 849.739Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1261.65 849.739L1277.91 849.739L1279.75 851.635L1277.91 853.531L1261.65 853.531L1259.8 851.635L1261.65 849.739Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1218.03 849.739L1234.29 849.739L1236.14 851.635L1234.29 853.531L1218.03 853.531L1216.18 851.635L1218.03 849.739Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1291.3 849.739L1307.57 849.739L1309.41 851.635L1307.57 853.531L1291.3 853.531L1289.46 851.635L1291.3 849.739Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1204.91 828.132V811.866L1206.81 810.023L1208.7 811.866V828.132L1206.81 829.975L1204.91 828.132Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1278.19 828.132V811.866L1280.08 810.023L1281.98 811.866V828.132L1280.08 829.975L1278.19 828.132Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1234.57 828.132V811.866L1236.46 810.023L1238.36 811.866V828.132L1236.46 829.975L1234.57 828.132Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1307.84 828.132V811.866L1309.74 810.023L1311.63 811.866V828.132L1309.74 829.975L1307.84 828.132Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1204.91 849.364V833.098L1206.81 831.255L1208.7 833.098V849.364L1206.81 851.207L1204.91 849.364Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1278.19 849.364V833.098L1280.08 831.255L1281.98 833.098V849.364L1280.08 851.207L1278.19 849.364Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1234.57 849.364V833.098L1236.46 831.255L1238.36 833.098V849.364L1236.46 851.207L1234.57 849.364Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
             />
             <path
               d="M1307.84 849.364V833.098L1309.74 831.255L1311.63 833.098V849.364L1309.74 851.207L1307.84 849.364Z"
               fill="#FFE8E2"
-              fill-opacity="0.3"
+              fillOpacity="0.3"
+            />
+            <g filter="url(#filter1_f_2072_1393)">
+              <path
+                d="M493.457 922.229L275.599 352.991L401.544 197.014L1918.73 922.229H493.457Z"
+                fill="url(#paint13_linear_2072_1393)"
+                fillOpacity="0.5"
+              />
+            </g>
+            <path
+              d="M495.694 922.229L277.835 352.991L403.78 197.014L1920.96 922.229H495.694Z"
+              fill="url(#paint14_linear_2072_1393)"
+              fillOpacity="0.8"
             />
           </g>
           <defs>
@@ -1896,9 +1894,9 @@ const UserPage = () => {
               width="1466"
               height="66"
               filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
+              colorInterpolationFilters="sRGB"
             >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
               <feBlend
                 mode="normal"
                 in="SourceGraphic"
@@ -1917,9 +1915,9 @@ const UserPage = () => {
               width="1782.13"
               height="864.215"
               filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
+              colorInterpolationFilters="sRGB"
             >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
               <feBlend
                 mode="normal"
                 in="SourceGraphic"
@@ -1931,27 +1929,6 @@ const UserPage = () => {
                 result="effect1_foregroundBlur_2072_1393"
               />
             </filter>
-            <filter
-              id="filter2_f_2072_1393"
-              x="1661.25"
-              y="74.5652"
-              width="207.061"
-              height="154.282"
-              filterUnits="userSpaceOnUse"
-              color-interpolation-filters="sRGB"
-            >
-              <feFlood flood-opacity="0" result="BackgroundImageFix" />
-              <feBlend
-                mode="normal"
-                in="SourceGraphic"
-                in2="BackgroundImageFix"
-                result="shape"
-              />
-              <feGaussianBlur
-                stdDeviation="10"
-                result="effect1_foregroundBlur_2072_1393"
-              />
-            </filter>
             <linearGradient
               id="paint0_linear_2072_1393"
               x1="1949.71"
@@ -1960,8 +1937,8 @@ const UserPage = () => {
               y2="1123.04"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#3F2871" />
-              <stop offset="1" stop-color="#1A1337" />
+              <stop stopColor="#3F2871" />
+              <stop offset="1" stopColor="#1A1337" />
             </linearGradient>
             <linearGradient
               id="paint1_linear_2072_1393"
@@ -1971,8 +1948,8 @@ const UserPage = () => {
               y2="540"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#251C43" />
-              <stop offset="1" stop-color="#181331" />
+              <stop stopColor="#251C43" />
+              <stop offset="1" stopColor="#181331" />
             </linearGradient>
             <linearGradient
               id="paint2_linear_2072_1393"
@@ -1982,140 +1959,140 @@ const UserPage = () => {
               y2="431.303"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#7672A2" />
-              <stop offset="1" stop-color="#30215C" />
+              <stop stopColor="#7672A2" />
+              <stop offset="1" stopColor="#30215C" />
             </linearGradient>
             <linearGradient
               id="paint3_linear_2072_1393"
-              x1="317.941"
-              y1="268.112"
-              x2="1373.95"
-              y2="922.229"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#FFB5AC" stop-opacity="0.6" />
-              <stop offset="1" stop-color="#FFEADF" stop-opacity="0" />
-            </linearGradient>
-            <linearGradient
-              id="paint4_linear_2072_1393"
-              x1="315.704"
-              y1="268.112"
-              x2="1371.71"
-              y2="922.229"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#FFB5AC" stop-opacity="0.6" />
-              <stop offset="1" stop-color="#FFEADF" stop-opacity="0" />
-            </linearGradient>
-            <linearGradient
-              id="paint5_linear_2072_1393"
               x1="1839.77"
               y1="84.0791"
               x2="1214.62"
               y2="734"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#4D3494" />
-              <stop offset="1" stop-color="#28175F" />
+              <stop stopColor="#4D3494" />
+              <stop offset="1" stopColor="#28175F" />
             </linearGradient>
             <linearGradient
-              id="paint6_linear_2072_1393"
+              id="paint4_linear_2072_1393"
               x1="494.659"
               y1="954.5"
               x2="1920.66"
               y2="954.5"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#A17B7E" />
-              <stop offset="1" stop-color="#605273" />
+              <stop stopColor="#A17B7E" />
+              <stop offset="1" stopColor="#605273" />
             </linearGradient>
             <linearGradient
-              id="paint7_linear_2072_1393"
+              id="paint5_linear_2072_1393"
               x1="284.264"
               y1="177.884"
               x2="233.682"
               y2="240.127"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#281F49" />
-              <stop offset="1" stop-color="#120B27" />
+              <stop stopColor="#281F49" />
+              <stop offset="1" stopColor="#120B27" />
             </linearGradient>
             <linearGradient
-              id="paint8_linear_2072_1393"
-              x1="941.659"
-              y1="812"
-              x2="941.659"
-              y2="895"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#AD87A5" />
-              <stop offset="1" stop-color="#C8A5B9" />
-            </linearGradient>
-            <linearGradient
-              id="paint9_linear_2072_1393"
+              id="paint6_linear_2072_1393"
               x1="376.395"
               y1="380.596"
               x2="905.353"
               y2="380.596"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#4A406D" />
-              <stop offset="1" stop-color="#2E2154" />
+              <stop stopColor="#4A406D" />
+              <stop offset="1" stopColor="#2E2154" />
             </linearGradient>
             <linearGradient
-              id="paint10_linear_2072_1393"
+              id="paint7_linear_2072_1393"
               x1="376.395"
               y1="116.052"
               x2="905.353"
               y2="116.052"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#4A406D" />
-              <stop offset="1" stop-color="#2F2255" />
+              <stop stopColor="#4A406D" />
+              <stop offset="1" stopColor="#2F2255" />
             </linearGradient>
             <linearGradient
-              id="paint11_linear_2072_1393"
+              id="paint8_linear_2072_1393"
               x1="1564.4"
               y1="778.844"
               x2="1564.4"
               y2="889.941"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#64558C" />
-              <stop offset="1" stop-color="#3F3384" />
+              <stop stopColor="#64558C" />
+              <stop offset="1" stopColor="#3F3384" />
             </linearGradient>
             <linearGradient
-              id="paint12_linear_2072_1393"
+              id="paint9_linear_2072_1393"
               x1="1339.3"
               y1="821.728"
               x2="1477.14"
               y2="932.963"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#1B1363" stop-opacity="0.5" />
-              <stop offset="1" stop-color="#371363" stop-opacity="0" />
+              <stop stopColor="#1B1363" stopOpacity="0.5" />
+              <stop offset="1" stopColor="#371363" stopOpacity="0" />
             </linearGradient>
             <linearGradient
-              id="paint13_linear_2072_1393"
+              id="paint10_linear_2072_1393"
+              x1="942.155"
+              y1="811"
+              x2="942.155"
+              y2="894"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#AD87A5" />
+              <stop offset="1" stopColor="#C8A5B9" />
+            </linearGradient>
+            <linearGradient
+              id="paint11_linear_2072_1393"
               x1="1162.92"
               y1="789.741"
               x2="1315"
               y2="895"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#D7BDB0" />
-              <stop offset="1" stop-color="#41359C" />
+              <stop stopColor="#D7BDB0" />
+              <stop offset="1" stopColor="#41359C" />
             </linearGradient>
             <linearGradient
-              id="paint14_linear_2072_1393"
+              id="paint12_linear_2072_1393"
               x1="1177.09"
               y1="800.693"
               x2="1313.79"
               y2="857.577"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#473739" />
-              <stop offset="1" stop-color="#0C0A0D" />
+              <stop stopColor="#473739" />
+              <stop offset="1" stopColor="#0C0A0D" />
+            </linearGradient>
+            <linearGradient
+              id="paint13_linear_2072_1393"
+              x1="315.704"
+              y1="268.112"
+              x2="1371.71"
+              y2="922.229"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#FFB5AC" stopOpacity="0.6" />
+              <stop offset="1" stopColor="#FFEADF" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient
+              id="paint14_linear_2072_1393"
+              x1="317.941"
+              y1="268.112"
+              x2="1373.95"
+              y2="922.229"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#FFB5AC" stopOpacity="0.6" />
+              <stop offset="1" stopColor="#FFEADF" stopOpacity="0" />
             </linearGradient>
             <clipPath id="clip0_2072_1393">
               <rect
@@ -2127,10 +2104,10 @@ const UserPage = () => {
             </clipPath>
             <clipPath id="clip1_2072_1393">
               <rect
-                width="533"
+                width="475"
                 height="254"
                 fill="white"
-                transform="translate(673.659 479)"
+                transform="translate(706 479)"
               />
             </clipPath>
           </defs>
