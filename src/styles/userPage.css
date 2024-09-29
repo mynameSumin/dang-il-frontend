@@ -39,18 +39,85 @@
 
 .list-panel {
   position: fixed;
-  left: 0;
-  top: 0;
-  width: 20%; /* 전체 화면의 1/5 크기 */
-  height: 100%;
+  left: 1%;
+  top: 2%;
+  width: 16.7%; /* 전체 화면의 1/5 크기 */
+  height: 91%;
   background-color: #f8f9fa;
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.70);
+  backdrop-filter: blur(15px);
+  padding:20px;
   transition: transform 0.3s ease;
   transform: translateX(-100%); /* 초기에는 보이지 않음 */
 }
 
 .list-panel.visible {
   transform: translateX(0); /* 화면에 나타남 */
+}
+.panel-topdiv {
+  display: flex;
+  flex-direction: row;
+}
+.panel-topdiv p {
+  margin-right: 5px;
+}
+
+.deskDesign {
+  color: #6F7FB5;
+  font-family: Roboto;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;  
+}
+
+#Group43 {
+  height: 17px;
+  margin-top: 7px;
+}
+
+.rowline1 {
+  border-bottom: 2px solid #ccc; /* 회색 구분선 */
+  margin-top: 10px;
+  width:100%;
+  display:flex;
+  justify-content: center;
+}
+
+.all-tag {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.design-tag {
+  padding: 7px 10px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 20px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+.design-tag p{
+  color: #6F7FB5;
+  font-weight: 500;
+}
+
+.all-items {
+  margin-top: 10px;
+  color: #6F7FB5;
+  font-family: Roboto;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 /* body code css */
@@ -77,11 +144,10 @@
   left: 36.5%;
   bottom: 31.5%;
   border-radius: 8px;
-  z-index: 100;
 }
 .add-color {
   position: fixed;
-  border-radius: 10px;
+  border-radius: px;
   width: 25%;
   height: 24.9%;
   left: 36.5%;
@@ -98,9 +164,12 @@
 .player-box {
   position: fixed;
   width: fit-content;
-
   padding-bottom: 200px; /* 4:3 비율을 유지하기 위한 패딩 (3 / 4 = 75%) */
   height: 0; /* 높이는 padding-bottom으로 결정됨 */
+}
+
+#desktop-bottom {
+  z-index: 1000;
 }
 
 #desktop-bottom {
@@ -121,11 +190,8 @@
     transform-box: fill-box;
     transform: rotate(-40deg) translateY(-200px);
   }
-  50% {
-  }
   100% {
     transform-box: fill-box;
-    opacity: 1;
     transform: rotate(0deg) translateY(0px);
   }
 }

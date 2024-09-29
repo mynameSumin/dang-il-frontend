@@ -8,6 +8,7 @@ import { FiEdit } from "react-icons/fi";
 import windowFrame from "../assets/windowFrame.png";
 import sun from "../assets/sun.png";
 import moon from "../assets/moon.png";
+import Group43 from "../assets/Group 43.png";
 
 const UserPage = () => {
   const { userId } = useParams(); // URL에서 userId를 받아옴
@@ -19,6 +20,7 @@ const UserPage = () => {
   const [click, setClick] = useState(true);
   const [mode, setMode] = useState(true);
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
+
 
   // 이전 사용자로 이동하는 함수
   const handlePrevUser = () => {
@@ -63,94 +65,14 @@ const UserPage = () => {
     };
   }, []);
 
+  const [activeTag, setActiveTag] = useState('');
+
+  const TagClick = (tag) => {
+    setActiveTag(tag);
+  };
+
+
   return (
-    // <div className="background">
-    //   <img src={stand} id="stand" />
-    //   <Clock userId={userId} /> {/* userId를 Clock에 전달 */}
-    //   <div>
-    //     <div>클릭</div>
-    //     <YouTube
-    //       videoId="SEL82m5Xjiw"
-    //       opts={{
-    //         width: "560",
-    //         height: "315",
-    //         playerVars: {
-    //           autoplay: 1, //자동재생 O
-    //           rel: 0,
-    //           modestbranding: 1, // 컨트롤 바에 youtube 로고를 표시하지 않음
-    //         },
-    //       }}
-    //       //이벤트 리스너
-    //       onEnd={(e) => {
-    //         e.target.stopVideo(0);
-    //       }}
-    //     />
-    //     <h2>User Details</h2>
-    //     <p>Name: [User Name]</p>
-    //     <p>Email: [User Email]</p>
-    //     <Book editBook={editBook} setEditBook={setEditBook} />
-    // <div className={`settings ${editBook ? 'hidden' : ''}`}>
-    // {/* 이전 사용자로 이동하는 버튼, 첫 번째 사용자일 경우 비활성화 */}
-    // <button
-    //   onClick={handlePrevUser}
-    //   disabled={parseInt(userId) === minUserId}
-    //   className={`control-button ${
-    //     parseInt(userId) === minUserId ? "invisible" : ""
-    //   }`}
-    // >
-    //   <span className="icon">＜</span>
-    // </button>
-    // {/* 중간 기능 버튼 */}
-    // <button className="control-button">
-    //   <span className="icon">M</span>
-    // </button>
-    // <div className="settings">
-    //   {/* 이전 사용자로 이동하는 버튼, 첫 번째 사용자일 경우 비활성화 */}
-    //   <button
-    //     onClick={handlePrevUser}
-    //     disabled={parseInt(userId) === minUserId}
-    //     className={`control-button ${
-    //       parseInt(userId) === minUserId ? "invisible" : ""
-    //     }`}
-    //   >
-    //     <span className="icon">＜</span>
-    //   </button>
-    //   {/* 중간 기능 버튼 */}
-    //   <button className="control-button">
-    //     <span className="icon">M</span>
-    //   </button>
-
-    //   <div
-    //     ref={panelRef}
-    //     className={`list-panel ${isListVisible ? "visible" : ""}`}
-    //   >
-    //     <button>메모</button>
-    //     <button>스탠드</button>
-    //     <button>책</button>
-    //   </div>
-    //   <FiEdit onClick={LeftSettingtoggle} style={{ cursor: "pointer" }} />
-
-    //   <button
-    //     onClick={handleNextUser}
-    //     disabled={parseInt(userId) === maxUserId}
-    //     className={`control-button ${
-    //       parseInt(userId) === maxUserId ? "invisible" : ""
-    //     }`}
-    //   >
-    //     <span className="icon">＞</span>
-    //   </button>
-    // </div>
-    //     {/* 메인 페이지로 이동하는 버튼 */}
-    //     <button
-    //       onClick={handleGoHome}
-    //       className="home-button"
-    //       style={{ marginTop: "30px" }}
-    //     >
-    //       Go to Home
-    //     </button>
-    //     <Link to={"/mainpage"}>go tp Home</Link>
-    //   </div>
-    // </div>
     <div className="background">
       <div className="add-color"></div>
       <div className="player-box">
@@ -196,7 +118,44 @@ const UserPage = () => {
           ref={panelRef}
           className={`list-panel ${isListVisible ? "visible" : ""}`}
         >
-          <button>메모</button>
+          <div className='panel-topdiv'>
+            <p className='deskDesign'>데스크 꾸미기</p>
+            <img src={Group43} id="Group43"/>
+          </div>
+          <div className="rowline1"></div>
+          <div className="all-tag">
+            <div className="design-tag" onClick={() => TagClick('curtain')}><p>#커텐</p></div>
+            <div className="design-tag" onClick={() => TagClick('wallpaper')}><p>#벽지</p></div>
+            <div className="design-tag" onClick={() => TagClick('board')}><p>#게시판</p></div>
+            <div className="design-tag" onClick={() => TagClick('lighting')}><p>#조명</p></div>
+          </div>
+          <div className="rowline1"></div>
+          <p className='all-items'>모든 아이템</p>
+                  {activeTag === 'curtain' && (
+                <div id="curtain">
+                  {/* 여기에 커텐 관련 내용 */}
+                  <p>커텐 관련 내용이 표시됩니다.</p>
+                </div>
+              )}
+              {activeTag === 'wallpaper' && (
+                <div id="wallpaper">
+                  {/* 여기에 벽지 관련 내용 */}
+                  <p>벽지 관련 내용이 표시됩니다.</p>
+                </div>
+              )}
+              {activeTag === 'board' && (
+                <div id="board">
+                  {/* 여기에 게시판 관련 내용 */}
+                  <p>게시판 관련 내용이 표시됩니다.</p>
+                </div>
+              )}
+              {activeTag === 'lighting' && (
+                <div id="lighting">
+                  {/* 여기에 조명 관련 내용 */}
+                  <p>조명 관련 내용이 표시됩니다.</p>
+                </div>
+              )}
+          {/* <button>메모</button>
           <button>스탠드</button>
           <button>책</button>
           <button
@@ -205,7 +164,7 @@ const UserPage = () => {
             }}
           >
             모드변경
-          </button>
+          </button> */}
         </div>
         <FiEdit onClick={LeftSettingtoggle} style={{ cursor: "pointer" }} />
 
@@ -231,7 +190,6 @@ const UserPage = () => {
           viewBox="0 0 1916 1080"
           preserveAspectRatio="none"
           fill="none"
-          preserveAspectRatio="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <g clip-path="url(#clip0_397_66)">
