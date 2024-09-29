@@ -37,22 +37,6 @@
   background: #eee; /* 배경색 변경 */
 }
 
-.list-panel {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 20%; /* 전체 화면의 1/5 크기 */
-  height: 100%;
-  background-color: #f8f9fa;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  transform: translateX(-100%); /* 초기에는 보이지 않음 */
-}
-
-.list-panel.visible {
-  transform: translateX(0); /* 화면에 나타남 */
-}
-
 /* body code css */
 .background {
   height: 100vh;
@@ -77,11 +61,10 @@
   left: 36.5%;
   bottom: 31.5%;
   border-radius: 8px;
-  z-index: 100;
 }
 .add-color {
   position: fixed;
-  border-radius: 10px;
+  border-radius: px;
   width: 25%;
   height: 24.9%;
   left: 36.5%;

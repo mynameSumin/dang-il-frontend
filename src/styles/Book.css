@@ -51,6 +51,12 @@
     background-color: #D3DEEE;
     }
 
+  .book-name input {
+    text-align: center;
+    font-size: 15px;
+    padding: 0px;
+  }
+
   .gray-rowline {
     border-bottom: 2px solid #ccc; /* 회색 구분선 */
     margin-bottom: 15px;

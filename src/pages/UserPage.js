@@ -4,10 +4,10 @@ import YouTube from "react-youtube";
 import Clock from "../components/Clock.js";
 import Book from "../components/Book";
 import "../styles/userPage.css";
-import { FiEdit } from "react-icons/fi";
 import windowFrame from "../assets/windowFrame.png";
 import sun from "../assets/sun.png";
 import moon from "../assets/moon.png";
+import Panel from "../components/Panel"; // 새로운 컴포넌트 import
 
 const UserPage = () => {
   const { userId } = useParams(); // URL에서 userId를 받아옴
@@ -19,6 +19,7 @@ const UserPage = () => {
   const [mode, setMode] = useState(true);
   const [animation, setAnimation] = useState(false);
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
+  const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
 
   // 이전 사용자로 이동하는 함수
   const handlePrevUser = () => {
@@ -46,22 +47,22 @@ const UserPage = () => {
     setIsListVisible(!isListVisible);
   };
 
-  useEffect(() => {
-    //화면 바깥 클릭하면 토글 목록 닫힘
-    const handleClickOutside = (event) => {
-      if (panelRef.current && !panelRef.current.contains(event.target)) {
-        setIsListVisible(false); // 패널 외부 클릭 시 패널 숨김
-      }
-    };
+  // useEffect(() => {
+  //   //화면 바깥 클릭하면 토글 목록 닫힘
+  //   const handleClickOutside = (event) => {
+  //     if (panelRef.current && !panelRef.current.contains(event.target)) {
+  //       setIsListVisible(false); // 패널 외부 클릭 시 패널 숨김
+  //     }
+  //   };
 
-    // 전역 클릭 이벤트 등록
-    document.addEventListener("click", handleClickOutside);
+  //   // 전역 클릭 이벤트 등록
+  //   document.addEventListener("click", handleClickOutside);
 
-    //컴포넌트 언마운트 시 이벤트 제거
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  //   //컴포넌트 언마운트 시 이벤트 제거
+  //   return () => {
+  //     document.removeEventListener("click", handleClickOutside);
+  //   };
+  // }, []);
 
   return (
     <div className="background">
@@ -104,23 +105,13 @@ const UserPage = () => {
         <button className="control-button">
           <span className="icon">M</span>
         </button>
-
-        <div
+        <Panel
+          mode={mode}
           ref={panelRef}
-          className={`list-panel ${isListVisible ? "visible" : ""}`}
-        >
-          <button>메모</button>
-          <button>스탠드</button>
-          <button>책</button>
-          <button
-            onClick={() => {
-              setMode(!mode);
-            }}
-          >
-            모드변경
-          </button>
-        </div>
-        <FiEdit onClick={LeftSettingtoggle} style={{ cursor: "pointer" }} />
+          isListVisible={isListVisible}
+          setIsListVisible={setIsListVisible}
+          LeftSettingtoggle={LeftSettingtoggle}
+        />
 
         <button
           onClick={handleNextUser}
@@ -132,6 +123,7 @@ const UserPage = () => {
           <span className="icon">＞</span>
         </button>
       </div>
+
       <div class="image-container">
         <img src={sun} id="sun" />
         <img src={moon} id="moon" />
