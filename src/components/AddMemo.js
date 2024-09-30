@@ -1,5 +1,6 @@
 import closeBtn from "../assets/close.png";
 import { useState } from "react";
+import "../styles/AddMemo.css";
 
 const AddMemo = ({
   setKey,
@@ -47,7 +48,7 @@ const AddMemo = ({
   return (
     <>
       <div
-        className="change-music-window"
+        className="add-memo-window"
         id={activeWindow == "memo" ? "open" : ""}
       >
         <img
@@ -59,7 +60,7 @@ const AddMemo = ({
             setActiveWindow("");
           }}
         />
-        <div className="music-title">유튜브 불러오기</div>
+        <div className="music-title">메모하기</div>
         <input
           className="url"
           value={url}

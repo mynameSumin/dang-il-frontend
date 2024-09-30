@@ -4,10 +4,13 @@ import YouTube from "react-youtube";
 import Clock from "../components/Clock.js";
 import Book from "../components/Book";
 import "../styles/userPage.css";
-import AddMemo from "../assets/AddMemo.png";
+
 import sun from "../assets/sun.png";
 import moon from "../assets/moon.png";
 import changeMusic from "../assets/chageMusic.png";
+import bookbutton from "../assets/bookbutton.png";
+import memobutton from "../assets/memobutton.png";
+import closeBtn from "../assets/close.png";
 import Panel from "../components/Panel"; // 새로운 컴포넌트 import
 import AddYoutube from "../components/AddYoutube.js";
 import Memo from "../components/AddMemo.js";
@@ -25,6 +28,7 @@ const UserPage = () => {
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
   const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
   const [key, setKey] = useState("bHvT0SNITuU");
+  const [bookName, setBookName] = useState("Book Name");
   const [showWindow, setShowWindow] = useState(false);
   const [activeWindow, setActiveWindow] = useState("");
 
@@ -32,6 +36,29 @@ const UserPage = () => {
     // 창을 열 때 창 타입 설정 (음악 창 또는 메모 창)
     setActiveWindow(windowType);
     setShowWindow(true);
+  };
+
+  const bookRef = useRef(null);
+  // 책 클릭시 편집화면 활성화
+  const bookImageClick = async (e) => {
+    e.stopPropagation();
+    setEditBook(!editBook);
+    try {
+      const response = await fetch(
+        "https://dangil-artisticsw.site/space/3661157737",
+        {
+          method: "GET",
+          credentials: "include", // 쿠키 포함 설정
+        }
+      );
+
+      const bookNameData = await response.json();
+      const bookNameList = bookNameData.data.user_space_data.book_list;
+
+      setBookName();
+    } catch (error) {
+      console.error("Error handling the book name:", error);
+    }
   };
 
   // 이전 사용자로 이동하는 함수
@@ -58,22 +85,28 @@ const UserPage = () => {
   return (
     <div>
       {/* 단축 버튼들 */}
-      <img
-        src={changeMusic}
-        className="change-music"
-        onClick={() => {
-          setShowWindow(!showWindow);
-          setActiveWindow("change-music");
-        }}
-      />
-      <img
-        src={AddMemo}
-        className="add-memo"
-        onClick={() => {
-          setShowWindow(true);
-          setActiveWindow("memo");
-        }}
-      />
+
+      <div className="memo-youtube-book">
+        <img
+          src={memobutton}
+          className="add-memo"
+          onClick={() => {
+            setShowWindow(true);
+            setActiveWindow("memo");
+          }}
+        />
+        <img
+          src={changeMusic}
+          className="change-music"
+          onClick={() => {
+            setShowWindow(!showWindow);
+            setActiveWindow("change-music");
+          }}
+        />
+        <img src={bookbutton} className="bookbutton" />
+      </div>
+      {/*
+       */}
       <AddYoutube
         setKey={setKey}
         showWindow={showWindow}
@@ -164,6 +197,30 @@ const UserPage = () => {
           className={mode ? "day-color" : "night-color"}
           id={animation ? "active-day" : click ? "active-night" : ""}
         />
+        <div className="bookshelfbox">
+          <div className="cols-bookbox">
+            <div className="col-book1" onClick={bookImageClick}>
+              <Book
+                bookRef={bookRef}
+                editBook={editBook}
+                setEditBook={setEditBook}
+                bookName={bookName}
+                setBookName={setBookName}
+              />
+            </div>
+            <div className="col-book2"></div>
+            <div className="col-book3"></div>
+            <div className="col-book4"></div>
+          </div>
+
+          <div className="rows-bookbox">
+            <div className="row-book1"></div>
+            <div className="row-book2"></div>
+            <div className="row-book3"></div>
+            <div className="row-book4"></div>
+          </div>
+        </div>
+
         {mode ? (
           <svg
             width="100%"

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import "../styles/Book.css";
 import { RiHomeLine } from "react-icons/ri";
 import { RiDownloadLine } from "react-icons/ri";
@@ -10,7 +10,8 @@ import Ellipse from "../assets/Ellipse 2.png";
 import Vector from "../assets/Vector.png";
 import { useCookies } from "react-cookie";
 
-const Book = ({editBook, setEditBook}) => {
+const Book = forwardRef(
+  ({editBook, setEditBook, bookName, setBookName}, bookRef) => {
   const [cookies] = useCookies(["session_id"]);
   // 편집 모드 상태 (기본값은 false로 비편집 상태)
   const [NameEditing, setNameEditing] = useState(false);
@@ -21,32 +22,11 @@ const Book = ({editBook, setEditBook}) => {
   // +버튼 상태
   const [plusButton, setPlusButton] = useState(false);
 
-  // 책 클릭시 편집화면 활성화
-  const bookImageClick = async (e) => {
-    e.stopPropagation(); 
-    setEditBook(!editBook);
-    try {
-      const response = await fetch("https://dangil-artisticsw.site/space/3661157737", {
-        method: "GET",
-        credentials: "include" // 쿠키 포함 설정
-      });
-
-      const bookNameData = await response.json();
-      const bookNameList = bookNameData.data.user_space_data.book_list;
-      
-      setBookName()
-    } catch (error) {
-      console.error('Error handling the book name:', error);
-    }
-
-  };
-
-
   // 책이름 관련 start
 
   // 책 이름 상태
-  const [bookName, setBookName] = useState("Book Name");  
-  const bookRef = useRef(null);
+  // const [bookName, setBookName] = useState("Book Name");  
+  // const bookRef = useRef(null);
   const inputRef = useRef(null); 
   const textareaRef = useRef(null); // input활성화됐을때 enter나 esc로만 input나갈수있음
   // 책이름 클릭 시 편집 모드로 전환
@@ -122,7 +102,10 @@ const Book = ({editBook, setEditBook}) => {
       if (
         NameEditing && 
         inputRef.current && 
-        !inputRef.current.contains(event.target)) {
+        !inputRef.current.contains(event.target) &&
+        bookRef.current && // bookRef 추가
+      ! bookRef.current.contains(event.target)) // 책 컴포넌트 외부 클릭 감지
+        {
         event.preventDefault();
         event.stopPropagation(); // 클릭 이벤트 전파를 차단하여 외부 클릭 차단
       }
@@ -167,27 +150,11 @@ const Book = ({editBook, setEditBook}) => {
     }
   };
 
-  const plusMenu = () => {
+  const plusMenu = (e) => {
+    e.stopPropagation()
     setPlusButton(!plusButton);
   }
 
-  // 책편집화면 외부 클릭하면 책편집화면 사라짐
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (bookRef.current && !bookRef.current.contains(event.target)) {
-          setEditBook(false); // 책 외부 클릭 시 편집화면 숨김
-        };
-    };
-    // 전역 클릭 이벤트 등록
-    document.addEventListener("click", handleClickOutside);
-    //컴포넌트 언마운트 시 이벤트 제거
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
-  
-  
   //책 생성시 백엔드에 저장
   const createBook = async (title) => {
     try {
@@ -211,9 +178,9 @@ const Book = ({editBook, setEditBook}) => {
   };
 
   return (
-    <div ref={bookRef} >
-     <img src="/path/to/book.jpg" alt="Book Image" onClick={bookImageClick} style={{ cursor: 'pointer'}}/>
-        <div className={`book-page ${editBook ? 'visible': ''}`}>
+    <div bookRef={bookRef}>
+     {/* <img src="/path/to/book.jpg" alt="Book Image" onClick={bookImageClick} style={{ cursor: 'pointer'}}/> */}
+        <div bookRef={bookRef} onClick={(e) => e.stopPropagation()} className={`book-page ${editBook ? 'visible': ''}`}>
           <div className="book-name-box">
             <div className="icon-box">
               <RiHomeLine style={{marginLeft: "20", marginRight: "2"}}/>
@@ -263,6 +230,6 @@ const Book = ({editBook, setEditBook}) => {
       )}
     </div>
   );
-};
+});
 
 export default Book;

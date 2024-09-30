@@ -38,145 +38,113 @@ const Panel = forwardRef(
       <div ref={ref}>
         <FiEdit onClick={LeftSettingtoggle} style={{ cursor: "pointer" }} />
         <div className={`panel-total ${!mode ? "night" : ""}`}>
-          <div
-            ref={panelRef}
-            className={`list-panel ${isListVisible ? "visible" : ""}`}
-          >
-            <div className="panel-topdiv">
-              <p className="deskDesign">데스크 꾸미기</p>
-              <img src={Group43} id="Group43" />
-            </div>
-            <div className="rowline1"></div>
-            <div className="all-tag">
-              <div
-                className={`design-tag ${
-                  activeTag === "curtain" ? "active" : ""
-                }`}
-                onClick={() => TagClick("curtain")}
-              >
-                <p className={activeTag === "curtain" ? "active" : ""}>#커텐</p>
-              </div>
-              <div
-                className={`design-tag ${
-                  activeTag === "wallpaper" ? "active" : ""
-                }`}
-                onClick={() => TagClick("wallpaper")}
-              >
-                <p className={activeTag === "wallpaper" ? "active" : ""}>
-                  #벽지
-                </p>
-              </div>
-              <div
-                className={`design-tag ${
-                  activeTag === "board" ? "active" : ""
-                }`}
-                onClick={() => TagClick("board")}
-              >
-                <p className={activeTag === "board" ? "active" : ""}>#게시판</p>
-              </div>
-              <div
-                className={`design-tag ${
-                  activeTag === "lighting" ? "active" : ""
-                }`}
-                onClick={() => TagClick("lighting")}
-              >
-                <p className={activeTag === "lighting" ? "active" : ""}>
-                  #조명
-                </p>
-              </div>
-            </div>
-            <div className="rowline1"></div>
-            {defaultTag === true && (
-              <div className="default-panel-design">
-                <p className="all-items">모든 아이템(9)</p>
-                <div className="panel-textbox">
-                  <div>
-                    <p className="panel-text">모던한 커텐</p>
-                    <div className="panel-box">
-                      {/*여기에 이미지 들어가야함*/}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="panel-text">블라인드 커텐</p>
-                    <div className="panel-box">
-                      {/*여기에 이미지 들어가야함*/}
-                    </div>
-                  </div>
+            <div ref={panelRef} className={`list-panel ${isListVisible ? "visible" : ""}`}>
+                <div className='panel-topdiv'>
+                <p className='deskDesign'>데스크 꾸미기</p>
+                <img src={mode ? Group43 : Group43N} id="Group43"/>
                 </div>
-
-                <div className="panel-textbox">
-                  <div>
-                    <p className="panel-text">모던한 벽지</p>
-                    <div className="panel-box">
-                      {/*여기에 이미지 들어가야함*/}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="panel-text">별이 쏟아지는 벽지</p>
-                    <div className="panel-box">
-                      {/*여기에 이미지 들어가야함*/}
-                    </div>
-                  </div>
+                <div className="rowline1"></div>
+                <div className="all-tag">
+                <div className={`design-tag ${activeTag === 'curtain' ? "active" : ""}`} onClick={() => TagClick('curtain')}>
+                    <p className={activeTag === 'curtain' ? "active" : ""}>#커텐</p>
                 </div>
-
-                <div className="panel-textbox">
-                  <div>
-                    <p className="panel-text">모던한 게시판</p>
-                    <div className="panel-box">
-                      {/*여기에 이미지 들어가야함*/}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="panel-text">마구잡이 게시판</p>
-                    <div className="panel-box">
-                      {/*여기에 이미지 들어가야함*/}
-                    </div>
-                  </div>
+                <div className={`design-tag ${activeTag === 'wallpaper' ? "active" : ""}`} onClick={() => TagClick('wallpaper')}>
+                    <p className={activeTag === 'wallpaper' ? "active" : ""}>#벽지</p>
                 </div>
-
-                <div className="panel-textbox">
-                  <div>
-                    <p className="panel-text">감성 옐로우 라이트</p>
-                    <div className="panel-box">
-                      {/*여기에 이미지 들어가야함*/}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="panel-text">집중 화이트 라이트</p>
-                    <div className="panel-box">
-                      {/*여기에 이미지 들어가야함*/}
-                    </div>
-                  </div>
+                <div className={`design-tag ${activeTag === 'board' ? "active" : ""}`} onClick={() => TagClick('board')}>
+                    <p className={activeTag === 'board' ? "active" : ""}>#게시판</p>
                 </div>
-
-                <div className="panel-textbox">
-                  <div>
-                    <p className="panel-text">총명 블루 라이트</p>
-                    <div className="panel-box">
-                      {/*여기에 이미지 들어가야함*/}
-                    </div>
-                  </div>
+                <div className={`design-tag ${activeTag === 'lighting' ? "active" : ""}`} onClick={() => TagClick('lighting')}>
+                    <p className={activeTag === 'lighting' ? "active" : ""}>#조명</p>
                 </div>
-              </div>
-            )}
-            {activeTag === "curtain" && (
-              <div id="curtain">
-                <p className="all-items">커텐 아이템(2)</p>
-                <div className="panel-textbox">
-                  <div>
-                    <p className="panel-text">커텐 제거</p>
-                    <div className="panel-box">
-                      <img
-                        src={mode ? Union : UnionN}
-                        id="Union"
-                        alt="커텐 제거"
-                      />
+                </div>
+                <div className="rowline1"></div>
+                {defaultTag === true && (
+                <div className='default-panel-design'>
+                    <p className='all-items'>모든 아이템(9)</p>
+                    <div className="panel-textbox">
+                        <div className="panel-textbox2">
+                            <p className="panel-text">모던한 커텐</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
+                        </div>
+        
+                        <div className="panel-textbox2">
+                            <p className="panel-text">블라인드 커텐</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
+                        </div>
                     </div>
-                  </div>
+    
+                    <div className="panel-textbox">
+                        <div className="panel-textbox2">
+                            <p className="panel-text">모던한 벽지</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
+                        </div>
+    
+                        <div className="panel-textbox2">
+                            <p className="panel-text">별이 쏟아지는 벽지</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div className="panel-textbox">
+                        <div className="panel-textbox2">
+                            <p className="panel-text">모던한 게시판</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
+                        </div>
+        
+                        <div className="panel-textbox2">
+                            <p className="panel-text">마구잡이 게시판</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div className="panel-textbox">
+                        <div className="panel-textbox2">
+                            <p className="panel-text">감성 옐로우 라이트</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
+                        </div>
+        
+                        <div className="panel-textbox2">
+                            <p className="panel-text">집중 화이트 라이트</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div className="panel-textbox">
+                        <div className="panel-textbox2">
+                            <p className="panel-text">총명 블루 라이트</p>
+                            <div className="panel-box">
+                            {/*여기에 이미지 들어가야함*/}
+                            </div>
+                        </div>
+                    </div>
+                </div>)}
+                {activeTag === 'curtain' && (
+                    <div id="curtain">
+                    <p className='all-items'>커텐 아이템(2)</p>
+                    <div className="panel-textbox">
+                        <div>
+                        <p className="panel-text">커텐 제거</p>
+                        <div className="panel-box"> 
+                            <img src={mode ? Union : UnionN} id="Union" alt="커텐 제거"/>
+                        </div>
+                        </div>
 
                   <div>
                     <p className="panel-text">모던한 커텐</p>
