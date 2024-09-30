@@ -1,41 +1,42 @@
 import React, { useState, useRef, useEffect, forwardRef } from "react";
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit } from "react-icons/fi";
 import Group43 from "../assets/Group 43.png";
-import Group43N from "../assets/Group 43-n.png"
+import Group43N from "../assets/Group 43-n.png";
 import Union from "../assets/Union.png";
 import UnionN from "../assets/UnionN.png";
 import LeftVector from "../assets/LeftVector.png";
 import "../styles/Panel.css";
 
-const Panel = forwardRef(({mode, isListVisible, LeftSettingtoggle, setIsListVisible }, ref) => {
-//tag 관련 
-  const [activeTag, setActiveTag] = useState('');
-  const [defaultTag, setdefaultTag] = useState(true);
-  const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
-  const panelRef = useRef(null);
+const Panel = forwardRef(
+  ({ mode, isListVisible, LeftSettingtoggle, setIsListVisible }, ref) => {
+    //tag 관련
+    const [activeTag, setActiveTag] = useState("");
+    const [defaultTag, setdefaultTag] = useState(true);
+    const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
+    const panelRef = useRef(null);
 
-  const TagClick = (tag) => {
-    setActiveTag(tag);
-    setdefaultTag(false);
-    settagbutton(true);
-  };
-  
-  // 패널이 열릴 때 초기 상태로 리셋
-  useEffect(() => {
-    if (isListVisible) {
-      setdefaultTag(true);
-      setActiveTag('');
-      settagbutton(false);
-    }
-  }, [isListVisible]);  // 의존성 배열에 isListVisible 추가
+    const TagClick = (tag) => {
+      setActiveTag(tag);
+      setdefaultTag(false);
+      settagbutton(true);
+    };
 
-  const backButtonClick = () => {
-    setIsListVisible(false);
-  }
+    // 패널이 열릴 때 초기 상태로 리셋
+    useEffect(() => {
+      if (isListVisible) {
+        setdefaultTag(true);
+        setActiveTag("");
+        settagbutton(false);
+      }
+    }, [isListVisible]); // 의존성 배열에 isListVisible 추가
 
-  return (
-    <div ref={ref}>
-      <FiEdit onClick={LeftSettingtoggle} style={{ cursor: "pointer" }} />
+    const backButtonClick = () => {
+      setIsListVisible(false);
+    };
+
+    return (
+      <div ref={ref}>
+        <FiEdit onClick={LeftSettingtoggle} style={{ cursor: "pointer" }} />
         <div className={`panel-total ${!mode ? "night" : ""}`}>
             <div ref={panelRef} className={`list-panel ${isListVisible ? "visible" : ""}`}>
                 <div className='panel-topdiv'>
@@ -145,85 +146,87 @@ const Panel = forwardRef(({mode, isListVisible, LeftSettingtoggle, setIsListVisi
                         </div>
                         </div>
 
-                        <div>
-                        <p className="panel-text">모던한 커텐</p>
-                        <div className="panel-box"></div>
-                        </div>
-                    </div>
-                    
-                    <div className="panel-textbox">
-                        <div>
-                        <p className="panel-text">블라인드 커텐</p>
-                        <div className="panel-box"></div>
-                        </div>
-                    </div>
-                    </div>
-                )}
-                {activeTag === 'wallpaper' && (
-                    <div id="wallpaper">
-                    <p className='all-items'>벽지 아이템(2)</p>
-                    <div className="panel-textbox">
-                        <div>
-                        <p className="panel-text">모던한 벽지</p>
-                        <div className="panel-box"></div>
-                        </div>
+                  <div>
+                    <p className="panel-text">모던한 커텐</p>
+                    <div className="panel-box"></div>
+                  </div>
+                </div>
 
-                        <div>
-                        <p className="panel-text">별이 쏟아지는 벽지</p>
-                        <div className="panel-box"></div>
-                        </div>                      
-                    </div>
-                    </div>
-                )}
-                {activeTag === 'board' && (
-                    <div id="board">
-                    <p className='all-items'>게시판 아이템(2)</p>
-                    <div className="panel-textbox">
-                        <div>
-                        <p className="panel-text">모던한 게시판</p>
-                        <div className="panel-box"></div>
-                        </div>
+                <div className="panel-textbox">
+                  <div>
+                    <p className="panel-text">블라인드 커텐</p>
+                    <div className="panel-box"></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {activeTag === "wallpaper" && (
+              <div id="wallpaper">
+                <p className="all-items">벽지 아이템(2)</p>
+                <div className="panel-textbox">
+                  <div>
+                    <p className="panel-text">모던한 벽지</p>
+                    <div className="panel-box"></div>
+                  </div>
 
-                        <div>
-                        <p className="panel-text">마구잡이 게시판</p>
-                        <div className="panel-box"></div>
-                        </div>                      
-                    </div>
-                    </div>
-                )}
-                {activeTag === 'lighting' && (
-                    <div id="lighting">
-                    <p className='all-items'>조명 아이템(3)</p>
-                    <div className="panel-textbox">
-                        <div>
-                        <p className="panel-text">감성 옐로우 라이트</p>
-                        <div className="panel-box"> 
-                        </div>
-                        </div>
+                  <div>
+                    <p className="panel-text">별이 쏟아지는 벽지</p>
+                    <div className="panel-box"></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {activeTag === "board" && (
+              <div id="board">
+                <p className="all-items">게시판 아이템(2)</p>
+                <div className="panel-textbox">
+                  <div>
+                    <p className="panel-text">모던한 게시판</p>
+                    <div className="panel-box"></div>
+                  </div>
 
-                        <div>
-                        <p className="panel-text">집중 화이트 라이트</p>
-                        <div className="panel-box"></div>
-                        </div>
-                    </div>
-                    
-                    <div className="panel-textbox">
-                        <div>
-                        <p className="panel-text">총명 블루 라이트</p>
-                        <div className="panel-box"></div>
-                        </div>
-                    </div>
-                    </div>
-                )}
-            </div>
+                  <div>
+                    <p className="panel-text">마구잡이 게시판</p>
+                    <div className="panel-box"></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {activeTag === "lighting" && (
+              <div id="lighting">
+                <p className="all-items">조명 아이템(3)</p>
+                <div className="panel-textbox">
+                  <div>
+                    <p className="panel-text">감성 옐로우 라이트</p>
+                    <div className="panel-box"></div>
+                  </div>
 
-            <div className={`backButton ${isListVisible ? "visible" : ""}`} onClick={backButtonClick}> 
-                <img src={LeftVector} style={{ width: '50%', height: '40%' }}/>
-            </div>
+                  <div>
+                    <p className="panel-text">집중 화이트 라이트</p>
+                    <div className="panel-box"></div>
+                  </div>
+                </div>
+
+                <div className="panel-textbox">
+                  <div>
+                    <p className="panel-text">총명 블루 라이트</p>
+                    <div className="panel-box"></div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div
+            className={`backButton ${isListVisible ? "visible" : ""}`}
+            onClick={backButtonClick}
+          >
+            <img src={LeftVector} style={{ width: "40%", height: "35%" }} />
+          </div>
         </div>
-    </div>
-    )}
-  );
-
+      </div>
+    );
+  }
+);
 
 export default Panel;

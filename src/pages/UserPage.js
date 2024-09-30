@@ -7,8 +7,11 @@ import "../styles/userPage.css";
 import windowFrame from "../assets/windowFrame.png";
 import sun from "../assets/sun.png";
 import moon from "../assets/moon.png";
+import changeMusic from "../assets/chageMusic.png";
+import bookbutton from "../assets/bookbutton.png";
+import memobutton from "../assets/memobutton.png";
+import closeBtn from "../assets/close.png";
 import Panel from "../components/Panel"; // 새로운 컴포넌트 import
-
 
 const UserPage = () => {
   const { userId } = useParams(); // URL에서 userId를 받아옴
@@ -17,11 +20,52 @@ const UserPage = () => {
   const maxUserId = 17; // 최대 사용자 ID 설정
   const [isListVisible, setIsListVisible] = useState(false);
   const panelRef = useRef(null);
-  const [click, setClick] = useState(true);
   const [mode, setMode] = useState(true);
+  const [click, setClick] = useState(false);
+  const [animation, setAnimation] = useState(false);
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
   const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
+  const [key, setKey] = useState("bHvT0SNITuU");
+  const [bookName, setBookName] = useState("Book Name");  
 
+
+  const bookRef = useRef(null);
+  // 책 클릭시 편집화면 활성화
+  const bookImageClick = async (e) => {
+    e.stopPropagation(); 
+    setEditBook(!editBook);
+    try {
+      const response = await fetch("https://dangil-artisticsw.site/space/3661157737", {
+        method: "GET",
+        credentials: "include" // 쿠키 포함 설정
+      });
+
+      const bookNameData = await response.json();
+      const bookNameList = bookNameData.data.user_space_data.book_list;
+      
+      setBookName()
+    } catch (error) {
+      console.error('Error handling the book name:', error);
+    }
+
+  };
+
+  useEffect(() => {
+    //화면 바깥 클릭하면 토글 목록 닫힘
+    const handleClickOutside = (event) => {
+      if (bookRef.current && !bookRef.current.contains(event.target)) {
+        setEditBook(false); // 패널 외부 클릭 시 패널 숨김
+      }
+    };
+
+    // 전역 클릭 이벤트 등록
+    document.addEventListener("click", handleClickOutside);
+
+    //컴포넌트 언마운트 시 이벤트 제거
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   // 이전 사용자로 이동하는 함수
   const handlePrevUser = () => {
@@ -37,11 +81,6 @@ const UserPage = () => {
     if (nextId <= maxUserId) {
       navigate(`/user/${nextId}`);
     }
-  };
-
-  // 메인 페이지로 이동하는 함수
-  const handleGoHome = () => {
-    navigate(-1);
   };
 
   const LeftSettingtoggle = (e) => {
@@ -69,10 +108,12 @@ const UserPage = () => {
   return (
     <div className="background">
       <div className="add-color"></div>
+
+      {/* 유튜브 관련 파트 */}
       <div className="player-box">
         <YouTube
           iframeClassName="player"
-          videoId="FSugYv8kmeo"
+          videoId={key}
           opts={{
             width: "25%",
             height: "24.9%",
@@ -82,7 +123,7 @@ const UserPage = () => {
               loop: 1, // 반복재생
               modestbranding: 1, // YouTube 로고 숨김
               mute: 1, // 음소거 (브라우저 자동재생 정책으로 인해 필요)
-              playlist: "hJzDWzEvX5E", // 반복 재생을 위해 playlist에 videoId 추가
+              playlist: "bHvT0SNITuU", // 반복 재생을 위해 playlist에 videoId 추가
             },
           }}
           //이벤트 리스너
@@ -91,7 +132,12 @@ const UserPage = () => {
           }}
         />
       </div>
-
+      <div className="change-music-window">
+        <img src={closeBtn} />
+        <div className="title">유튜브 불러오기</div>
+        <input></input>
+        <div>적용하기</div>
+      </div>
       <div className="settings">
         {/* 이전 사용자로 이동하는 버튼, 첫 번째 사용자일 경우 비활성화 */}
         <button
@@ -105,14 +151,22 @@ const UserPage = () => {
         </button>
         {/* 중간 기능 버튼 */}
         <button className="control-button">
-          <span className="icon">M</span>
+          <span
+            className="icon"
+            onClick={() => {
+              navigate("/mainpage");
+            }}
+          >
+            M
+          </span>
         </button>
-        <Panel 
-        mode={mode}
-        ref={panelRef} 
-        isListVisible={isListVisible} 
-        setIsListVisible={setIsListVisible}
-        LeftSettingtoggle={LeftSettingtoggle} />
+        <Panel
+          mode={mode}
+          ref={panelRef}
+          isListVisible={isListVisible}
+          setIsListVisible={setIsListVisible}
+          LeftSettingtoggle={LeftSettingtoggle}
+        />
 
         <button
           onClick={handleNextUser}
@@ -124,15 +178,45 @@ const UserPage = () => {
           <span className="icon">＞</span>
         </button>
       </div>
-
+      {/* 단축 버튼들 */}
+      <div className="memo-youtube-book">
+        <img src={memobutton} className="memobutton" />
+        <img src={changeMusic} className="change-music" />
+        <img src={bookbutton} className="bookbutton" />
+      </div>
       <div class="image-container">
         <img src={sun} id="sun" />
         <img src={moon} id="moon" />
       </div>
+      <div
+        className={mode ? "day-color" : "night-color"}
+        id={animation ? "active-day" : click ? "active-night" : ""}
+      />
+      <div className="bookshelfbox">
+        <div className="cols-bookbox">
+          <div className="col-book1" onClick={bookImageClick}>
+            <Book 
+            bookRef ={bookRef}
+            editBook={editBook}
+            setEditBook={setEditBook}
+            bookName={bookName}
+            setBookName={setBookName}/>
+          </div>
+          <div className="col-book2"></div>
+          <div className="col-book3"></div>
+          <div className="col-book4"></div>
+        </div>
+
+        <div className="rows-bookbox">
+          <div className="row-book1"></div>
+          <div className="row-book2"></div>
+          <div className="row-book3"></div>
+          <div className="row-book4"></div>
+        </div>
+      </div>
 
       {mode ? (
         <svg
-          className="day"
           width="100%"
           height="100%"
           viewBox="0 0 1916 1080"
@@ -455,13 +539,20 @@ const UserPage = () => {
               fill="white"
             />
             <path
-              id="stand-head"
+              className="stand-head"
               onClick={() => {
-                setClick(false);
-                // setTimeout(() => {
-                //   setMode(!mode);
-                // }, 3000);
-                setMode(!mode);
+                setAnimation(true);
+                setClick(true);
+                const sun = document.getElementById("sun");
+                const moon = document.getElementById("moon");
+                sun.classList.remove("night-day");
+                moon.classList.remove("night-day");
+                sun.classList.add("animate");
+                moon.classList.add("animate");
+
+                setTimeout(() => {
+                  setMode(!mode);
+                }, 3950);
               }}
               fill-rule="evenodd"
               clipRule="evenodd"
@@ -1384,8 +1475,18 @@ const UserPage = () => {
             <path
               fill-rule="evenodd"
               clipRule="evenodd"
+              className="stand-head"
               onClick={() => {
-                setMode(!mode);
+                setAnimation(false);
+                const sun = document.getElementById("sun");
+                const moon = document.getElementById("moon");
+                sun.classList.remove("animate");
+                moon.classList.remove("animate");
+                sun.classList.add("night-day");
+                moon.classList.add("night-day");
+                setTimeout(() => {
+                  setMode(!mode);
+                }, 1300);
               }}
               d="M264.361 265.024C258.23 279.246 259.056 322.299 277.422 353.118L309.023 314.232L340.623 275.347L340.623 275.347L372.006 236.728L404.093 197.245C370.05 185.717 327.418 194.106 314.606 203.195L288.937 234.781L288.938 234.781L264.361 265.024Z"
               fill="#100C0A"
@@ -1781,12 +1882,14 @@ const UserPage = () => {
             />
             <g filter="url(#filter1_f_2072_1393)">
               <path
+                style={{ visibility: animation ? "visible" : "hidden" }}
                 d="M493.457 922.229L275.599 352.991L401.544 197.014L1918.73 922.229H493.457Z"
                 fill="url(#paint13_linear_2072_1393)"
                 fillOpacity="0.5"
               />
             </g>
             <path
+              style={{ visibility: animation ? "visible" : "hidden" }}
               d="M495.694 922.229L277.835 352.991L403.78 197.014L1920.96 922.229H495.694Z"
               fill="url(#paint14_linear_2072_1393)"
               fillOpacity="0.8"

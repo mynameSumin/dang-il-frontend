@@ -64,7 +64,7 @@
 }
 .add-color {
   position: fixed;
-  border-radius: px;
+  border-radius: 10px;
   width: 25%;
   height: 24.9%;
   left: 36.5%;
@@ -81,18 +81,17 @@
 .player-box {
   position: fixed;
   width: fit-content;
-  padding-bottom: 200px; /* 4:3 비율을 유지하기 위한 패딩 (3 / 4 = 75%) */
-  height: 0; /* 높이는 padding-bottom으로 결정됨 */
+  padding-bottom: 200px;
+  height: 0;
 }
 
 #desktop-bottom {
   z-index: 1000;
 }
 
-#desktop-bottom {
-  z-index: 1000;
+.stand-head {
+  pointer-events: all;
 }
-
 @keyframes sunSet {
   0% {
     transform: translateY(0px);
@@ -105,11 +104,29 @@
 @keyframes moonRise {
   0% {
     transform-box: fill-box;
-    transform: rotate(-40deg) translateY(-200px);
+    transform: rotate(-40deg) translateY(0px);
   }
   100% {
     transform-box: fill-box;
-    transform: rotate(0deg) translateY(0px);
+    transform: rotate(0deg) translateY(110px);
+  }
+}
+@keyframes sunRise {
+  0% {
+    transform: rotate(20deg) translateY(-400px);
+  }
+  100% {
+    transform: translateY(0px); /* 끝점을 기존의 시작점으로 */
+  }
+}
+@keyframes moonSet {
+  0% {
+    transform-box: fill-box;
+    transform: rotate(0deg) translateY(110px); /* 시작점을 기존의 끝점으로 */
+  }
+  100% {
+    transform-box: fill-box;
+    transform: rotate(-40deg) translateY(0px); /* 끝점을 기존의 시작점으로 */
   }
 }
 
@@ -117,18 +134,39 @@
   position: relative;
   top: -100px;
   z-index: -2;
-  animation: sunSet 6s infinite;
+  animation-fill-mode: forwards;
+}
+
+#sun.animate {
+  animation: sunSet 4s 1 forwards;
   transform-box: fill-box;
-  animation-delay: 1s;
+  animation-delay: 0.5s;
+}
+
+#sun.night-day {
+  animation: sunRise 4s 1 forwards;
+  transform-box: fill-box;
+  animation-delay: 0s;
+  transform: translateY(-400px);
 }
 
 #moon {
   position: relative;
-  top: -70px;
+  animation-fill-mode: forwards;
+  top: -200px;
   left: 100px;
   z-index: -2;
-  animation: moonRise 4s infinite;
-  animation-delay: 6s;
+}
+
+#moon.animate {
+  animation: moonRise 3s 1 forwards;
+  animation-delay: 1s;
+}
+
+#moon.night-day {
+  animation: moonSet 3s 1 forwards;
+  animation-delay: 0.5s;
+  transform: rotate(0deg) translateY(110px);
 }
 
 .image-container {
@@ -138,6 +176,223 @@
   height: 490px;
   top: 72px;
   right: 62px;
-  z-index: 0;
+  z-index: 102;
   overflow: hidden;
+}
+@keyframes light {
+  0% {
+    background: #3f2871;
+    opacity: 0.2;
+  }
+  10% {
+    background: #3f2871;
+    opacity: 0.4;
+  }
+  60% {
+    background: #251c43;
+    opacity: 0.7;
+  }
+  100% {
+    background: #251c43;
+    opacity: 0.95;
+  }
+}
+@keyframes lightDay {
+  1% {
+    background: #251c43;
+    opacity: 0.9;
+  }
+  20% {
+    background: #251c43;
+    opacity: 0.8;
+  }
+  40% {
+    background: #251c43;
+    opacity: 0.7;
+  }
+  60% {
+    background: #7760a8;
+    opacity: 0.4;
+  }
+  90% {
+    background: #7fa6d1;
+    opacity: 0.2;
+  }
+  100% {
+    background: radial-gradient(
+      49.92% 50% at 51.45% 50.64%,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(63, 105, 242, 0.2) 100%
+    );
+    background-blend-mode: multiply;
+    opacity: 0.7;
+  }
+}
+
+.day-color {
+  pointer-events: none;
+  z-index: 100;
+  background: radial-gradient(
+    49.92% 50% at 51.45% 50.64%,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(63, 105, 242, 0.2) 100%
+  );
+  background-blend-mode: multiply;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#active-day,
+#active-night {
+  animation: none;
+}
+
+#active-day {
+  animation: light 4s ease 1;
+  background-size: cover;
+}
+
+.night-color {
+  pointer-events: none;
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#active-night {
+  animation: lightDay 4s ease 1 !important;
+  background-size: cover;
+}
+
+/* 유튜브 관련 */
+.memo-youtube-book {
+  position: absolute;
+  right: 4vw;
+  top: 90vh;    
+  width: 13vw;
+  height: 5vh;  
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 2px solid #000; /* 2픽셀 두께의 검은색 테두리를 추가 */
+}
+
+/* .change-music {
+  position: fixed;
+  bottom: 35px;
+  right: 150px;
+} */
+
+.change-music-window {
+  position: fixed;
+  width: 22%;
+  height: 20%;
+  top: 40%;
+  left: 38%;
+  gap: 0px;
+  border-radius: 23px;
+  opacity: 0px;
+  z-index: 300;
+  background: #ffffff;
+}
+
+.title {
+  color: #6f7fb5;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 21.09px;
+  text-align: left;
+}
+
+.bookshelfbox {
+  position: absolute;
+  left: 72vw;   /* 뷰포트 너비의 80% 위치 */
+  top: 63.5vh;    /* 뷰포트 높이의 50% 위치 */
+  width: 18vw;  /* 뷰포트 너비의 10% 만큼 너비 */
+  height: 18vh; /* 뷰포트 높이의 20% 만큼 높이 */
+  display:flex;
+  flex-direction: row;
+}
+
+.cols-bookbox {
+  display:flex;
+  flex-direction:row;
+  width:38%;
+  height:100%;
+}
+
+.col-book1 {
+  border-radius: 5px;
+  background-color: yellow;
+  width:25%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.col-book2 {
+  border-radius: 5px;
+  background-color: black;
+  width:25%;
+  height: 100%;
+}
+.col-book3 {
+  border-radius: 5px;
+  background-color: blue;
+  width:25%;
+  height: 100%;
+}
+.col-book4 {
+  border-radius: 5px;
+  background-color: red;
+  width:25%;
+  height: 100%;
+}
+
+.rows-bookbox {
+  width:62%;
+  height:100%;
+  position: relative;
+}
+
+.row-book1{
+  border-radius: 5px;
+  position: absolute;
+  background-color: black;
+  bottom:0;
+  left:1%;
+  width:90%;
+  height:15%;
+}
+.row-book2{
+  border-radius: 5px;
+  position: absolute;
+  background-color: blue;
+  bottom:15%;
+  left:5%;
+  width:90%;
+  height:15%;
+}
+.row-book3{
+  border-radius: 5px;
+  position: absolute;
+  background-color: green;
+  bottom:30%;
+  left:1%;
+  width:90%;
+  height:15%;
+}
+.row-book4{
+  border-radius: 5px;
+  position: absolute;
+  background-color: pink;
+  bottom:45%;
+  left:5%;
+  width:90%;
+  height:15%;
 }

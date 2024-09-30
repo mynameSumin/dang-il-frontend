@@ -8,6 +8,7 @@
     border-radius: 22px;
     box-shadow: 0px 0px 50px rgba(0, 16, 73, 0.5);
     transform: translateX(200%); /* 초기에는 보이지 않음 */
+    z-index: 1000; /* 높은 값으로 설정하여 다른 요소들보다 위에 오도록 함 */
   }
   
   .book-page.visible {
