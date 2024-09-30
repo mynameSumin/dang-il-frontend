@@ -100,7 +100,9 @@ const UserPage = () => {
           className="change-music"
           onClick={() => {
             setShowWindow(!showWindow);
-            setActiveWindow("change-music");
+            activeWindow == "change-music"
+              ? setActiveWindow("")
+              : setActiveWindow("change-music");
           }}
         />
         <img src={bookbutton} className="bookbutton" />

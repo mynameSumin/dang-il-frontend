@@ -1,6 +1,5 @@
 import closeBtn from "../assets/close.png";
 import { useState } from "react";
-import "../styles/AddMemo.css";
 
 const AddMemo = ({
   setKey,
@@ -48,7 +47,7 @@ const AddMemo = ({
   return (
     <>
       <div
-        className="add-memo-window"
+        className="change-music-window"
         id={activeWindow == "memo" ? "open" : ""}
       >
         <img
