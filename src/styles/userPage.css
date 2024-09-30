@@ -326,12 +326,14 @@
   color: #6f7fb5;
   box-shadow: 0px 0px 4px 0px #8c9dd599;
 }
+
 .close-btn {
   position: relative;
   left: 90%;
-  top: 10%;
+  top: 20px;
   cursor: pointer;
 }
+
 .complete {
   position: relative;
   cursor: pointer;

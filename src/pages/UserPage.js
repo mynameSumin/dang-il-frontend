@@ -34,8 +34,13 @@ const UserPage = () => {
 
   const handleClick = (windowType) => {
     // 창을 열 때 창 타입 설정 (음악 창 또는 메모 창)
-    setActiveWindow(windowType);
-    setShowWindow(true);
+    if (activeWindow == windowType) {
+      setShowWindow(false);
+      setActiveWindow("");
+    } else {
+      setActiveWindow(windowType);
+      setShowWindow(true);
+    }
   };
 
   const bookRef = useRef(null);
@@ -91,18 +96,14 @@ const UserPage = () => {
           src={memobutton}
           className="add-memo"
           onClick={() => {
-            setShowWindow(true);
-            setActiveWindow("memo");
+            handleClick("add-memo");
           }}
         />
         <img
           src={changeMusic}
           className="change-music"
           onClick={() => {
-            setShowWindow(!showWindow);
-            activeWindow == "change-music"
-              ? setActiveWindow("")
-              : setActiveWindow("change-music");
+            handleClick("change-music");
           }}
         />
         <img src={bookbutton} className="bookbutton" />
