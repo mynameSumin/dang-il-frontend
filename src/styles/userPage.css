@@ -47,6 +47,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: filter 0.3s ease;
 }
 
 #stand {
@@ -194,13 +195,13 @@
   }
   100% {
     background: #251c43;
-    opacity: 0.95;
+    opacity: 0.85;
   }
 }
 @keyframes lightDay {
   1% {
     background: #251c43;
-    opacity: 0.9;
+    opacity: 0.85;
   }
   20% {
     background: #251c43;
@@ -274,6 +275,8 @@
   position: fixed;
   bottom: 35px;
   right: 150px;
+  z-index: 100;
+  cursor: pointer;
 }
 
 .change-music-window {
@@ -287,13 +290,83 @@
   opacity: 0px;
   z-index: 300;
   background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
 }
 
-.title {
+#open.change-music-window {
+  position: fixed;
+  opacity: 1;
+  display: block;
+  z-index: 900;
+  pointer-events: all;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.music-title {
   color: #6f7fb5;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 21.09px;
+  text-align: left;
+  margin: 5% 6% 4% 6%;
+}
+
+.url {
+  margin-left: 6%;
+  border: none;
+  width: 85%;
+  height: 13%;
+  border-radius: 3px;
+  color: #6f7fb5;
+  box-shadow: 0px 0px 4px 0px #8c9dd599;
+}
+
+.close-btn {
+  position: relative;
+  left: 90%;
+  top: 10%;
+  cursor: pointer;
+}
+.complete {
+  position: relative;
+  cursor: pointer;
+  top: 6%;
+  left: 75%;
+  color: #d9ddec;
   font-family: Roboto;
   font-size: 18px;
   font-weight: 600;
   line-height: 21.09px;
   text-align: left;
+}
+
+#ok {
+  color: #6f7fb5;
+}
+
+input::placeholder {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 17.58px;
+  text-align: left;
+  color: #6f7fb580;
+}
+
+.error {
+  color: #e98888;
+  margin-left: 6%;
+  margin-top: 3%;
+  height: 8%;
+  font-size: 15px;
+}
+
+.background#blur {
+  filter: blur(4px) brightness(0.7);
+  transition: filter 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
