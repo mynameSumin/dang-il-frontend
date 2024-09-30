@@ -4,12 +4,13 @@ import YouTube from "react-youtube";
 import Clock from "../components/Clock.js";
 import Book from "../components/Book";
 import "../styles/userPage.css";
-
+import AddMemo from "../assets/AddMemo.png";
 import sun from "../assets/sun.png";
 import moon from "../assets/moon.png";
 import changeMusic from "../assets/chageMusic.png";
 import Panel from "../components/Panel"; // 새로운 컴포넌트 import
 import AddYoutube from "../components/AddYoutube.js";
+import Memo from "../components/AddMemo.js";
 
 const UserPage = () => {
   const { userId } = useParams(); // URL에서 userId를 받아옴
@@ -25,6 +26,13 @@ const UserPage = () => {
   const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
   const [key, setKey] = useState("bHvT0SNITuU");
   const [showWindow, setShowWindow] = useState(false);
+  const [activeWindow, setActiveWindow] = useState("");
+
+  const handleClick = (windowType) => {
+    // 창을 열 때 창 타입 설정 (음악 창 또는 메모 창)
+    setActiveWindow(windowType);
+    setShowWindow(true);
+  };
 
   // 이전 사용자로 이동하는 함수
   const handlePrevUser = () => {
@@ -55,12 +63,30 @@ const UserPage = () => {
         className="change-music"
         onClick={() => {
           setShowWindow(!showWindow);
+          setActiveWindow("change-music");
+        }}
+      />
+      <img
+        src={AddMemo}
+        className="add-memo"
+        onClick={() => {
+          setShowWindow(true);
+          setActiveWindow("memo");
         }}
       />
       <AddYoutube
         setKey={setKey}
         showWindow={showWindow}
         setShowWindow={setShowWindow}
+        activeWindow={activeWindow}
+        setActiveWindow={setActiveWindow}
+      />
+      <Memo
+        setKey={setKey}
+        showWindow={showWindow}
+        setShowWindow={setShowWindow}
+        activeWindow={activeWindow}
+        setActiveWindow={setActiveWindow}
       />
       <div className="background" id={showWindow ? "blur" : ""}>
         <div className="add-color"></div>

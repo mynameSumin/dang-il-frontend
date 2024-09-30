@@ -370,3 +370,11 @@ input::placeholder {
   position: relative;
   z-index: 1;
 }
+
+.add-memo {
+  position: fixed;
+  bottom: 35px;
+  right: 230px;
+  z-index: 100;
+  cursor: pointer;
+}

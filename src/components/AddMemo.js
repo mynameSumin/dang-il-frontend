@@ -1,7 +1,7 @@
 import closeBtn from "../assets/close.png";
 import { useState } from "react";
 
-const AddYoutube = ({
+const AddMemo = ({
   setKey,
   showWindow,
   setShowWindow,
@@ -48,7 +48,7 @@ const AddYoutube = ({
     <>
       <div
         className="change-music-window"
-        id={activeWindow == "change-music" ? "open" : ""}
+        id={activeWindow == "memo" ? "open" : ""}
       >
         <img
           src={closeBtn}
@@ -80,4 +80,4 @@ const AddYoutube = ({
   );
 };
 
-export default AddYoutube;
+export default AddMemo;
