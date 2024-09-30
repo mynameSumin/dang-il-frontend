@@ -13,6 +13,7 @@ import memobutton from "../assets/memobutton.png";
 import closeBtn from "../assets/close.png";
 import Panel from "../components/Panel"; // 새로운 컴포넌트 import
 import AddYoutube from "../components/AddYoutube.js";
+import Memo from "../components/AddMemo.js";
 
 const UserPage = () => {
   const { userId } = useParams(); // URL에서 userId를 받아옴
@@ -27,47 +28,43 @@ const UserPage = () => {
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
   const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
   const [key, setKey] = useState("bHvT0SNITuU");
-  const [bookName, setBookName] = useState("Book Name");  
+  const [bookName, setBookName] = useState("Book Name");
   const [showWindow, setShowWindow] = useState(false);
+  const [activeWindow, setActiveWindow] = useState("");
 
+  const handleClick = (windowType) => {
+    // 창을 열 때 창 타입 설정 (음악 창 또는 메모 창)
+    if (activeWindow == windowType) {
+      setShowWindow(false);
+      setActiveWindow("");
+    } else {
+      setActiveWindow(windowType);
+      setShowWindow(true);
+    }
+  };
 
   const bookRef = useRef(null);
   // 책 클릭시 편집화면 활성화
   const bookImageClick = async (e) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     setEditBook(!editBook);
     try {
-      const response = await fetch("https://dangil-artisticsw.site/space/3661157737", {
-        method: "GET",
-        credentials: "include" // 쿠키 포함 설정
-      });
+      const response = await fetch(
+        "https://dangil-artisticsw.site/space/3661157737",
+        {
+          method: "GET",
+          credentials: "include", // 쿠키 포함 설정
+        }
+      );
 
       const bookNameData = await response.json();
       const bookNameList = bookNameData.data.user_space_data.book_list;
-      
-      setBookName()
+
+      setBookName();
     } catch (error) {
-      console.error('Error handling the book name:', error);
+      console.error("Error handling the book name:", error);
     }
-
   };
-
-  // useEffect(() => {
-  //   //화면 바깥 클릭하면 토글 목록 닫힘
-  //   const handleClickOutside = (event) => {
-  //     if (bookRef.current && !bookRef.current.contains(event.target)) {
-  //       setEditBook(false); // 패널 외부 클릭 시 패널 숨김
-  //     }
-  //   };
-
-  //   // 전역 클릭 이벤트 등록
-  //   document.addEventListener("click", handleClickOutside);
-
-  //   //컴포넌트 언마운트 시 이벤트 제거
-  //   return () => {
-  //     document.removeEventListener("click", handleClickOutside);
-  //   };
-  // }, []);
 
   // 이전 사용자로 이동하는 함수
   const handlePrevUser = () => {
@@ -93,17 +90,39 @@ const UserPage = () => {
   return (
     <div>
       {/* 단축 버튼들 */}
-      {/* <img
-        src={changeMusic}
-        className="change-music"
-        onClick={() => {
-          setShowWindow(!showWindow);
-        }}
-      /> */}
+
+      <div className="memo-youtube-book">
+        <img
+          src={memobutton}
+          className="add-memo"
+          onClick={() => {
+            handleClick("add-memo");
+          }}
+        />
+        <img
+          src={changeMusic}
+          className="change-music"
+          onClick={() => {
+            handleClick("change-music");
+          }}
+        />
+        <img src={bookbutton} className="bookbutton" />
+      </div>
+      {/*
+       */}
       <AddYoutube
         setKey={setKey}
         showWindow={showWindow}
         setShowWindow={setShowWindow}
+        activeWindow={activeWindow}
+        setActiveWindow={setActiveWindow}
+      />
+      <Memo
+        setKey={setKey}
+        showWindow={showWindow}
+        setShowWindow={setShowWindow}
+        activeWindow={activeWindow}
+        setActiveWindow={setActiveWindow}
       />
       <div className="background" id={showWindow ? "blur" : ""}>
         <div className="add-color"></div>
@@ -162,179 +181,72 @@ const UserPage = () => {
             LeftSettingtoggle={LeftSettingtoggle}
           />
 
-        <button
-          onClick={handleNextUser}
-          disabled={parseInt(userId) === maxUserId}
-          className={`control-button ${
-            parseInt(userId) === maxUserId ? "invisible" : ""
-          }`}
-        >
-          <span className="icon">＞</span>
-        </button>
-      </div>
-      {/* 단축 버튼들 */}
-      <div className="memo-youtube-book">
-        <img src={memobutton} className="memobutton" />
-        <img src={changeMusic} className="change-music" />
-        <img src={bookbutton} className="bookbutton" />
-      </div>
-      <div class="image-container">
-        <img src={sun} id="sun" />
-        <img src={moon} id="moon" />
-      </div>
-      <div
-        className={mode ? "day-color" : "night-color"}
-        id={animation ? "active-day" : click ? "active-night" : ""}
-      />
-      <div className="bookshelfbox">
-        <div className="cols-bookbox">
-          <div className="col-book1" onClick={bookImageClick}>
-            <Book 
-            bookRef ={bookRef}
-            editBook={editBook}
-            setEditBook={setEditBook}
-            bookName={bookName}
-            setBookName={setBookName}/>
+          <button
+            onClick={handleNextUser}
+            disabled={parseInt(userId) === maxUserId}
+            className={`control-button ${
+              parseInt(userId) === maxUserId ? "invisible" : ""
+            }`}
+          >
+            <span className="icon">＞</span>
+          </button>
+        </div>
+
+        <div class="image-container">
+          <img src={sun} id="sun" />
+          <img src={moon} id="moon" />
+        </div>
+        <div
+          className={mode ? "day-color" : "night-color"}
+          id={animation ? "active-day" : click ? "active-night" : ""}
+        />
+        <div className="bookshelfbox">
+          <div className="cols-bookbox">
+            <div className="col-book1" onClick={bookImageClick}>
+              <Book
+                bookRef={bookRef}
+                editBook={editBook}
+                setEditBook={setEditBook}
+                bookName={bookName}
+                setBookName={setBookName}
+              />
+            </div>
+            <div className="col-book2"></div>
+            <div className="col-book3"></div>
+            <div className="col-book4"></div>
           </div>
-          <div className="col-book2"></div>
-          <div className="col-book3"></div>
-          <div className="col-book4"></div>
+
+          <div className="rows-bookbox">
+            <div className="row-book1"></div>
+            <div className="row-book2"></div>
+            <div className="row-book3"></div>
+            <div className="row-book4"></div>
+          </div>
         </div>
 
-        <div className="rows-bookbox">
-          <div className="row-book1"></div>
-          <div className="row-book2"></div>
-          <div className="row-book3"></div>
-          <div className="row-book4"></div>
-        </div>
-      </div>
-
-      {mode ? (
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 1916 1080"
-          preserveAspectRatio="none"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g clip-path="url(#clip0_397_66)">
-            <rect
-              width="1920"
-              height="1080"
-              transform="translate(0.15918)"
-              fill="#656565"
-            />
-            <rect
-              opacity="0.5"
-              x="1493.11"
-              y="94.5652"
-              width="5.29932"
-              height="293.696"
-              fill="#C8DBFF"
-            />
-            <rect
-              opacity="0.5"
-              x="1836.27"
-              y="94.5652"
-              width="5.29932"
-              height="293.696"
-              fill="#C8DBFF"
-            />
-            <rect
-              opacity="0.5"
-              x="1176.77"
-              y="393.561"
-              width="5.29932"
-              height="321.637"
-              transform="rotate(-90 1176.77 393.561)"
-              fill="#C8DBFF"
-            />
-            <rect
-              opacity="0.5"
-              x="1519.93"
-              y="393.561"
-              width="5.29932"
-              height="321.637"
-              transform="rotate(-90 1519.93 393.561)"
-              fill="#C8DBFF"
-            />
-            <rect
-              opacity="0.5"
-              x="1176.77"
-              y="549.931"
-              width="5.29932"
-              height="321.637"
-              transform="rotate(-90 1176.77 549.931)"
-              fill="#C8DBFF"
-            />
-            <rect
-              opacity="0.5"
-              x="1519.93"
-              y="549.931"
-              width="5.29932"
-              height="321.637"
-              transform="rotate(-90 1519.93 549.931)"
-              fill="#C8DBFF"
-            />
-            <rect
-              opacity="0.5"
-              x="1176.77"
-              y="713.593"
-              width="5.29932"
-              height="321.637"
-              transform="rotate(-90 1176.77 713.593)"
-              fill="#C8DBFF"
-            />
-            <rect
-              opacity="0.5"
-              x="1519.93"
-              y="713.593"
-              width="5.29932"
-              height="321.637"
-              transform="rotate(-90 1519.93 713.593)"
-              fill="#C8DBFF"
-            />
-            <rect
-              opacity="0.5"
-              x="1493.11"
-              y="414.586"
-              width="5.29932"
-              height="130.046"
-              fill="#C8DBFF"
-            />
-            <rect
-              opacity="0.5"
-              x="1836.27"
-              y="414.586"
-              width="5.29932"
-              height="130.046"
-              fill="#C8DBFF"
-            />
-            <rect
-              opacity="0.5"
-              x="1493.11"
-              y="570.954"
-              width="5.29932"
-              height="137.34"
-              fill="#C8DBFF"
-            />
-            <rect
-              opacity="0.5"
-              x="1836.27"
-              y="570.954"
-              width="5.29932"
-              height="137.34"
-              fill="#C8DBFF"
-            />
-            <g filter="url(#filter0_f_397_66)">
+        {mode ? (
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 1916 1080"
+            preserveAspectRatio="none"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clip-path="url(#clip0_397_66)">
+              <rect
+                width="1920"
+                height="1080"
+                transform="translate(0.15918)"
+                fill="#656565"
+              />
               <rect
                 opacity="0.5"
                 x="1493.11"
                 y="94.5652"
                 width="5.29932"
                 height="293.696"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
               <rect
                 opacity="0.5"
@@ -342,7 +254,7 @@ const UserPage = () => {
                 y="94.5652"
                 width="5.29932"
                 height="293.696"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
               <rect
                 opacity="0.5"
@@ -351,7 +263,7 @@ const UserPage = () => {
                 width="5.29932"
                 height="321.637"
                 transform="rotate(-90 1176.77 393.561)"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
               <rect
                 opacity="0.5"
@@ -360,7 +272,7 @@ const UserPage = () => {
                 width="5.29932"
                 height="321.637"
                 transform="rotate(-90 1519.93 393.561)"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
               <rect
                 opacity="0.5"
@@ -369,7 +281,7 @@ const UserPage = () => {
                 width="5.29932"
                 height="321.637"
                 transform="rotate(-90 1176.77 549.931)"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
               <rect
                 opacity="0.5"
@@ -378,7 +290,7 @@ const UserPage = () => {
                 width="5.29932"
                 height="321.637"
                 transform="rotate(-90 1519.93 549.931)"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
               <rect
                 opacity="0.5"
@@ -387,7 +299,7 @@ const UserPage = () => {
                 width="5.29932"
                 height="321.637"
                 transform="rotate(-90 1176.77 713.593)"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
               <rect
                 opacity="0.5"
@@ -396,7 +308,7 @@ const UserPage = () => {
                 width="5.29932"
                 height="321.637"
                 transform="rotate(-90 1519.93 713.593)"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
               <rect
                 opacity="0.5"
@@ -404,7 +316,7 @@ const UserPage = () => {
                 y="414.586"
                 width="5.29932"
                 height="130.046"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
               <rect
                 opacity="0.5"
@@ -412,7 +324,7 @@ const UserPage = () => {
                 y="414.586"
                 width="5.29932"
                 height="130.046"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
               <rect
                 opacity="0.5"
@@ -420,7 +332,7 @@ const UserPage = () => {
                 y="570.954"
                 width="5.29932"
                 height="137.34"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
               <rect
                 opacity="0.5"
@@ -428,121 +340,224 @@ const UserPage = () => {
                 y="570.954"
                 width="5.29932"
                 height="137.34"
-                fill="#CEDFFF"
+                fill="#C8DBFF"
               />
-            </g>
-            <path
-              fill-rule="evenodd"
-              clipRule="evenodd"
-              d="M1149.16 68.8652H1863.16V734H1149.16V68.8652ZM1519.37 94.5942H1835.54V388.256H1519.37V94.5942ZM1519.37 414.609H1835.54V544.628H1519.37V414.609ZM1493.01 544.628V414.609H1176.78V544.628H1493.01ZM1176.78 570.98H1493.01V708.271H1176.78V570.98ZM1519.37 570.98H1835.54V708.271H1519.37V570.98ZM1493.01 94.5942V388.256H1176.78V94.5942H1493.01Z"
-              fill="#808EBD"
-            />
-            <rect
-              x="232.691"
-              width="1688.2"
-              height="1080"
-              fill="url(#paint0_linear_397_66)"
-            />
-            <rect
-              x="0.15918"
-              width="246.285"
-              height="1080"
-              fill="url(#paint1_linear_397_66)"
-            />
-            <rect
-              x="412.779"
-              y="595.257"
-              width="492.723"
-              height="83.2285"
-              transform="rotate(90 412.779 595.257)"
-              fill="#6B7AB2"
-            />
-            <path
-              d="M412.314 722.463H876.787L805.475 751.436H338.576L412.314 722.463Z"
-              fill="#A4B5ED"
-            />
-            <path
-              d="M412.882 907.478H876.79L806.331 942.666H338.883L412.882 907.478Z"
-              fill="#A4B5ED"
-            />
-            <rect
-              x="876.788"
-              y="543.709"
-              width="544.271"
-              height="83.2285"
-              transform="rotate(90 876.788 543.709)"
-              fill="#6B7AB2"
-            />
-            <path
-              fill-rule="evenodd"
-              clipRule="evenodd"
-              d="M303.762 562.435H338.929H770.309H805.476V597.602V751.163V786.33V939.892V975.059V1087.98H770.309V975.059H338.929V1087.98H303.762V975.059V939.892V786.33V751.163V597.602V562.435ZM770.309 939.892V786.33H338.929V939.892H770.309ZM770.309 751.163V597.602H338.929V751.163H770.309Z"
-              fill="#8095CE"
-            />
-            <path
-              d="M407.263 543.709H876.788L805.476 562.435H303.762L407.263 543.709Z"
-              fill="#A4B5ED"
-            />
-            <rect
-              x="388.342"
-              y="137.539"
-              width="512.512"
-              height="232.461"
-              fill="#AAB7D3"
-            />
-            <rect
-              x="384.118"
-              y="137.539"
-              width="512.512"
-              height="232.461"
-              fill="url(#paint2_linear_397_66)"
-            />
-            <rect
-              x="246.444"
-              y="192.052"
-              width="11.1416"
-              height="46.8813"
-              rx="5.5708"
-              transform="rotate(129.099 246.444 192.052)"
-              fill="#154287"
-            />
-            <rect
-              x="222.282"
-              y="165.824"
-              width="12.4586"
-              height="322.622"
-              transform="rotate(33.333 222.282 165.824)"
-              fill="#154287"
-            />
-            <rect
-              x="63.2725"
-              y="375.527"
-              width="12.4586"
-              height="704.473"
-              fill="#154287"
-            />
-            <path
-              d="M314.692 203.018L264.111 265.261L233.375 240.284C216.187 226.316 213.577 201.059 227.545 183.871C241.512 166.683 266.769 164.073 283.957 178.041L314.692 203.018Z"
-              fill="url(#paint3_linear_397_66)"
-            />
-            <circle
-              cx="333.122"
-              cy="270.258"
-              r="41.2473"
-              transform="rotate(129.099 333.122 270.258)"
-              fill="white"
-            />
-            <path
-              className="stand-head"
-              onClick={() => {
-                setAnimation(true);
-                setClick(true);
-                const sun = document.getElementById("sun");
-                const moon = document.getElementById("moon");
-                sun.classList.remove("night-day");
-                moon.classList.remove("night-day");
-                sun.classList.add("animate");
-                moon.classList.add("animate");
+              <g filter="url(#filter0_f_397_66)">
+                <rect
+                  opacity="0.5"
+                  x="1493.11"
+                  y="94.5652"
+                  width="5.29932"
+                  height="293.696"
+                  fill="#CEDFFF"
+                />
+                <rect
+                  opacity="0.5"
+                  x="1836.27"
+                  y="94.5652"
+                  width="5.29932"
+                  height="293.696"
+                  fill="#CEDFFF"
+                />
+                <rect
+                  opacity="0.5"
+                  x="1176.77"
+                  y="393.561"
+                  width="5.29932"
+                  height="321.637"
+                  transform="rotate(-90 1176.77 393.561)"
+                  fill="#CEDFFF"
+                />
+                <rect
+                  opacity="0.5"
+                  x="1519.93"
+                  y="393.561"
+                  width="5.29932"
+                  height="321.637"
+                  transform="rotate(-90 1519.93 393.561)"
+                  fill="#CEDFFF"
+                />
+                <rect
+                  opacity="0.5"
+                  x="1176.77"
+                  y="549.931"
+                  width="5.29932"
+                  height="321.637"
+                  transform="rotate(-90 1176.77 549.931)"
+                  fill="#CEDFFF"
+                />
+                <rect
+                  opacity="0.5"
+                  x="1519.93"
+                  y="549.931"
+                  width="5.29932"
+                  height="321.637"
+                  transform="rotate(-90 1519.93 549.931)"
+                  fill="#CEDFFF"
+                />
+                <rect
+                  opacity="0.5"
+                  x="1176.77"
+                  y="713.593"
+                  width="5.29932"
+                  height="321.637"
+                  transform="rotate(-90 1176.77 713.593)"
+                  fill="#CEDFFF"
+                />
+                <rect
+                  opacity="0.5"
+                  x="1519.93"
+                  y="713.593"
+                  width="5.29932"
+                  height="321.637"
+                  transform="rotate(-90 1519.93 713.593)"
+                  fill="#CEDFFF"
+                />
+                <rect
+                  opacity="0.5"
+                  x="1493.11"
+                  y="414.586"
+                  width="5.29932"
+                  height="130.046"
+                  fill="#CEDFFF"
+                />
+                <rect
+                  opacity="0.5"
+                  x="1836.27"
+                  y="414.586"
+                  width="5.29932"
+                  height="130.046"
+                  fill="#CEDFFF"
+                />
+                <rect
+                  opacity="0.5"
+                  x="1493.11"
+                  y="570.954"
+                  width="5.29932"
+                  height="137.34"
+                  fill="#CEDFFF"
+                />
+                <rect
+                  opacity="0.5"
+                  x="1836.27"
+                  y="570.954"
+                  width="5.29932"
+                  height="137.34"
+                  fill="#CEDFFF"
+                />
+              </g>
+              <path
+                fill-rule="evenodd"
+                clipRule="evenodd"
+                d="M1149.16 68.8652H1863.16V734H1149.16V68.8652ZM1519.37 94.5942H1835.54V388.256H1519.37V94.5942ZM1519.37 414.609H1835.54V544.628H1519.37V414.609ZM1493.01 544.628V414.609H1176.78V544.628H1493.01ZM1176.78 570.98H1493.01V708.271H1176.78V570.98ZM1519.37 570.98H1835.54V708.271H1519.37V570.98ZM1493.01 94.5942V388.256H1176.78V94.5942H1493.01Z"
+                fill="#808EBD"
+              />
+              <rect
+                x="232.691"
+                width="1688.2"
+                height="1080"
+                fill="url(#paint0_linear_397_66)"
+              />
+              <rect
+                x="0.15918"
+                width="246.285"
+                height="1080"
+                fill="url(#paint1_linear_397_66)"
+              />
+              <rect
+                x="412.779"
+                y="595.257"
+                width="492.723"
+                height="83.2285"
+                transform="rotate(90 412.779 595.257)"
+                fill="#6B7AB2"
+              />
+              <path
+                d="M412.314 722.463H876.787L805.475 751.436H338.576L412.314 722.463Z"
+                fill="#A4B5ED"
+              />
+              <path
+                d="M412.882 907.478H876.79L806.331 942.666H338.883L412.882 907.478Z"
+                fill="#A4B5ED"
+              />
+              <rect
+                x="876.788"
+                y="543.709"
+                width="544.271"
+                height="83.2285"
+                transform="rotate(90 876.788 543.709)"
+                fill="#6B7AB2"
+              />
+              <path
+                fill-rule="evenodd"
+                clipRule="evenodd"
+                d="M303.762 562.435H338.929H770.309H805.476V597.602V751.163V786.33V939.892V975.059V1087.98H770.309V975.059H338.929V1087.98H303.762V975.059V939.892V786.33V751.163V597.602V562.435ZM770.309 939.892V786.33H338.929V939.892H770.309ZM770.309 751.163V597.602H338.929V751.163H770.309Z"
+                fill="#8095CE"
+              />
+              <path
+                d="M407.263 543.709H876.788L805.476 562.435H303.762L407.263 543.709Z"
+                fill="#A4B5ED"
+              />
+              <rect
+                x="388.342"
+                y="137.539"
+                width="512.512"
+                height="232.461"
+                fill="#AAB7D3"
+              />
+              <rect
+                x="384.118"
+                y="137.539"
+                width="512.512"
+                height="232.461"
+                fill="url(#paint2_linear_397_66)"
+              />
+              <rect
+                x="246.444"
+                y="192.052"
+                width="11.1416"
+                height="46.8813"
+                rx="5.5708"
+                transform="rotate(129.099 246.444 192.052)"
+                fill="#154287"
+              />
+              <rect
+                x="222.282"
+                y="165.824"
+                width="12.4586"
+                height="322.622"
+                transform="rotate(33.333 222.282 165.824)"
+                fill="#154287"
+              />
+              <rect
+                x="63.2725"
+                y="375.527"
+                width="12.4586"
+                height="704.473"
+                fill="#154287"
+              />
+              <path
+                d="M314.692 203.018L264.111 265.261L233.375 240.284C216.187 226.316 213.577 201.059 227.545 183.871C241.512 166.683 266.769 164.073 283.957 178.041L314.692 203.018Z"
+                fill="url(#paint3_linear_397_66)"
+              />
+              <circle
+                cx="333.122"
+                cy="270.258"
+                r="41.2473"
+                transform="rotate(129.099 333.122 270.258)"
+                fill="white"
+              />
+              <path
+                className="stand-head"
+                onClick={() => {
+                  setAnimation(true);
+                  setClick(true);
+                  const sun = document.getElementById("sun");
+                  const moon = document.getElementById("moon");
+                  sun.classList.remove("night-day");
+                  moon.classList.remove("night-day");
+                  sun.classList.add("animate");
+                  moon.classList.add("animate");
 
                   setTimeout(() => {
                     setMode(!mode);

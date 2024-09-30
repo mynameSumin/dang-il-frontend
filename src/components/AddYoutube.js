@@ -1,7 +1,13 @@
 import closeBtn from "../assets/close.png";
 import { useState } from "react";
 
-const AddYoutube = ({ setKey, showWindow, setShowWindow }) => {
+const AddYoutube = ({
+  setKey,
+  showWindow,
+  setShowWindow,
+  activeWindow,
+  setActiveWindow,
+}) => {
   const [url, setUrl] = useState("");
   const [errorMessage, setErrorMessage] = useState(" ");
   const [videoId, setVideoId] = useState("");
@@ -17,6 +23,7 @@ const AddYoutube = ({ setKey, showWindow, setShowWindow }) => {
       setVideoId(match[1]); // URL에서 ID 추출
       setKey(match[1]);
       setShowWindow(false);
+      setActiveWindow("");
       setUrl("");
       return true;
     } else {
@@ -39,12 +46,18 @@ const AddYoutube = ({ setKey, showWindow, setShowWindow }) => {
 
   return (
     <>
-      <div className="change-music-window" id={showWindow ? "open" : ""}>
+      <div
+        className="change-music-window"
+        id={activeWindow == "change-music" ? "open" : ""}
+      >
         <img
           src={closeBtn}
           className="close-btn"
           alt="Close"
-          onClick={() => setShowWindow(false)}
+          onClick={() => {
+            setShowWindow(false);
+            setActiveWindow("");
+          }}
         />
         <div className="music-title">유튜브 불러오기</div>
         <input
