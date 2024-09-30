@@ -52,6 +52,11 @@
     background-color: #D3DEEE;
     }
 
+  .bookColors {
+    display: flex;
+    flex-direction: row;
+  }
+
   .book-name input {
     text-align: center;
     font-size: 15px;
@@ -93,12 +98,12 @@
     top:83%;
     right:2%;
     cursor: pointer;
-    transform: translateX(500%); /* 초기에는 보이지 않음 */
+    transform: translateX(0); /* 초기에는 보이지 않음 */
   }
-
+/* 
   .plus-icon.visible {
     transform: translateX(0);
-  }
+  } */
 
   .side-buttons {
     position: fixed;
@@ -106,16 +111,22 @@
     right:3.25%;
     cursor: pointer;
   }
-  /* .side-button1 {
-    position: fixed;
-    top: 13%;
-    right: 4%;
-    cursor: pointer;
-  }
 
-  .side-Vector {
+  /* .side-button-ellipse1 {
     position: fixed;
-    top: 80%;
-    right: 4%;
+    right: 2%; 
+    top: 75%;  
     cursor: pointer;
   } */
+  .circle {
+    width: 3.5vw;
+    height: 5.5vh;
+    right: 50vw; 
+    background-color: #D3DEEE;
+    border-radius: 50%; /* 원형 만들기 */
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+

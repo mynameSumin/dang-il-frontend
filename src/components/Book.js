@@ -6,8 +6,10 @@ import { LuEraser } from "react-icons/lu";
 import { LiaHighlighterSolid } from "react-icons/lia";
 import { FaRegFile } from "react-icons/fa6";
 import icon from "../assets/+ icon.png";
-import Ellipse from "../assets/Ellipse 2.png";
+import Ellipse from "../assets/Ellipse.png";
 import Vector from "../assets/Vector.png";
+import total from "../assets/total.png";
+import Lock from "../assets/Lock.png";
 import { useCookies } from "react-cookie";
 
 const Book = forwardRef(
@@ -95,6 +97,8 @@ const Book = forwardRef(
       console.error('Failed to update book:', error);
     }
   };
+
+
   
   // 책 이름 작성중일때 외부 클릭 차단 및 엔터 & esc로만 입력 완료 설정
   useEffect(() => {
@@ -104,7 +108,7 @@ const Book = forwardRef(
         inputRef.current && 
         !inputRef.current.contains(event.target) &&
         bookRef.current && // bookRef 추가
-      ! bookRef.current.contains(event.target)) // 책 컴포넌트 외부 클릭 감지
+        !bookRef.current.contains(event.target)) // 책 컴포넌트 외부 클릭 감지
         {
         event.preventDefault();
         event.stopPropagation(); // 클릭 이벤트 전파를 차단하여 외부 클릭 차단
@@ -116,11 +120,14 @@ const Book = forwardRef(
     return () => {
       document.removeEventListener('click', handleDocumentClick, true);
     };
-  }, [NameEditing]);
+  }, [NameEditing, inputRef]);
 
   // 책이름 관련 end
   
-
+  const HomeButton = (e) => {
+    e.stopPropagation(); // 클릭 이벤트 전파를 차단하여 외부 클릭 차단
+    setEditBook(false);
+  }
 
   // 책내용 저장
   const bookTextChange = (event) => {
@@ -178,12 +185,12 @@ const Book = forwardRef(
   };
 
   return (
+    
     <div bookRef={bookRef}>
-     {/* <img src="/path/to/book.jpg" alt="Book Image" onClick={bookImageClick} style={{ cursor: 'pointer'}}/> */}
         <div bookRef={bookRef} onClick={(e) => e.stopPropagation()} className={`book-page ${editBook ? 'visible': ''}`}>
           <div className="book-name-box">
             <div className="icon-box">
-              <RiHomeLine style={{marginLeft: "20", marginRight: "2"}}/>
+              <RiHomeLine onClick={HomeButton} style={{marginLeft: "20", marginRight: "2"}}/>
               <div className="gray-colline"></div>
               <RiDownloadLine/>
               <FaRegFile/>
@@ -206,6 +213,12 @@ const Book = forwardRef(
                   </p>
                 )}
             </div>
+            <div className="bookColors">
+                <div className="color1"></div>
+                <div className="color2"></div>
+                <div className="color3"></div>
+                <div className="color4"></div>
+            </div>
           </div>     
           <div className="gray-rowline"></div>
           <div className="book-content">
@@ -220,12 +233,23 @@ const Book = forwardRef(
             />
           </div>
         </div>
-        <img className={`plus-icon ${editBook ? 'visible': ''}`} onClick={plusMenu} src={icon} id="+ icon" />
+        <img className="plus-icon" onClick={plusMenu} src={icon} id="+ icon" />
         
         {plusButton && (
         <div className="side-buttons">
-          <img className="side-button1" src={Ellipse} id='Ellipse'></img>
-          <img className="side-Vector" src={Vector} id='Vector'></img>
+          <div class="circle">
+            <img className="side-Vector" src={Vector} id='Vector'></img>
+          </div>
+
+          {/* <div>
+            <img className="side-button-ellipse2" src={Ellipse} id='Ellipse'></img>
+            <img className="total" src={total} id='total'></img>
+          </div>
+
+          <div>
+            <img className="side-button-ellipse3" src={Ellipse} id='Ellipse'></img>
+            <img className="Lock" src={Lock} id='Lock'></img>
+          </div> */}
         </div>
       )}
     </div>
