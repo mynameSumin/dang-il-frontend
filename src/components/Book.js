@@ -150,7 +150,8 @@ const Book = forwardRef(
     }
   };
 
-  const plusMenu = () => {
+  const plusMenu = (e) => {
+    e.stopPropagation()
     setPlusButton(!plusButton);
   }
 
@@ -179,7 +180,7 @@ const Book = forwardRef(
   return (
     <div bookRef={bookRef}>
      {/* <img src="/path/to/book.jpg" alt="Book Image" onClick={bookImageClick} style={{ cursor: 'pointer'}}/> */}
-        <div bookRef={bookRef} className={`book-page ${editBook ? 'visible': ''}`}>
+        <div bookRef={bookRef} onClick={(e) => e.stopPropagation()} className={`book-page ${editBook ? 'visible': ''}`}>
           <div className="book-name-box">
             <div className="icon-box">
               <RiHomeLine style={{marginLeft: "20", marginRight: "2"}}/>

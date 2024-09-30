@@ -52,22 +52,22 @@ const UserPage = () => {
 
   };
 
-  useEffect(() => {
-    //화면 바깥 클릭하면 토글 목록 닫힘
-    const handleClickOutside = (event) => {
-      if (bookRef.current && !bookRef.current.contains(event.target)) {
-        setEditBook(false); // 패널 외부 클릭 시 패널 숨김
-      }
-    };
+  // useEffect(() => {
+  //   //화면 바깥 클릭하면 토글 목록 닫힘
+  //   const handleClickOutside = (event) => {
+  //     if (bookRef.current && !bookRef.current.contains(event.target)) {
+  //       setEditBook(false); // 패널 외부 클릭 시 패널 숨김
+  //     }
+  //   };
 
-    // 전역 클릭 이벤트 등록
-    document.addEventListener("click", handleClickOutside);
+  //   // 전역 클릭 이벤트 등록
+  //   document.addEventListener("click", handleClickOutside);
 
-    //컴포넌트 언마운트 시 이벤트 제거
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  //   //컴포넌트 언마운트 시 이벤트 제거
+  //   return () => {
+  //     document.removeEventListener("click", handleClickOutside);
+  //   };
+  // }, []);
 
   // 이전 사용자로 이동하는 함수
   const handlePrevUser = () => {
@@ -93,13 +93,13 @@ const UserPage = () => {
   return (
     <div>
       {/* 단축 버튼들 */}
-      <img
+      {/* <img
         src={changeMusic}
         className="change-music"
         onClick={() => {
           setShowWindow(!showWindow);
         }}
-      />
+      /> */}
       <AddYoutube
         setKey={setKey}
         showWindow={showWindow}
