@@ -29,14 +29,15 @@ export const getUserDataAfterLogin = async (cookies) => {
 };
 
 //logout 함수
-export const handleLogout = (e) => {
-  e.stopPropagation(); // 이벤트 전파 방지
+export const handleLogout = (logoutHandler) => {
   fetch("https://dangil-artisticsw.site/auth/logout", {
     method: "POST",
     credentials: "include",
   })
     .then((response) => {
+      console.log(response, ": hi");
       if (response.ok) {
+        logoutHandler();
         window.location.href = "/"; // 로그아웃 후 게스트 모드로 이동
       } else {
         console.error("Logout failed");
@@ -44,6 +45,7 @@ export const handleLogout = (e) => {
     })
     .catch((error) => {
       console.error("An error occurred during logout:", error);
+      console.log(error);
     });
 };
 
@@ -98,5 +100,23 @@ export const inviteFriend = async (myId, receiverId) => {
     alert("친구신청이 완료되었습니다");
   } else if (res.status == 204) {
     alert("이미 신청을 보낸 친구입니다");
+  }
+};
+
+export const saveUrl = async (myId, url) => {
+  const res = await fetch("https://dangil-artisticsw.site/youtube/video/save", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user_id: myId,
+      video_id: url,
+    }),
+  });
+
+  if (res.status == 200) {
+    alert("동영상 저장 성공");
   }
 };

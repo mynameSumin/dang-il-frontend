@@ -20,7 +20,7 @@ import {
   inviteFriend,
 } from "../utils/data";
 
-export default function MainPage() {
+export default function MainPage({ logoutHandler }) {
   const navigate = useNavigate();
   const loginContainerRef = useRef(null);
   const [cookies] = useCookies(["session_id"]);
@@ -582,7 +582,12 @@ export default function MainPage() {
           >
             아니오
           </div>
-          <div className="answer" onClick={handleLogout}>
+          <div
+            className="answer"
+            onClick={() => {
+              handleLogout(logoutHandler);
+            }}
+          >
             예
           </div>
         </div>

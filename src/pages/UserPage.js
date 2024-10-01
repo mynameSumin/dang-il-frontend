@@ -3,7 +3,6 @@ import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import YouTube from "react-youtube";
 import Clock from "../components/Clock.js";
 import Book from "../components/Book";
-import "../styles/userPage.css";
 import sun from "../assets/sun.png";
 import moon from "../assets/moon.png";
 import changeMusic from "../assets/chageMusic.png";
@@ -13,7 +12,8 @@ import closeBtn from "../assets/close.png";
 import Panel from "../components/Panel"; // 새로운 컴포넌트 import
 import AddYoutube from "../components/AddYoutube.js";
 import Memo from "../components/AddMemo.js";
-import DigitalClock from "../components/\bDigitalClock.js";
+import DigitalClock from "../components/DigitalClock.js";
+import "../styles/userPage.css";
 
 const UserPage = () => {
   const location = useLocation();

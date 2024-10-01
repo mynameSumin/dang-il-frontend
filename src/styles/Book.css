@@ -1,132 +1,131 @@
 .book-page {
-    position: fixed;
-    top:10%;
-    right:10%;
-    width: 84%; /* 16:9비율임 */
-    height: 84.5%;
-    background: #D3DEEE;
-    border-radius: 22px;
-    box-shadow: 0px 0px 50px rgba(0, 16, 73, 0.5);
-    transform: translateX(200%); /* 초기에는 보이지 않음 */
-    z-index: 1000; /* 높은 값으로 설정하여 다른 요소들보다 위에 오도록 함 */
-  }
-  
-  .book-page.visible {
-    transform: translateX(0); /* 화면에 나타남 */
-  }
+  position: fixed;
+  top: 10%;
+  right: 10%;
+  width: 84%; /* 16:9비율임 */
+  height: 84.5%;
+  background: #d3deee;
+  border-radius: 22px;
+  box-shadow: 0px 0px 50px rgba(0, 16, 73, 0.5);
+  transform: translateX(200%); /* 초기에는 보이지 않음 */
+  z-index: 1000; /* 높은 값으로 설정하여 다른 요소들보다 위에 오도록 함 */
+}
 
-  .book-name-box {
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    margin-top:20px;
-    margin-bottom:10px;
-  }
+.book-page.visible {
+  transform: translateX(0); /* 화면에 나타남 */
+}
 
-  .icon-box {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    left: 0;
-  }
+.book-name-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
 
-  .icons {
-   width:27x;
-  }
+.icon-box {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0;
+}
 
-  .icon-box > * {
-    margin-right: 15px;
-   }
+.icons {
+  width: 27x;
+}
 
-  .icon-box > *:list-child {
-    margin-right: 0px;
-  }
+.icon-box > * {
+  margin-right: 15px;
+}
 
-  .gray-colline {
-    padding: 5px;
-    border-right: 2px solid #ccc;
-  }
+.icon-box > *:list-child {
+  margin-right: 0px;
+}
 
-  .book-name {
-    cursor: 'text';
-    background-color: #D3DEEE;
-    }
+.gray-colline {
+  padding: 5px;
+  border-right: 2px solid #ccc;
+}
 
-  .bookColors {
-    display: flex;
-    flex-direction: row;
-  }
+.book-name {
+  cursor: "text";
+  background-color: #d3deee;
+}
 
-  .book-name input {
-    text-align: center;
-    font-size: 15px;
-    padding: 0px;
-  }
+.bookColors {
+  display: flex;
+  flex-direction: row;
+}
 
-  .gray-rowline {
-    border-bottom: 2px solid #ccc; /* 회색 구분선 */
-    margin-bottom: 15px;
-    margin-left:20px;
-    width:97%;
-    display:flex;
-    justify-content: center;
-    
-  }
+.book-name input {
+  text-align: center;
+  font-size: 15px;
+  padding: 0px;
+}
 
-  .book-content {
-    width:97%;
-    height:88%;
-    background: #FFFFFF;
-    border-radius: 20px;
-    margin : 0 auto;
-  }
+.gray-rowline {
+  border-bottom: 2px solid #ccc; /* 회색 구분선 */
+  margin-bottom: 15px;
+  margin-left: 20px;
+  width: 97%;
+  display: flex;
+  justify-content: center;
+}
 
-  .book-text {
-    width:100%;
-    height:100%;
-    resize:'none'; 
-  }
+.book-content {
+  width: 97%;
+  height: 88%;
+  background: #ffffff;
+  border-radius: 20px;
+  margin: 0 auto;
+}
 
-  .book-button {
-    width :40px;
-    height: 40px;
-    margin-right: 100px;
-  }
+.book-text {
+  width: 100%;
+  height: 100%;
+  resize: "none";
+}
 
-  .plus-icon {
-    position: fixed;
-    top:83%;
-    right:2%;
-    cursor: pointer;
-    transform: translateX(0); /* 초기에는 보이지 않음 */
-  }
+.book-button {
+  width: 40px;
+  height: 40px;
+  margin-right: 100px;
+}
+
+.plus-icon {
+  position: fixed;
+  top: 83%;
+  right: 2%;
+  cursor: pointer;
+  transform: translateX(0); /* 초기에는 보이지 않음 */
+}
 /* 
   .plus-icon.visible {
     transform: translateX(0);
   } */
 
-  .side-buttons {
-    position: fixed;
-    top: 83%;
-    right:3.25%;
-    cursor: pointer;
-  }
+.side-buttons {
+  position: fixed;
+  top: 83%;
+  right: 3.25%;
+  cursor: pointer;
+}
 
-  /* .side-button-ellipse1 {
+/* .side-button-ellipse1 {
     position: fixed;
     right: 2%; 
     top: 75%;  
     cursor: pointer;
   } */
-  .circle {
-    width: 3.5vw;
-    height: 5.5vh;
-    right: 50vw; 
-    background-color: #D3DEEE;
-    border-radius: 50%; /* 원형 만들기 */
-    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 
+.circle {
+  width: 3.5vw;
+  height: 5.5vh;
+  right: 50vw;
+  background-color: #d3deee;
+  border-radius: 50%; /* 원형 만들기 */
+  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
