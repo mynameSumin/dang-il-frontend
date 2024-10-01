@@ -56,7 +56,7 @@ const Digit = ({ value }) => {
 };
 
 const DigitalClock = () => {
-  const [time, setTime] = useState(3590);
+  const [time, setTime] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
 
   useEffect(() => {
@@ -91,7 +91,11 @@ const DigitalClock = () => {
         >
           <Digit value={Math.floor(hours / 10)} />
           <Digit value={hours % 10} />
-          <img src={ClockSpan} style={{ width: "10px", height: "20px" }} />
+          <img
+            src={ClockSpan}
+            className="clock-span"
+            id={timerActive ? "on" : ""}
+          />
           <Digit value={Math.floor(minutes / 10)} />
           <Digit value={minutes % 10} />
         </div>
@@ -104,7 +108,11 @@ const DigitalClock = () => {
         >
           <Digit value={Math.floor(minutes / 10)} />
           <Digit value={minutes % 10} />
-          <img src={ClockSpan} style={{ width: "10px", height: "20px" }} />
+          <img
+            src={ClockSpan}
+            className="clock-span"
+            id={timerActive ? "on" : ""}
+          />
           <Digit value={Math.floor(seconds / 10)} />
           <Digit value={seconds % 10} />
         </div>
@@ -113,19 +121,7 @@ const DigitalClock = () => {
   };
 
   return (
-    <div
-      onClick={toggleTimer}
-      style={{
-        position: "fixed",
-        right: "450px",
-        bottom: "168px",
-        zIndex: "100",
-        cursor: "pointer",
-        fontFamily: "Digital",
-        textAlign: "center",
-        userSelect: "none",
-      }}
-    >
+    <div onClick={toggleTimer} className="toggle-timer">
       {formatTime()}
     </div>
   );

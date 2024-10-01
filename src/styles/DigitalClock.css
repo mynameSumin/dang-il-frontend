@@ -63,3 +63,37 @@
   user-select: none;
   cursor: pointer;
 }
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.clock-span {
+  width: 10px;
+  height: 20px;
+  padding-top: 10px;
+}
+
+.clock-span#on {
+  animation: twinkle 1s ease infinite;
+  transition: opacity 1s ease;
+  width: 10px;
+  height: 20px;
+  padding-top: 10px;
+}
+
+.toggle-timer {
+  position: fixed;
+  right: 450px;
+  bottom: 20.8%;
+  z-index: 100;
+  cursor: pointer;
+  font-family: Digital;
+  text-align: center;
+  user-select: none;
+}
