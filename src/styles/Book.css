@@ -21,6 +21,8 @@
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .icon-box {
@@ -28,18 +30,34 @@
   align-items: center;
   position: absolute;
   left: 0;
+  cursor: pointer;
+  width: 20%;
+  height: 20%;
+}
+
+.icon-box > *:not(.home) {
+  margin-right: 20px;
+}
+
+.icon-box img {
+  width: 20px; /* 원하는 아이콘 크기 */
+  height: 20px; /* 원하는 아이콘 크기 */
+  object-fit: contain; /* 아이콘의 비율을 유지하면서 크기를 맞춤 */
+}
+
+.home {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .icons {
-  width: 27x;
+  width: 27px;
 }
 
-.icon-box > * {
-  margin-right: 15px;
-}
-
-.icon-box > *:list-child {
-  margin-right: 0px;
+.gray-colline {
+  height: 15px;
+  border-right: solid #ccc;
+  margin-right: 20px;
 }
 
 .gray-colline {
@@ -51,6 +69,30 @@
   cursor: "text";
   background-color: #d3deee;
 }
+.bookColors {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  right: 0;
+}
+.bookColors > div {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 13px;
+}
+.color1 {
+  background: linear-gradient(to bottom, #abb0e1 0%, #435190 100%);
+}
+.color2 {
+  background: linear-gradient(to bottom, #4869a8 0%, #1d2b47 100%);
+}
+.color3 {
+  background: linear-gradient(to bottom, #aa7a9e 0%, #734b6c 100%);
+}
+.color4 {
+  background: linear-gradient(to bottom, #c3afe8 0%, #6c6285 100%);
+}
 
 .bookColors {
   display: flex;
@@ -61,6 +103,14 @@
   text-align: center;
   font-size: 15px;
   padding: 0px;
+}
+.gray-rowline {
+  border-bottom: 2px solid #ccc; /* 회색 구분선 */
+  margin-bottom: 15px;
+  margin-left: 20px;
+  width: 97%;
+  display: flex;
+  justify-content: center;
 }
 
 .gray-rowline {
@@ -79,53 +129,115 @@
   border-radius: 20px;
   margin: 0 auto;
 }
-
 .book-text {
   width: 100%;
   height: 100%;
   resize: "none";
+  border-radius: 20px;
+  border: 1px solid white;
 }
 
-.book-button {
-  width: 40px;
-  height: 40px;
-  margin-right: 100px;
+.guideEsc {
+  position: fixed;
+  width: 20vw;
+  height: 5vh;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 17px;
+  box-shadow: 0px 4px 10px 0px rgba(0, 6, 60, 0.25);
+  backdrop-filter: blur(2px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #154287;
+}
+
+.Esc {
+  border-radius: 7px;
+  border: 2px solid #154287;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.circleBottom {
+  position: fixed;
+  top: 83vh;
+  right: 2vw;
+  z-index: 200;
+  cursor: default;
+}
+
+.circleMid {
+  position: fixed;
+  top: 75vh;
+  right: 2vw;
+  z-index: 200;
+  cursor: default;
+}
+
+.circleTop {
+  position: fixed;
+  top: 67vh;
+  right: 2vw;
+  z-index: 200;
+  cursor: default;
 }
 
 .plus-icon {
   position: fixed;
-  top: 83%;
-  right: 2%;
+  top: 83vh;
+  right: 2vw;
   cursor: pointer;
-  transform: translateX(0); /* 초기에는 보이지 않음 */
+  transform: translateX(0);
+  z-index: 1000;
 }
-/* 
-  .plus-icon.visible {
-    transform: translateX(0);
-  } */
 
-.side-buttons {
+.plus-icon.invisible {
+  transform: translateX(200%);
+}
+
+.total {
   position: fixed;
-  top: 83%;
-  right: 3.25%;
-  cursor: pointer;
+  top: 82.3vh;
+  right: 5.9vw;
+  z-index: 300;
+  /* 수민이 화면에서 top이랑 right 적절히 조절필요*/
 }
 
-/* .side-button-ellipse1 {
-    position: fixed;
-    right: 2%; 
-    top: 75%;  
-    cursor: pointer;
-  } */
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background: #d3deee;
+  border-radius: 0;
+}
 
-.circle {
-  width: 3.5vw;
-  height: 5.5vh;
-  right: 50vw;
-  background-color: #d3deee;
-  border-radius: 50%; /* 원형 만들기 */
-  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.X {
+  position: fixed;
+  top: 90.5vh;
+  right: 6vw;
+  z-index: 300;
+  /* 수민이 화면에서 top이랑 right 적절히 조절필요*/
+  /* x이미지로 바꿔야함*/
+}
+
+.Lock {
+  position: fixed;
+  top: 74vh;
+  right: 5.8vw;
+  z-index: 300;
+  /* 수민이 화면에서 top이랑 right 적절히 조절필요*/
+}
+
+.side-buttons.invisible {
+  transform: translateX(200%);
 }
