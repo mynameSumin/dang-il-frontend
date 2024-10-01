@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import YouTube from "react-youtube";
 import Clock from "../components/Clock.js";
 import Book from "../components/Book";
 import "../styles/userPage.css";
-
 import sun from "../assets/sun.png";
 import moon from "../assets/moon.png";
 import changeMusic from "../assets/chageMusic.png";
@@ -14,15 +13,19 @@ import closeBtn from "../assets/close.png";
 import Panel from "../components/Panel"; // 새로운 컴포넌트 import
 import AddYoutube from "../components/AddYoutube.js";
 import Memo from "../components/AddMemo.js";
+import DigitalClock from "../components/\bDigitalClock.js";
 
 const UserPage = () => {
+  const location = useLocation();
+  const { mode } = location.state;
+  const [currentMode, setCurrentMode] = useState(mode);
   const { userId } = useParams(); // URL에서 userId를 받아옴
   const navigate = useNavigate();
   const minUserId = 0; // 최소 사용자 ID 설정
   const maxUserId = 17; // 최대 사용자 ID 설정
   const [isListVisible, setIsListVisible] = useState(false);
   const panelRef = useRef(null);
-  const [mode, setMode] = useState(true);
+
   const [click, setClick] = useState(false);
   const [animation, setAnimation] = useState(false);
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
@@ -42,6 +45,19 @@ const UserPage = () => {
       setShowWindow(true);
     }
   };
+
+  useEffect(() => {
+    if (currentMode == false) {
+      setAnimation(true);
+      setClick(true);
+      const sun = document.getElementById("sun");
+      const moon = document.getElementById("moon");
+      sun.classList.remove("night-day");
+      moon.classList.remove("night-day");
+      sun.classList.add("animate");
+      moon.classList.add("animate");
+    }
+  }, []);
 
   const bookRef = useRef(null);
   // 책 클릭시 편집화면 활성화
@@ -90,7 +106,6 @@ const UserPage = () => {
   return (
     <div>
       {/* 단축 버튼들 */}
-
       <div className="memo-youtube-book">
         <img
           src={memobutton}
@@ -124,6 +139,7 @@ const UserPage = () => {
         activeWindow={activeWindow}
         setActiveWindow={setActiveWindow}
       />
+      <DigitalClock />
       <div className="background" id={showWindow ? "blur" : ""}>
         <div className="add-color"></div>
 
@@ -174,7 +190,7 @@ const UserPage = () => {
             </span>
           </button>
           <Panel
-            mode={mode}
+            mode={currentMode}
             ref={panelRef}
             isListVisible={isListVisible}
             setIsListVisible={setIsListVisible}
@@ -197,7 +213,7 @@ const UserPage = () => {
           <img src={moon} id="moon" />
         </div>
         <div
-          className={mode ? "day-color" : "night-color"}
+          className={currentMode ? "day-color" : "night-color"}
           id={animation ? "active-day" : click ? "active-night" : ""}
         />
         <div className="bookshelfbox">
@@ -224,7 +240,7 @@ const UserPage = () => {
           </div>
         </div>
 
-        {mode ? (
+        {currentMode ? (
           <svg
             width="100%"
             height="100%"
@@ -560,7 +576,7 @@ const UserPage = () => {
                   moon.classList.add("animate");
 
                   setTimeout(() => {
-                    setMode(!mode);
+                    setCurrentMode(!currentMode);
                   }, 3950);
                 }}
                 fill-rule="evenodd"
@@ -920,162 +936,6 @@ const UserPage = () => {
                 rx="36.6327"
                 fill="url(#paint13_linear_397_66)"
               />
-              <path
-                d="M1183.62 828.132V811.866L1185.51 810.023L1187.41 811.866V828.132L1185.51 829.975L1183.62 828.132Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1256.89 828.132V811.866L1258.79 810.023L1260.68 811.866V828.132L1258.79 829.975L1256.89 828.132Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1213.27 828.132V811.866L1215.17 810.023L1217.07 811.866V828.132L1215.17 829.975L1213.27 828.132Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1286.55 828.132V811.866L1288.44 810.023L1290.34 811.866V828.132L1288.44 829.975L1286.55 828.132Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1183.62 849.364V833.098L1185.51 831.255L1187.41 833.098V849.364L1185.51 851.207L1183.62 849.364Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1256.89 849.364V833.098L1258.79 831.255L1260.68 833.098V849.364L1258.79 851.207L1256.89 849.364Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1213.27 849.364V833.098L1215.17 831.255L1217.07 833.098V849.364L1215.17 851.207L1213.27 849.364Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1286.55 849.364V833.098L1288.44 831.255L1290.34 833.098V849.364L1288.44 851.207L1286.55 849.364Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1187.87 828.628L1204.14 828.628L1205.98 830.524L1204.14 832.42L1187.87 832.42L1186.03 830.524L1187.87 828.628Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1261.15 828.628L1277.41 828.628L1279.25 830.524L1277.41 832.42L1261.15 832.42L1259.3 830.524L1261.15 828.628Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1217.53 828.628L1233.79 828.628L1235.64 830.524L1233.79 832.42L1217.53 832.42L1215.68 830.524L1217.53 828.628Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1290.8 828.628L1307.07 828.628L1308.91 830.524L1307.07 832.42L1290.8 832.42L1288.96 830.524L1290.8 828.628Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1187.87 807.534L1204.14 807.534L1205.98 809.431L1204.14 811.327L1187.87 811.327L1186.03 809.431L1187.87 807.534Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1261.15 807.534L1277.41 807.534L1279.25 809.431L1277.41 811.327L1261.15 811.327L1259.3 809.431L1261.15 807.534Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1217.53 807.534L1233.79 807.534L1235.64 809.431L1233.79 811.327L1217.53 811.327L1215.68 809.431L1217.53 807.534Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1290.8 807.534L1307.07 807.534L1308.91 809.431L1307.07 811.327L1290.8 811.327L1288.96 809.431L1290.8 807.534Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1249.6 816.455L1249.6 819.53L1247.38 822.177L1245.15 819.53L1245.15 816.455L1247.38 813.808L1249.6 816.455Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1249.6 840.773L1249.6 843.848L1247.38 846.495L1245.15 843.848L1245.15 840.773L1247.38 838.126L1249.6 840.773Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1187.87 849.739L1204.14 849.739L1205.98 851.635L1204.14 853.531L1187.87 853.531L1186.03 851.635L1187.87 849.739Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1261.15 849.739L1277.41 849.739L1279.25 851.635L1277.41 853.531L1261.15 853.531L1259.3 851.635L1261.15 849.739Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1217.53 849.739L1233.79 849.739L1235.64 851.635L1233.79 853.531L1217.53 853.531L1215.68 851.635L1217.53 849.739Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1290.8 849.739L1307.07 849.739L1308.91 851.635L1307.07 853.531L1290.8 853.531L1288.96 851.635L1290.8 849.739Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1204.41 828.132V811.866L1206.31 810.023L1208.2 811.866V828.132L1206.31 829.975L1204.41 828.132Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1277.69 828.132V811.866L1279.58 810.023L1281.48 811.866V828.132L1279.58 829.975L1277.69 828.132Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1234.07 828.132V811.866L1235.96 810.023L1237.86 811.866V828.132L1235.96 829.975L1234.07 828.132Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1307.34 828.132V811.866L1309.24 810.023L1311.13 811.866V828.132L1309.24 829.975L1307.34 828.132Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1204.41 849.364V833.098L1206.31 831.255L1208.2 833.098V849.364L1206.31 851.207L1204.41 849.364Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1277.69 849.364V833.098L1279.58 831.255L1281.48 833.098V849.364L1279.58 851.207L1277.69 849.364Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1234.07 849.364V833.098L1235.96 831.255L1237.86 833.098V849.364L1235.96 851.207L1234.07 849.364Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1307.34 849.364V833.098L1309.24 831.255L1311.13 833.098V849.364L1309.24 851.207L1307.34 849.364Z"
-                fill="white"
-                fillOpacity="0.3"
-              />
-              <path
-                style={{ pointerEvents: "none" }}
-                d="M-31.0439 -32.7485H1948.04L1951.04 1112.75H-28.0439L-31.0439 -32.7485Z"
-                fill="url(#paint14_radial_397_66)"
-                fillOpacity="0.2"
-              />
             </g>
             <defs>
               <filter
@@ -1350,7 +1210,7 @@ const UserPage = () => {
             width="100%"
             height="100%"
             preserveAspectRatio="none"
-            viewBox="0 0 1921 1080"
+            viewBox="0 0 1920 1080"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -1494,7 +1354,7 @@ const UserPage = () => {
                   sun.classList.add("night-day");
                   moon.classList.add("night-day");
                   setTimeout(() => {
-                    setMode(!mode);
+                    setCurrentMode(!currentMode);
                   }, 1300);
                 }}
                 d="M264.361 265.024C258.23 279.246 259.056 322.299 277.422 353.118L309.023 314.232L340.623 275.347L340.623 275.347L372.006 236.728L404.093 197.245C370.05 185.717 327.418 194.106 314.606 203.195L288.937 234.781L288.938 234.781L264.361 265.024Z"
@@ -1739,156 +1599,7 @@ const UserPage = () => {
                 d="M1151.87 830.533C1151.87 810.301 1168.27 793.9 1188.5 793.9H1307.25C1327.48 793.9 1343.88 810.301 1343.88 830.533C1343.88 850.765 1327.48 867.166 1307.25 867.166H1188.5C1168.27 867.166 1151.87 850.765 1151.87 830.533Z"
                 fill="url(#paint12_linear_2072_1393)"
               />
-              <path
-                d="M1184.12 828.132V811.866L1186.01 810.023L1187.91 811.866V828.132L1186.01 829.975L1184.12 828.132Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1257.39 828.132V811.866L1259.29 810.023L1261.18 811.866V828.132L1259.29 829.975L1257.39 828.132Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1213.77 828.132V811.866L1215.67 810.023L1217.57 811.866V828.132L1215.67 829.975L1213.77 828.132Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1287.05 828.132V811.866L1288.94 810.023L1290.84 811.866V828.132L1288.94 829.975L1287.05 828.132Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1184.12 849.364V833.098L1186.01 831.255L1187.91 833.098V849.364L1186.01 851.207L1184.12 849.364Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1257.39 849.364V833.098L1259.29 831.255L1261.18 833.098V849.364L1259.29 851.207L1257.39 849.364Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1213.77 849.364V833.098L1215.67 831.255L1217.57 833.098V849.364L1215.67 851.207L1213.77 849.364Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1287.05 849.364V833.098L1288.94 831.255L1290.84 833.098V849.364L1288.94 851.207L1287.05 849.364Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1188.37 828.628L1204.64 828.628L1206.48 830.524L1204.64 832.42L1188.37 832.42L1186.53 830.524L1188.37 828.628Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1261.65 828.628L1277.91 828.628L1279.75 830.524L1277.91 832.42L1261.65 832.42L1259.8 830.524L1261.65 828.628Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1218.03 828.628L1234.29 828.628L1236.14 830.524L1234.29 832.42L1218.03 832.42L1216.18 830.524L1218.03 828.628Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1291.3 828.628L1307.57 828.628L1309.41 830.524L1307.57 832.42L1291.3 832.42L1289.46 830.524L1291.3 828.628Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1188.37 807.534L1204.64 807.534L1206.48 809.431L1204.64 811.327L1188.37 811.327L1186.53 809.431L1188.37 807.534Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1261.65 807.534L1277.91 807.534L1279.75 809.431L1277.91 811.327L1261.65 811.327L1259.8 809.431L1261.65 807.534Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1218.03 807.534L1234.29 807.534L1236.14 809.431L1234.29 811.327L1218.03 811.327L1216.18 809.431L1218.03 807.534Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1291.3 807.534L1307.57 807.534L1309.41 809.431L1307.57 811.327L1291.3 811.327L1289.46 809.431L1291.3 807.534Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1250.1 816.455L1250.1 819.53L1247.88 822.177L1245.65 819.53L1245.65 816.455L1247.88 813.808L1250.1 816.455Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1250.1 840.773L1250.1 843.848L1247.88 846.495L1245.65 843.848L1245.65 840.773L1247.88 838.126L1250.1 840.773Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1188.37 849.739L1204.64 849.739L1206.48 851.635L1204.64 853.531L1188.37 853.531L1186.53 851.635L1188.37 849.739Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1261.65 849.739L1277.91 849.739L1279.75 851.635L1277.91 853.531L1261.65 853.531L1259.8 851.635L1261.65 849.739Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1218.03 849.739L1234.29 849.739L1236.14 851.635L1234.29 853.531L1218.03 853.531L1216.18 851.635L1218.03 849.739Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1291.3 849.739L1307.57 849.739L1309.41 851.635L1307.57 853.531L1291.3 853.531L1289.46 851.635L1291.3 849.739Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1204.91 828.132V811.866L1206.81 810.023L1208.7 811.866V828.132L1206.81 829.975L1204.91 828.132Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1278.19 828.132V811.866L1280.08 810.023L1281.98 811.866V828.132L1280.08 829.975L1278.19 828.132Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1234.57 828.132V811.866L1236.46 810.023L1238.36 811.866V828.132L1236.46 829.975L1234.57 828.132Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1307.84 828.132V811.866L1309.74 810.023L1311.63 811.866V828.132L1309.74 829.975L1307.84 828.132Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1204.91 849.364V833.098L1206.81 831.255L1208.7 833.098V849.364L1206.81 851.207L1204.91 849.364Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1278.19 849.364V833.098L1280.08 831.255L1281.98 833.098V849.364L1280.08 851.207L1278.19 849.364Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1234.57 849.364V833.098L1236.46 831.255L1238.36 833.098V849.364L1236.46 851.207L1234.57 849.364Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
-              <path
-                d="M1307.84 849.364V833.098L1309.74 831.255L1311.63 833.098V849.364L1309.74 851.207L1307.84 849.364Z"
-                fill="#FFE8E2"
-                fillOpacity="0.3"
-              />
+
               <g filter="url(#filter1_f_2072_1393)">
                 <path
                   style={{ visibility: animation ? "visible" : "hidden" }}

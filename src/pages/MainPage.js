@@ -177,7 +177,7 @@ export default function MainPage() {
     setClearProfilePic(isChecked);
     if (isChecked) {
       // 프로필 사진 URL을 초기화합니다.
-      setProfilePicUrl('');
+      setProfilePicUrl("");
     }
   };
 
@@ -191,8 +191,10 @@ export default function MainPage() {
   };
 
   //두 번 클릭 시 다른 사용자 페이지로 이동
-  const handleDoubleClick = (userId) => {
-    navigate(`/user/${userId}`);
+  const handleDoubleClick = (userId, mode) => {
+    navigate(`/user/${userId}`, {
+      state: { mode },
+    });
   };
 
   //이름 변경 시 백엔드 변경요청 & 로컬상태 업데이트
@@ -284,7 +286,7 @@ export default function MainPage() {
 
   useEffect(() => {
     // 컴포넌트가 마운트될 때 프로필 섹션을 기본적으로 활성화
-    setProfileSetting('profile');
+    setProfileSetting("profile");
   }, []);
 
   useEffect(() => {
@@ -390,6 +392,7 @@ export default function MainPage() {
     <div className={mode ? "day" : "night"}>
       <DeskField
         mode={mode}
+        setMode={setMode}
         userData={allData ? allData : [{ id: 0, name: "sumin" }]}
         fieldRef={fieldRef}
         onDoubleClick={handleDoubleClick}
@@ -398,7 +401,7 @@ export default function MainPage() {
         onClick={() => {
           setMode(!mode);
         }}
-        style={{ position: "fixed", bottom: "100px", top: "10px" }}
+        className="mode"
       >
         낮/밤
       </button>

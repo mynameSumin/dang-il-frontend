@@ -1,3 +1,7 @@
+html {
+  background-color: black;
+}
+
 .settings {
   position: absolute; /* 절대 위치 지정 */
   bottom: 5%; /* 하단에서 20px 위쪽 */
@@ -39,10 +43,7 @@
 /* body code css */
 .background {
   height: 100vh;
-  background: linear-gradient(to right, #dbe1f8 0%, #9aaddc 80%) left / 15% 100%
-      no-repeat,
-    /* 왼쪽: 좌우 그라데이션 */
-      linear-gradient(to bottom, #d8dff7 0%, #9eafde 100%);
+  background-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,6 +112,7 @@
     transform: rotate(0deg) translateY(110px);
   }
 }
+
 @keyframes sunRise {
   0% {
     transform: rotate(20deg) translateY(-400px);
@@ -132,7 +134,7 @@
 
 #sun {
   position: relative;
-  top: -100px;
+  top: -20%;
   z-index: -2;
   animation-fill-mode: forwards;
 }
@@ -153,8 +155,8 @@
 #moon {
   position: relative;
   animation-fill-mode: forwards;
-  top: -200px;
-  left: 100px;
+  top: -41%;
+  left: 15%;
   z-index: -2;
 }
 
@@ -454,4 +456,25 @@ input::placeholder {
   left: 5%;
   width: 90%;
   height: 15%;
+}
+
+.bar {
+  width: 100vw;
+  height: 40px;
+  background-color: black;
+  position: relative;
+  z-index: 100;
+}
+
+.mode {
+  position: fixed;
+  top: 20px;
+  right: 40px;
+  width: 130px;
+  height: 55px;
+  border: none;
+  background-color: #fff;
+  opacity: 0.9;
+  border-radius: 40px;
+  z-index: 2000;
 }
