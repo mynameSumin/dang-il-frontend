@@ -182,7 +182,7 @@ export default function MakeDesk({ mode, userData, fieldRef, onDoubleClick }) {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className={box.id === 0 ? "main-box" : "box"}
-                onDoubleClick={() => onDoubleClick(box.id)} // 더블클릭 이벤트 추가
+                onDoubleClick={() => onDoubleClick(box.id, mode)} // 더블클릭 이벤트 추가
                 id={box.id === 0 ? "my-Box" : ""}
                 onClick={() => {
                   if (isClickedDesk === box.id) {
@@ -482,7 +482,7 @@ export default function MakeDesk({ mode, userData, fieldRef, onDoubleClick }) {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className={box.id === 0 ? "main-box" : "box"}
-                onDoubleClick={() => onDoubleClick(box.id)} // 더블클릭 이벤트 추가
+                onDoubleClick={() => onDoubleClick(box.id, mode)} // 더블클릭 이벤트 추가
                 id={box.id === 0 ? "my-Box" : ""}
                 onClick={() => {
                   if (isClickedDesk === box.id) {
@@ -764,7 +764,7 @@ export default function MakeDesk({ mode, userData, fieldRef, onDoubleClick }) {
               </svg>
             )}
             <div
-              onDoubleClick={() => onDoubleClick(box.id)}
+              onDoubleClick={() => onDoubleClick(box.id, mode)}
               className="user-desk-name"
               id={box.id == 0 ? "my-name" : `name_ + ${box.id}`}
               style={{
