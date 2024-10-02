@@ -20,6 +20,7 @@ const AddMemo = ({
   setShowWindow,
   activeWindow,
   setActiveWindow,
+  desktopRef,
 }) => {
   const [memo, setMemo] = useState("");
   const [color, setColor] = useState("#faebd7");
@@ -48,6 +49,7 @@ const AddMemo = ({
 
     // 마우스가 움직일 때 스티커를 따라다니게 함
     const handleMouseMove = (e) => {
+      stickerNew.style.zIndex = "888";
       stickerNew.style.top = e.clientY + "px";
       stickerNew.style.left = e.clientX + "px";
     };
@@ -58,41 +60,43 @@ const AddMemo = ({
     const handleClick = (e) => {
       document.removeEventListener("mousemove", handleMouseMove);
       stickerNew.classList.remove("active-sticker");
+      stickerNew.style.zIndex = "-1";
       const newSticker = {
         shape: name,
         fixColor: color,
-        x: e.clientX, // 마우스 클릭 좌표
+        x: e.clientX,
         y: e.clientY,
+        text: memo,
       };
 
       // 새로운 스티커를 상태에 추가
       setList((prevStickers) => [...prevStickers, newSticker]);
 
-      document.removeEventListener("dblclick", handleClick); // 클릭 이벤트 제거
+      desktopRef.current.removeEventListener("dblclick", handleClick); // 클릭 이벤트 제거
     };
-
-    document.addEventListener("dblclick", handleClick);
+    desktopRef.current.addEventListener("dblclick", handleClick);
   };
 
   const renderSticker = (sticker, index) => {
-    const { shape, fixColor, x, y } = sticker;
-    console.log(shape);
+    const { shape, fixColor, x, y, text } = sticker;
+    const style = {
+      top: y,
+      left: x,
+      position: "fixed",
+      zIndex: "1",
+      opacity: "1",
+    };
 
-    // 스티커의 모양에 따라 다른 컴포넌트 렌더링
     switch (shape) {
       case "sticker-square":
         return (
           <StickerSquare
             key={index}
             color={fixColor}
-            className="fixed-sticker"
-            style={{
-              top: y,
-              left: x,
-              position: "fixed",
-              zIndex: "1",
-              opacity: "1",
-            }}
+            text={text}
+            style={style}
+            setShowWindow={setShowWindow}
+            showWindow={showWindow}
           />
         );
       case "sticker-rectangle":
@@ -100,13 +104,10 @@ const AddMemo = ({
           <StickerRectangle
             key={index}
             color={fixColor}
-            style={{
-              top: y,
-              left: x,
-              position: "fixed",
-              zIndex: "1",
-              opacity: "1",
-            }}
+            text={text}
+            style={style}
+            setShowWindow={setShowWindow}
+            showWindow={showWindow}
           />
         );
       case "sticker-R_rectangle":
@@ -114,13 +115,10 @@ const AddMemo = ({
           <StickerRRectangle
             key={index}
             color={fixColor}
-            style={{
-              top: y,
-              left: x,
-              position: "fixed",
-              zIndex: "1",
-              opacity: "1",
-            }}
+            text={text}
+            style={style}
+            setShowWindow={setShowWindow}
+            showWindow={showWindow}
           />
         );
       case "sticker-circle":
@@ -128,13 +126,10 @@ const AddMemo = ({
           <StickerCircle
             key={index}
             color={fixColor}
-            style={{
-              top: y,
-              left: x,
-              position: "fixed",
-              zIndex: "1",
-              opacity: "1",
-            }}
+            text={text}
+            style={style}
+            setShowWindow={setShowWindow}
+            showWindow={showWindow}
           />
         );
       case "sticker-star":
@@ -142,13 +137,10 @@ const AddMemo = ({
           <StickerStar
             key={index}
             color={fixColor}
-            style={{
-              top: y,
-              left: x,
-              position: "fixed",
-              zIndex: "1",
-              opacity: "1",
-            }}
+            text={text}
+            style={style}
+            setShowWindow={setShowWindow}
+            showWindow={showWindow}
           />
         );
       default:
@@ -169,9 +161,15 @@ const AddMemo = ({
       if (x > rect.width) x = rect.width;
 
       const percentage = (x / rect.width) * 100;
-      const newColor = `hsl(${(percentage * 360) / 100}, 100%, 50%)`;
-      setColor(newColor);
 
+      // 다양한 밝기와 채도를 섞어서 더 풍부한 색상 제공
+      const hue = (percentage * 360) / 100; // 색상 (0~360)
+      const saturation = 100; // 채도
+      const lightness = 50 + percentage / 2; // 밝기를 더 다양하게 조정
+
+      const newColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+
+      setColor(newColor);
       thumb.style.left = `${x - thumb.offsetWidth / 2}px`;
     };
 
@@ -203,7 +201,6 @@ const AddMemo = ({
       {list.map((sticker, index) => {
         return renderSticker(sticker, index);
       })}
-
       <div
         className="add-memo-window"
         id={activeWindow == "add-memo" ? "open" : ""}
@@ -224,7 +221,7 @@ const AddMemo = ({
             maxLength="30"
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
-            placeholder="여기에 메모를 적어주세요!"
+            placeholder={`여기에 메모를 적어주세요!\n(5줄 이내로 작성 가능합니다)`}
           />
           <div id="charCount" className="count">
             {memo.length} / 30
@@ -268,6 +265,7 @@ const AddMemo = ({
           onClick={() => {
             if (memo.length !== 0) {
               moveSticker(sticker);
+              setMemo("");
               setShowWindow(false);
               setActiveWindow("");
             }

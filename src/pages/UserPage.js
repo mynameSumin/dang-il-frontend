@@ -25,7 +25,7 @@ const UserPage = () => {
   const maxUserId = 17; // 최대 사용자 ID 설정
   const [isListVisible, setIsListVisible] = useState(false);
   const panelRef = useRef(null);
-
+  const desktopRef = useRef(null);
   const [click, setClick] = useState(false);
   const [animation, setAnimation] = useState(false);
   const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
@@ -138,9 +138,19 @@ const UserPage = () => {
         setShowWindow={setShowWindow}
         activeWindow={activeWindow}
         setActiveWindow={setActiveWindow}
+        desktopRef={desktopRef}
       />
       <DigitalClock />
-      <div className="background" id={showWindow ? "blur" : ""}>
+      <div
+        className="background"
+        onClick={() => {
+          if (showWindow && activeWindow !== "") {
+            setActiveWindow("");
+            setShowWindow(false);
+          }
+        }}
+        id={showWindow ? "blur" : ""}
+      >
         <div className="add-color"></div>
 
         {/* 유튜브 관련 파트 */}
@@ -863,6 +873,8 @@ const UserPage = () => {
                 fill="#A6A6C3"
               />
               <path
+                id="#desktop-bottom"
+                ref={desktopRef}
                 d="M686.41 749.77H1192.59V795C1192.59 804.389 1184.98 812 1175.59 812H703.41C694.021 812 686.41 804.389 686.41 795V749.77Z"
                 fill="#BCC6ED"
               />

@@ -50,6 +50,7 @@
   min-height: 115px;
   line-height: 18px;
   padding: 5px;
+  width: 80%;
   -webkit-tap-highlight-color: transparent;
   resize: none;
   vertical-align: top;
@@ -135,18 +136,58 @@
   opacity: 0;
   z-index: 10;
   transform: translateX(-50%);
-  width: 8%;
+  width: fit-content;
   height: 8%;
-  pointer-events: none;
+  cursor: pointer;
 }
 
 .active-sticker {
   opacity: 1;
   cursor: grabbing;
+  pointer-events: none;
 }
 
 .fixed-sticker {
   opacity: 1;
   position: fixed;
   z-index: 1;
+}
+
+.memo-div {
+  position: relative;
+}
+
+.info {
+  opacity: 0;
+  position: fixed;
+  bottom: 30px;
+  margin-left: 34%;
+  background-color: #fff;
+  color: #6f7fb5;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "Roboto";
+  border-radius: 30px;
+  width: 30%;
+  height: 50px;
+  text-align: center;
+  pointer-events: none;
+  line-height: 50px;
+  z-index: 999;
+}
+
+.info.active {
+  animation: show 4s 1;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
 }
