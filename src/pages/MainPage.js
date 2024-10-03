@@ -198,22 +198,28 @@ export default function MainPage({ logoutHandler }) {
   };
 
   //이름 변경 시 백엔드 변경요청 & 로컬상태 업데이트
-  const updateUserName = async () => {
-    const updatedUserData = { ...userData, name: inputValue };
+  const updateUserName = async (userId) => {
+    const updatedUserData = { ...userData, id: userId, name: inputValue };
     setUserData(updatedUserData);
 
     // 백엔드에 변경 요청
 
     try {
+      const contentBody = {
+        user_id: userId,
+        new_name: inputValue
+      }
+      console.log("으으으으으으으어어어엉, ", contentBody)
+
       const response = await fetch(
-        "https://dangil-artisticsw.site/updateUserName",
+        "https://dangil-artisticsw.site/users/user/name/update",
         {
-          method: "POST",
+          method: "PUT",
           headers: {
-            "Content-Type": "application/json",
-            Cookie: "session_id=" + cookies.session_id,
+            "Content-Type": "application/json"//,
+            // Cookie: "session_id=" + cookies.session_id,
           },
-          body: JSON.stringify({ name: inputValue }),
+          body: JSON.stringify(contentBody),
           credentials: "include",
         }
       );
@@ -381,9 +387,10 @@ export default function MainPage({ logoutHandler }) {
   };
 
   //적용하기 버튼 눌렀을때
-  const applyButton = () => {
+  const applyButton = (userId) => {
+    console.log("으어어어222, ", userId)
     if (inputValue.trim()) {
-      updateUserName();
+      updateUserName(userId);
       setApplySetting(false); // 버튼 비활성화
     }
   };
@@ -511,7 +518,12 @@ export default function MainPage({ logoutHandler }) {
           <div>
             <p
               className={`apply-button ${applySetting ? "active" : null}`}
-              onClick={() => applySetting && applyButton()}
+              onClick={() => 
+                  {
+                    applySetting && applyButton( userData["_id"]);
+                    
+                  }
+                }  // 찾았다 요놈, 프로필 
             >
               적용하기
             </p>
