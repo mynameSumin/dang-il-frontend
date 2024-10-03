@@ -59,13 +59,15 @@ const StickerRRectangle = ({
           dominantBaseline="middle" // 텍스트를 정가운데 정렬
           textAnchor="middle" // 텍스트를 중앙 정렬
           fill="white" // 텍스트 색상 설정
-          fontSize={showWindow ? "9" : "21"}
+          fontSize={showWindow ? "9" : "18"}
           fontFamily="Roboto"
           fontWeight="800"
         >
           {text ? (
             !showWindow ? (
-              <tspan x="46%">{text.slice(0, 4)}</tspan>
+              <tspan x="46%" textLength="50">
+                {text.slice(0, 4)}
+              </tspan>
             ) : (
               text.match(/.{1,8}/g).map((chunk, index) => (
                 <tspan x="46%" dy={`${index === 0 ? -1.8 : 1.2}em`} key={index}>
@@ -89,7 +91,7 @@ const StickerRRectangle = ({
           height="21.7008"
           transform="rotate(-9.83628 48.2656 2.85156)"
           fill="white"
-          fill-opacity="0.5"
+          fillOpacity="0.5"
         />
         <rect
           x="3.55859"
@@ -98,7 +100,7 @@ const StickerRRectangle = ({
           height="21.7008"
           transform="rotate(-9.83628 3.55859 2.85059)"
           fill="white"
-          fill-opacity="0.5"
+          fillOpacity="0.5"
         />
 
         <defs>
@@ -109,9 +111,9 @@ const StickerRRectangle = ({
             width="78.9629"
             height="85.0479"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feColorMatrix
               in="SourceAlpha"
               type="matrix"
