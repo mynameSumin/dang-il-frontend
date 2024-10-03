@@ -15,7 +15,8 @@ const AddYoutube = ({
   // 유튜브 링크 검증 및 ID 추출 함수
   const validateYoutubeUrl = (inputUrl) => {
     const youtubeRegex =
-      /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})$/;
+      /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)$/;
+
     const match = inputUrl.match(youtubeRegex);
 
     if (match) {
