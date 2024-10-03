@@ -1,0 +1,232 @@
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.BulletinBoard {
+  position: fixed; 
+  top: 50%;     
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  z-index:300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.TopBar, .BottomBar {
+    width: 67vw;
+    height: 9.7vh; 
+    border-radius: 8px;
+    background: linear-gradient(90deg, #A7B6F0 0%, #748BD5 100%);
+    box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.1), /* 더 큰 그림자 */
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.TopBar.night, .BottomBar.night {
+  width: 67vw;
+  height: 9.7vh; 
+  border-radius: 8px;
+  background: linear-gradient(90deg, #49406D 0%, #302255 100%);  
+  box-shadow: 
+  0 8px 16px rgba(0, 0, 0, 0.1), /* 더 큰 그림자 */
+  0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.BulletinBoard-content {
+  position: relative; /* 상대적 위치 지정 */
+  cursor:   url('../assets/T.png'), auto; 
+  width: 65vw;
+  height: 52.41vh; 
+  background: linear-gradient(107deg, #FDFEFF -6.45%, #CDD6F8 108.15%);
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.1), 
+    0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+.BulletinBoard-content.night {
+  cursor:   url('../assets/TN.png'), auto; 
+  background: linear-gradient(107deg, #9C96C6 -6.45%, #443474 108.15%);    
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.1), 
+    0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+.BulletinBoard-content.active {
+  cursor: url('../assets/eraser.png'), auto; 
+  }
+
+.night .BulletinBoard-content.active {
+  cursor: url('../assets/eraserN.png'), auto; 
+  }
+
+
+.bulletin-input-text {
+  border: 2px solid #ABBCDE; /* 항상 적용될 스타일 */
+  outline: none; /* 포커스 시 브라우저 기본 윤곽선 제거 */
+  background-color: transparent;
+}
+
+.night .bulletin-input-text {
+  border: 2px solid #D1CAFC; /* 항상 적용될 스타일 */
+  background-color: transparent;
+}
+
+.bulletin-input-text::placeholder {
+    color: #000;
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px; /* 플레이스홀더 텍스트 크기 */
+}
+
+.night .bulletin-input-text::placeholder {
+  color: #D1CAFC; /* night 모드에서의 색상 */
+}
+
+  
+  .BulletinBoard-content:hover .info-text {
+    visibility: visible; /* 호버 상태일 때 보이게 함 */
+    opacity: 1;
+    z-index: 2000;
+  }
+
+  .TODAY {
+    margin-top:2%;
+    margin-left:2%;
+    text-align: left;
+  }
+
+  .pen-box {
+    position: absolute; /* 절대적 위치 지정 */
+    bottom: 2%; /* 하단에서 2% 떨어진 위치 */
+    right: 2%; /* 우측에서 2% 떨어진 위치 */
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+  }
+
+  .T {
+    margin-right: 15%;
+    width: 30px; /* 원하는 아이콘 크기 */
+    height: 30px; /* 원하는 아이콘 크기 */
+    object-fit: contain; /* 아이콘의 비율을 유지하면서 크기를 맞춤 */
+    z-index:10000;
+    margin-top:16%;
+    }
+
+  .T:hover {
+    cursor: url('../assets/T.png'), auto; 
+  }
+
+  .night .T:hover {
+    cursor: url('../assets/TN.png'), auto; /* night 모드에서의 hover 상태 */
+}
+
+  .eraser {
+    width: 35px; /* 원하는 아이콘 크기 */
+    height: 35px; /* 원하는 아이콘 크기 */
+    object-fit: contain; /* 아이콘의 비율을 유지하면서 크기를 맞춤 */
+    margin-top:14%;
+    z-index:10000;
+  }
+
+  .eraser:hover {
+    cursor: url('../assets/eraser.png') , auto; 
+  }
+
+  .night .eraser:hover {
+    cursor: url('../assets/eraserN.png'), auto; /* night 모드에서의 hover 상태 */
+  }
+  .erasergo {
+    color :#0A266E;
+  }
+  .Tgo {
+    color :#0A266E;
+  }
+
+  .Tgo:hover {
+    cursor: url('../assets/T\(shadow\).png'), auto; 
+  }
+  .night .Tgo:hover {
+    cursor: url('../assets/TN.png'), auto; 
+  }
+
+
+  .erasergo:hover {
+    cursor: url('../assets/eraserOn.png'), auto; 
+  }
+  .night .erasergo:hover {
+    cursor: url('../assets/eraserN.png'), auto; 
+  }
+
+  .BulletinBoardGuide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    background: rgba(255, 255, 255, 0.3); 
+  backdrop-filter: blur(5px); 
+  }
+
+  .Welcome {
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* 더 진한 그림자로 변경 */
+    font-family: Roboto;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 127.939%; 
+    color: white;
+
+  }
+
+  .p1 {
+    color: #E9EDF9;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* 더 진한 그림자로 변경 */
+    font-family: Roboto;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 127.939%; 
+    color: white;
+  }
+
+  .smallPopup {
+    position: fixed;
+    width: 20vw;
+    height: 5vh;
+    top: 90%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    background: rgba(255, 255, 255, 0.80);
+    border-radius: 17px;
+    box-shadow: 0px 4px 10px 0px rgba(0, 6, 60, 0.25);
+    backdrop-filter: blur(2px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #154287;
+  }
+  
+  .smallPopup > span {
+    border-radius: 7px;
+    border: 2px solid #154287;
+    padding-left:2px;
+    padding-right:2px;
+    padding-top:4px;
+    padding-bottom:4px;
+    margin-left : 5px;
+    margin-right: 5px;
+  }
+

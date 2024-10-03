@@ -13,7 +13,9 @@ import Panel from "../components/Panel"; // 새로운 컴포넌트 import
 import AddYoutube from "../components/AddYoutube.js";
 import Memo from "../components/AddMemo.js";
 import DigitalClock from "../components/DigitalClock.js";
+import Bulletin from "../components/Bulletin.js";
 import "../styles/userPage.css";
+import { buttonBaseClasses } from "@mui/material";
 
 const UserPage = () => {
   const location = useLocation();
@@ -38,6 +40,7 @@ const UserPage = () => {
   const [bookName, setBookName] = useState("Book Name");
   const [showWindow, setShowWindow] = useState(false);
   const [activeWindow, setActiveWindow] = useState("");
+  const [bulletin, setBulletin] = useState(false);
 
   const handleClick = (windowType) => {
     if (activeWindow == windowType) {
@@ -108,6 +111,11 @@ const UserPage = () => {
     setIsListVisible(!isListVisible);
   };
 
+  const ClickBulletin = () => {
+    setBulletin(true);
+    setShowWindow(true);
+  };
+
   return (
     <div>
       {/* 단축 버튼들 */}
@@ -164,6 +172,14 @@ const UserPage = () => {
         setLockMode={setLockMode}
       />
       <DigitalClock />
+      {bulletin && (
+        <Bulletin
+          bulletin={bulletin}
+          setBulletin={setBulletin}
+          setShowWindow={setShowWindow}
+          className={currentMode ? "" : "night"}
+        />
+      )}
       <div
         className="background"
         onClick={() => {
@@ -547,6 +563,7 @@ const UserPage = () => {
                 fill="#AAB7D3"
               />
               <rect
+                onClick={ClickBulletin}
                 x="384.118"
                 y="137.539"
                 width="512.512"
@@ -1303,6 +1320,7 @@ const UserPage = () => {
                 fill="#1E1543"
               />
               <rect
+                onClick={ClickBulletin}
                 x="384.618"
                 y="137.539"
                 width="512.512"

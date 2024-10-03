@@ -6,6 +6,15 @@ import Union from "../assets/Union.png";
 import UnionN from "../assets/UnionN.png";
 import LeftVector from "../assets/LeftVector.png";
 import "../styles/Panel.css";
+import yellowlight from "../assets/yellowlight.png";
+import whitelight from "../assets/whitelight.png";
+import bluelight from "../assets/bluelight.png";
+import blind from "../assets/blind.png";
+import decoRec from "../assets/decoRec.png";
+import ManyStar from "../assets/ManyStar.png";
+import modernBulletin from "../assets/modernBulletin.png";
+import modernCurtain from "../assets/modernCurtain.png";
+import randomBulletin from "../assets/randomBulletin.png";
 
 const Panel = forwardRef(
   ({ mode, isListVisible, LeftSettingtoggle, setIsListVisible }, ref) => {
