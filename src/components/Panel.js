@@ -7,17 +7,27 @@ import UnionN from "../assets/UnionN.png";
 import LeftVector from "../assets/LeftVector.png";
 import "../styles/Panel.css";
 import yellowlight from "../assets/yellowlight.png";
+import yellowlightN from "../assets/yellowlightN.png";
 import whitelight from "../assets/whitelight.png";
+import whitelightN from "../assets/whitelightN.png";
 import bluelight from "../assets/bluelight.png";
+import bluelightN from "../assets/bluelightN.png";
 import blind from "../assets/blind.png";
+import blindN from "../assets/blindN.png";
 import decoRec from "../assets/decoRec.png";
+import decoRecN from "../assets/decoRecN.png";
 import ManyStar from "../assets/ManyStar.png";
+import ManyStarN from "../assets/ManyStarN.png";
 import modernBulletin from "../assets/modernBulletin.png";
+import modernBulletinN from "../assets/modernBulletinN.png";
 import modernCurtain from "../assets/modernCurtain.png";
+import modernCurtainN from "../assets/modernCurtainN.png";
 import randomBulletin from "../assets/randomBulletin.png";
+import randomBulletinN from "../assets/randomBulletinN.png";
+
 
 const Panel = forwardRef(
-  ({ mode, isListVisible, LeftSettingtoggle, setIsListVisible }, ref) => {
+  ({ mode, setDecoClick, isListVisible, LeftSettingtoggle, setIsListVisible, deco, setDeco }, ref) => {
     //tag 관련
     const [activeTag, setActiveTag] = useState("");
     const [defaultTag, setdefaultTag] = useState(true);
@@ -42,6 +52,44 @@ const Panel = forwardRef(
     const backButtonClick = () => {
       setIsListVisible(false);
     };
+
+    const modernCurtainF = () => {
+      setDecoClick('curtain');
+    };
+    
+    const removeCurtain = () => {
+      setDecoClick('');
+    }
+
+    const blindF = () => {
+      setDecoClick('blind');
+    };
+
+    const StarF = () => {
+      setDecoClick('Star');
+    }
+
+    const removeStar = () => {
+      setDecoClick('');
+    }
+   
+    const LightBlue = () => {
+      setDecoClick('Blue')
+      console.log('blue')
+    }
+    const LightWhite = () => {
+      setDecoClick('White')
+      console.log('white')
+
+    }
+    const LightYellow = () => {
+      setDecoClick('Yellow')
+      console.log('yellow')
+
+    }
+
+    
+
 
     return (
       <div ref={ref}>
@@ -70,19 +118,24 @@ const Panel = forwardRef(
                 <div className="rowline1"></div>
                 {defaultTag === true && (
                 <div className='default-panel-design'>
-                    <p className='all-items'>모든 아이템(9)</p>
+                    <p className='all-items'>모든 아이템(8)</p>
                     <div className="panel-textbox">
                         <div className="panel-textbox2">
                             <p className="panel-text">모던한 커텐</p>
                             <div className="panel-box">
-                            {/*여기에 이미지 들어가야함*/}
+                            <img 
+                            src={!mode ? modernCurtainN : modernCurtain} 
+                            onClick={() => modernCurtainF(!mode ? "modernCurtainN" : "modernCurtain")}
+                            alt="Curtain" />
                             </div>
                         </div>
         
                         <div className="panel-textbox2">
                             <p className="panel-text">블라인드 커텐</p>
                             <div className="panel-box">
-                            {/*여기에 이미지 들어가야함*/}
+                            <img src={!mode ? blindN :blind}
+                            onClick={() => blindF(!mode ? "blindN" : "blind")}
+                            />
                             </div>
                         </div>
                     </div>
@@ -91,14 +144,18 @@ const Panel = forwardRef(
                         <div className="panel-textbox2">
                             <p className="panel-text">모던한 벽지</p>
                             <div className="panel-box">
-                            {/*여기에 이미지 들어가야함*/}
+                            <img src={!mode ? decoRecN :decoRec}
+                            onClick={(removeStar)}
+                            />
                             </div>
                         </div>
     
                         <div className="panel-textbox2">
                             <p className="panel-text">별이 쏟아지는 벽지</p>
                             <div className="panel-box">
-                            {/*여기에 이미지 들어가야함*/}
+                            <img src={!mode ? ManyStarN :ManyStar}
+                            onClick={() => StarF(!mode ? "StarN" : "Star")}
+                            />
                             </div>
                         </div>
                     </div>
@@ -107,30 +164,21 @@ const Panel = forwardRef(
                         <div className="panel-textbox2">
                             <p className="panel-text">모던한 게시판</p>
                             <div className="panel-box">
-                            {/*여기에 이미지 들어가야함*/}
+                            <img src={!mode ? modernBulletinN :modernBulletin}/>
                             </div>
                         </div>
         
-                        <div className="panel-textbox2">
+                        {/* <div className="panel-textbox2">
                             <p className="panel-text">마구잡이 게시판</p>
                             <div className="panel-box">
-                            {/*여기에 이미지 들어가야함*/}
+                            <img src={!mode ? randomBulletinN :randomBulletin}/>
                             </div>
-                        </div>
-                    </div>
-    
-                    <div className="panel-textbox">
+                        </div> */}
                         <div className="panel-textbox2">
                             <p className="panel-text">감성 옐로우 라이트</p>
                             <div className="panel-box">
-                            {/*여기에 이미지 들어가야함*/}
-                            </div>
-                        </div>
-        
-                        <div className="panel-textbox2">
-                            <p className="panel-text">집중 화이트 라이트</p>
-                            <div className="panel-box">
-                            {/*여기에 이미지 들어가야함*/}
+                            <img src={!mode ? yellowlightN :yellowlight}
+                            onClick={(LightYellow)}/>
                             </div>
                         </div>
                     </div>
@@ -139,10 +187,20 @@ const Panel = forwardRef(
                         <div className="panel-textbox2">
                             <p className="panel-text">총명 블루 라이트</p>
                             <div className="panel-box">
-                            {/*여기에 이미지 들어가야함*/}
+                            <img src={!mode ? bluelightN :bluelight}
+                            onClick={(LightBlue)}/>
+                            </div>
+                        </div>
+        
+                        <div className="panel-textbox2">
+                            <p className="panel-text">집중 화이트 라이트</p>
+                            <div className="panel-box">
+                            <img src={!mode ? whitelightN :whitelight}
+                            onClick={(LightWhite)}/>
                             </div>
                         </div>
                     </div>
+    
                 </div>)}
                 {activeTag === 'curtain' && (
                     <div id="curtain">
@@ -151,20 +209,28 @@ const Panel = forwardRef(
                         <div>
                         <p className="panel-text">커텐 제거</p>
                         <div className="panel-box"> 
-                            <img src={mode ? Union : UnionN} id="Union" alt="커텐 제거"/>
+                            <img src={mode ? Union : UnionN} 
+                            onClick={removeCurtain}
+                            id="Union" alt="커텐 제거"/>
                         </div>
                         </div>
 
                   <div>
                     <p className="panel-text">모던한 커텐</p>
-                    <div className="panel-box"></div>
+                    <div className="panel-box">
+                    <img src={!mode ? modernCurtainN :modernCurtain}
+                      onClick={() => modernCurtainF(!mode ? "modernCurtainN" : "modernCurtain")}/>
+                    </div>
                   </div>
                 </div>
 
                 <div className="panel-textbox">
                   <div>
                     <p className="panel-text">블라인드 커텐</p>
-                    <div className="panel-box"></div>
+                    <div className="panel-box">
+                    <img src={!mode ? blindN :blind}
+                         onClick={() => blindF(!mode ? "blindN" : "blind")}/>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -175,29 +241,40 @@ const Panel = forwardRef(
                 <div className="panel-textbox">
                   <div>
                     <p className="panel-text">모던한 벽지</p>
-                    <div className="panel-box"></div>
+                    <div className="panel-box">
+                    <img src={!mode ? decoRecN :decoRec}
+                    onClick={(removeStar)}/>
+                    </div>
                   </div>
 
                   <div>
                     <p className="panel-text">별이 쏟아지는 벽지</p>
-                    <div className="panel-box"></div>
+                    <div className="panel-box">
+                    <img src={!mode ? ManyStarN :ManyStar}
+                    onClick={() => StarF(!mode ? "StarN" : "Star")}
+                    />
+                    </div>
                   </div>
                 </div>
               </div>
             )}
             {activeTag === "board" && (
               <div id="board">
-                <p className="all-items">게시판 아이템(2)</p>
+                <p className="all-items">게시판 아이템(1)</p>
                 <div className="panel-textbox">
                   <div>
                     <p className="panel-text">모던한 게시판</p>
-                    <div className="panel-box"></div>
+                    <div className="panel-box">
+                    <img src={!mode ? modernBulletinN :modernBulletin}/>
+                    </div>
                   </div>
 
-                  <div>
+                  {/* <div>
                     <p className="panel-text">마구잡이 게시판</p>
-                    <div className="panel-box"></div>
-                  </div>
+                    <div className="panel-box">
+                    <img src={!mode ? randomBulletinN :randomBulletin}/>
+                    </div>
+                  </div> */}
                 </div>
               </div>
             )}
@@ -207,19 +284,28 @@ const Panel = forwardRef(
                 <div className="panel-textbox">
                   <div>
                     <p className="panel-text">감성 옐로우 라이트</p>
-                    <div className="panel-box"></div>
+                    <div className="panel-box">
+                    <img src={!mode ? yellowlightN :yellowlight}
+                    onClick={(LightYellow)}/>
+                    </div>
                   </div>
 
                   <div>
                     <p className="panel-text">집중 화이트 라이트</p>
-                    <div className="panel-box"></div>
+                    <div className="panel-box">
+                    <img src={!mode ? whitelightN :whitelight}
+                    onClick={(LightWhite)}/>
+                    </div>
                   </div>
                 </div>
 
                 <div className="panel-textbox">
                   <div>
                     <p className="panel-text">총명 블루 라이트</p>
-                    <div className="panel-box"></div>
+                    <div className="panel-box">
+                    <img src={!mode ? bluelightN :bluelight}
+                    onClick={(LightBlue)}/>
+                    </div>
                   </div>
                 </div>
               </div>
