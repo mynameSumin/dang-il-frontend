@@ -405,26 +405,24 @@ input::placeholder {
 }
 .col-book1 {
   border-radius: 5px;
-  background-color: yellow;
   width: 25%;
   height: 100%;
-  cursor: pointer;
 }
 .col-book2 {
   border-radius: 5px;
-  background-color: black;
+
   width: 25%;
   height: 100%;
 }
 .col-book3 {
   border-radius: 5px;
-  background-color: blue;
+
   width: 25%;
   height: 100%;
 }
 .col-book4 {
   border-radius: 5px;
-  background-color: red;
+
   width: 25%;
   height: 100%;
 }
@@ -436,7 +434,7 @@ input::placeholder {
 .row-book1 {
   border-radius: 5px;
   position: absolute;
-  background-color: black;
+
   bottom: 0;
   left: 1%;
   width: 90%;
@@ -445,7 +443,7 @@ input::placeholder {
 .row-book2 {
   border-radius: 5px;
   position: absolute;
-  background-color: blue;
+
   bottom: 15%;
   left: 5%;
   width: 90%;
@@ -454,7 +452,7 @@ input::placeholder {
 .row-book3 {
   border-radius: 5px;
   position: absolute;
-  background-color: green;
+
   bottom: 30%;
   left: 1%;
   width: 90%;
@@ -463,7 +461,7 @@ input::placeholder {
 .row-book4 {
   border-radius: 5px;
   position: absolute;
-  background-color: pink;
+
   bottom: 45%;
   left: 5%;
   width: 90%;

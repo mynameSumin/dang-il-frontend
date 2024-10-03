@@ -106,46 +106,26 @@ export const inviteFriend = async (myId, receiverId) => {
   }
 };
 
-/*
 export const saveUrl = async (myId, url) => {
-  const res = await fetch("https://dangil-artisticsw.site/youtube/video/save", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      user_id: myId,
-      video_id: url,
-    }),
-  });
-
-  if (res.status == 200) {
-    alert("동영상 저장 성공");
-  }
-};
-
-export const deleteUrl = async
-*/
-
-export const saveUrl = async(myId, url) => {
   try {
-    const res = await fetch("https://dangil-artisticsw.site/youtube/video/save", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: myId,
-        video_id: url,
-      }),
-    });
+    const res = await fetch(
+      "https://dangil-artisticsw.site/youtube/video/save",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: myId,
+          video_id: url,
+        }),
+      }
+    );
 
     if (res.status === 200) {
       alert("동영상 저장 성공");
-    }
-    else {
+    } else {
       const errorData = await res.json();
       alert(`동영상 저장 실패: ${errorData.message}`);
     }
@@ -155,29 +135,30 @@ export const saveUrl = async(myId, url) => {
   }
 };
 
-
 export const deleteUrl = async (myId, videoId) => {
   try {
-    const res = await fetch("https://dangil-artisticsw.site/youtube/video/delete", {
-      method: "DELETE",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: myId,
-        video_id: videoId,
-      }),
-    });
+    const res = await fetch(
+      "https://dangil-artisticsw.site/youtube/video/delete",
+      {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: myId,
+          video_id: videoId,
+        }),
+      }
+    );
 
-    if (res.status === 200){
+    if (res.status === 200) {
       alert("동영상 삭제 성공");
-    }
-    else {
+    } else {
       const errorData = await res.json();
       alert(`동영상 삭제 실패: ${errorData.message}`);
     }
-  } catch (error){
+  } catch (error) {
     console.error("Error deleting video:", error);
     alert("동영상 삭제 중 오류가 발생했습니다.");
   }
@@ -185,23 +166,25 @@ export const deleteUrl = async (myId, videoId) => {
 
 export const updateUrl = async (myId, oldVideoId, newVideoId) => {
   try {
-    const res = await fetch("https://dangil-artisticsw.site/youtube/video/update", {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: myId,
-        old_video_id: oldVideoId,
-        new_video_id: newVideoId,
-      }),
-    });
+    const res = await fetch(
+      "https://dangil-artisticsw.site/youtube/video/update",
+      {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: myId,
+          old_video_id: oldVideoId,
+          new_video_id: newVideoId,
+        }),
+      }
+    );
 
     if (res.status === 200) {
-      alert("동영상 업데이트 성공")
-    }
-    else {
+      alert("동영상 업데이트 성공");
+    } else {
       const errorData = await res.json();
       alert(`동영상 업데이트 실패: ${errorData.message}`);
     }

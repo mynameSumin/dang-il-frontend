@@ -32,10 +32,7 @@ const AddMemo = ({
   const sliderRef = useRef("");
   const thumbRef = useRef("");
   const ref = desktopNightRef.current ? desktopNightRef : desktopRef;
-  useEffect(() => {
-    console.log(desktopNightRef);
-    console.log(desktopRef);
-  });
+
   const selectShape = (name) => {
     const selected = document.querySelector(`.${shape}`);
     selected.classList.remove("selected");

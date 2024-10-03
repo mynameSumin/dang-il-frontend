@@ -16,6 +16,8 @@ import DigitalClock from "../components/DigitalClock.js";
 import Bulletin from "../components/Bulletin.js";
 import "../styles/userPage.css";
 import { buttonBaseClasses } from "@mui/material";
+import { makeNewBook } from "../utils/bookData.js";
+import { useCookies } from "react-cookie";
 
 const UserPage = () => {
   const location = useLocation();
@@ -24,7 +26,7 @@ const UserPage = () => {
 
   //book 관련
   const [lockMode, setLockMode] = useState(false);
-
+  const [cookies] = useCookies(["session_id"]);
   const { userId } = useParams(); // URL에서 userId를 받아옴
   const navigate = useNavigate();
   const minUserId = 0; // 최소 사용자 ID 설정
@@ -138,7 +140,7 @@ const UserPage = () => {
           src={bookbutton}
           className="add-book"
           onClick={(e) => {
-            // bookImageClick(e);
+            makeNewBook(cookies);
             handleClick("add-book");
           }}
         />
