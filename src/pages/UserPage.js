@@ -17,6 +17,13 @@ import Bulletin from "../components/Bulletin.js";
 import "../styles/userPage.css";
 import { buttonBaseClasses } from "@mui/material";
 
+
+
+
+
+
+
+
 const UserPage = () => {
   const location = useLocation();
   const { mode } = location.state;
