@@ -64,8 +64,10 @@ export default function MainPageBeforeLogin() {
     window.location.href = "https://dangil-artisticsw.site/auth/google/login";
   };
 
-  const handleDoubleClick = (userId) => {
-    navigate(`/user/${userId}`);
+  const handleDoubleClick = (userId, mode) => {
+    navigate(`/user/${userId}`, {
+      state: { mode },
+    });
   };
 
   return (
