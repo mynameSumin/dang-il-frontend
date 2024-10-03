@@ -15,6 +15,21 @@ html {
   border-radius: 50px;
 }
 
+.total-userpage.blur {
+  z-index: 10000;
+  fill: rgba(0, 0, 0, 0.30);
+  backdrop-filter: blur(5px);
+  background-color: black;
+}
+
+.field {
+  transition: filter 0.3s ease; /* 블러 효과가 자연스럽게 적용되도록 설정 */
+}
+
+.field.blurred {
+  filter: blur(5px); /* 메인 페이지가 흐리게 보이도록 블러 효과 적용 */
+}
+
 .settings.hidden {
   display: none;
 }

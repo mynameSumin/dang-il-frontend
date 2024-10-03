@@ -13,7 +13,8 @@ import closeBtn from "../assets/close.png";
 import Panel from "../components/Panel"; // 새로운 컴포넌트 import
 import AddYoutube from "../components/AddYoutube.js";
 import Memo from "../components/AddMemo.js";
-import DigitalClock from "../components/\bDigitalClock.js";
+import DigitalClock from "../components/DigitalClock.js";
+import Bulletin from "../components/Bulletin.js";
 
 const UserPage = () => {
   const location = useLocation();
@@ -103,8 +104,20 @@ const UserPage = () => {
     setIsListVisible(!isListVisible);
   };
 
+  {/* 게시판 관련 파트*/}
+
+  // 게시판 상태관리
+  const [bulletin, setBulletin] = useState(false);
+
+  // 클릭 시 bulletin 컴포넌트를 토글하는 함수
+  const bulletinClick = () => {
+    setBulletin(true); 
+    setShowWindow(!showWindow)
+    console.log('bulletinClick');
+  };
+
   return (
-    <div>
+    <div className={`total-userpage ${bulletin ? "blur" : ""}`}>
       {/* 단축 버튼들 */}
       <div className="memo-youtube-book">
         <img
@@ -140,8 +153,19 @@ const UserPage = () => {
         setActiveWindow={setActiveWindow}
       />
       <DigitalClock />
+      {bulletin && (
+      <Bulletin
+        bulletin={bulletin}
+        setBulletin={setBulletin}
+        setShowWindow={setShowWindow}
+        activeWindow={activeWindow}
+        setActiveWindow={setActiveWindow}
+      />
+      )}
+      
       <div className="background" id={showWindow ? "blur" : ""}>
         <div className="add-color"></div>
+        
 
         {/* 유튜브 관련 파트 */}
         <div className="player-box">
@@ -239,6 +263,8 @@ const UserPage = () => {
             <div className="row-book4"></div>
           </div>
         </div>
+
+
 
         {currentMode ? (
           <svg
@@ -522,6 +548,8 @@ const UserPage = () => {
                 fill="#AAB7D3"
               />
               <rect
+                className="bulletin"
+                onClick={(bulletinClick)}
                 x="384.118"
                 y="137.539"
                 width="512.512"
@@ -1269,6 +1297,8 @@ const UserPage = () => {
                 fill="#2D2149"
               />
               <rect
+                className="bulletin"
+                onClick={(bulletinClick)}
                 x="388.842"
                 y="137.539"
                 width="512.512"
