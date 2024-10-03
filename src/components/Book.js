@@ -16,9 +16,9 @@ import { pdfjs, Document, Page } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import closeBtn from "../assets/close.png";
+import { updateBook, writeBook } from "../utils/bookData";
 
 // 워커 파일 경로 설정
-
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const Book = forwardRef(
@@ -37,10 +37,14 @@ const Book = forwardRef(
     const [file, setFile] = useState(null);
     const [numPages, setNumPages] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
-    const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호 상태 추가
     const fileInputRef = useRef(null);
     const [fileOpen, setFileOpen] = useState(false);
+    const [write, setWrite] = useState("");
     const [fileName, setFileName] = useState("");
+    const color1 = ["#D3DEEE", 0];
+    const color2 = ["#B3C7EC", 1];
+    const color3 = ["#D8C7D4", 2];
+    const color4 = ["#DDD4EF", 3];
 
     // 파일 선택 함수
     const onFileSelect = (e) => {
@@ -80,20 +84,8 @@ const Book = forwardRef(
       setNumPages(numPages);
     };
 
-    // 다음 페이지로 이동
-    const goToNextPage = () => {
-      if (pageNumber < numPages) {
-        setPageNumber(pageNumber + 1);
-      }
-    };
-
-    // 이전 페이지로 이동
-    const goToPreviousPage = () => {
-      if (pageNumber > 1) {
-        setPageNumber(pageNumber - 1);
-      }
-    };
     const [cookies] = useCookies(["session_id"]);
+
     // 편집 모드 상태 (기본값은 false로 비편집 상태)
     const [NameEditing, setNameEditing] = useState(false);
 
@@ -103,11 +95,10 @@ const Book = forwardRef(
     // +버튼 상태
     const [plusButton, setPlusButton] = useState(false);
 
-    // 책이름 관련 start
-
     // 책 이름 상태
     const inputRef = useRef(null);
     const textareaRef = useRef(null); // input활성화됐을때 enter나 esc로만 input나갈수있음
+
     // 책이름 클릭 시 편집 모드로 전환
     const bookNameEdit = (e) => {
       e.stopPropagation();
@@ -126,31 +117,6 @@ const Book = forwardRef(
       if (e.key === "Enter" || e.key === "Escape" /*Escape은 Esc를 의미함*/) {
         setNameEditing(false); // 편집 상태 종료
         console.log("편집 모드 종료");
-      }
-    };
-
-    // 책 정보 업데이트
-    const updateBook = async (newTitle, newDescription) => {
-      try {
-        const response = await fetch(
-          "https://dangil-artisticsw.site/book/update",
-          {
-            method: "PUT", // PUT 메소드 사용
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              note_title: bookName, // 기존 제목
-              new_note_title: newTitle, // 새 제목
-              new_note_description: newDescription, // 새 설명
-            }),
-          }
-        );
-        if (!response.ok) throw new Error("Failed to update book");
-        const data = await response.json();
-        console.log("Book updated:", data);
-      } catch (error) {
-        console.error("Failed to update book:", error);
       }
     };
 
@@ -229,30 +195,6 @@ const Book = forwardRef(
       console.log("Circle clicked");
     };
 
-    //책 생성시 백엔드에 저장
-    const createBook = async (title) => {
-      try {
-        const response = await fetch(
-          "https://dangil-artisticsw.site/book/create",
-          {
-            method: "POST",
-            credentials: "include", // 쿠키 포함
-            headers: {
-              Cookie: "session_id=" + cookies.session_id,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              note_title: title,
-              note_description: "hi", // 추가 정보 입력
-            }),
-          }
-        );
-        const data = await response.json();
-        console.log(data);
-      } catch (error) {
-        console.error("Failed to create book:", error);
-      }
-    };
     //책 색깔 관련
     const [bookColor, setBookColor] = useState("");
     // 선택된 색상으로 상태 업데이트
@@ -322,7 +264,7 @@ const Book = forwardRef(
             className={`book-page ${isFullscreen ? "fullscreen" : ""} ${
               fileOpen ? "blur" : ""
             }`}
-            style={{ backgroundColor: bookColor }}
+            style={{ backgroundColor: bookColor[0] }}
           >
             <div className="book-name-box">
               <div className="icon-box">
@@ -331,13 +273,25 @@ const Book = forwardRef(
                 <img
                   src={download}
                   onClick={() => {
+                    if (writeBook(fileName, 1, write, {}, file, bookColor[1])) {
+                      setBookColor((prev) => [
+                        ...prev,
+                        {
+                          name: fileName,
+                          content: write,
+                          file: file,
+                          bookColor: bookColor[1],
+                        },
+                      ]);
+                    }
+                  }}
+                />
+                <img
+                  src={newpage}
+                  onClick={() => {
                     setFileOpen(true);
                   }}
                 />
-                <img src={newpage} />
-                <img src={T} />
-                <img src={lightpen} />
-                <img src={eraser} />
               </div>
               <div className="book-name">
                 {NameEditing ? (
@@ -366,19 +320,19 @@ const Book = forwardRef(
               <div className="bookColors">
                 <div
                   className="color1"
-                  onClick={() => changeBookColor("#D3DEEE")}
+                  onClick={() => changeBookColor(color1)}
                 ></div>
                 <div
                   className="color2"
-                  onClick={() => changeBookColor("#B3C7EC")}
+                  onClick={() => changeBookColor(color2)}
                 ></div>
                 <div
                   className="color3"
-                  onClick={() => changeBookColor("#D8C7D4")}
+                  onClick={() => changeBookColor(color3)}
                 ></div>
                 <div
                   className="color4"
-                  onClick={() => changeBookColor("#DDD4EF")}
+                  onClick={() => changeBookColor(color4)}
                 ></div>
                 {isFullscreen && (
                   <div>
@@ -397,17 +351,14 @@ const Book = forwardRef(
                       <Page key={`page_${index + 1}`} pageNumber={index + 1} />
                     ))}
                   </Document>
-                  {/* <div className="pdf-controls">
-                    <button onClick={goToPreviousPage}>Previous</button>
-                    <span>
-                      Page {pageNumber} of {numPages}
-                    </span>
-                    <button onClick={goToNextPage}>Next</button>
-                  </div> */}
                 </div>
               )}
 
               <textarea
+                value={write}
+                onChange={(e) => {
+                  setWrite(e.target.value);
+                }}
                 className="book-text"
                 placeholder="여기에 내용을 작성하세요."
               />
