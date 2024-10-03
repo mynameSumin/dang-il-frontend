@@ -1,14 +1,18 @@
 .settings {
     position: absolute; /* 절대 위치 지정 */
-    bottom: 20px; /* 하단에서 20px 위쪽 */
-    left: 20px; /* 왼쪽에서 20px 오른쪽 */
+    bottom: 5%; /* 하단에서 20px 위쪽 */
+    left: 6%; /* 왼쪽에서 20px 오른쪽 */
     width: 200px;
     height: 50px;
-    display: flex; 
+    display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: white;
-    border-radius:50px;
+    border-radius: 50px;
+  }
+  
+  .settings.hidden {
+    display: none;
   }
   
   .control-button {
@@ -26,9 +30,454 @@
   .control-button:hover {
     background-color: rgba(255, 255, 255, 0.1); /* Light hover effect */
   }
-
+  
   .control-button.disabled {
     color: #ccc; /* 회색으로 표시 */
     cursor: not-allowed; /* 커서를 not-allowed로 변경 */
     background: #eee; /* 배경색 변경 */
+  }
+  /* body code css */
+  .background {
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: filter 0.3s ease;
+  }
+  
+  #stand {
+    height: 92%;
+    position: fixed;
+    bottom: 0;
+    left: 6%;
+  }
+  
+  .player {
+    position: fixed;
+    left: 36.5%;
+    bottom: 31.5%;
+    border-radius: 8px;
+  }
+  .add-color {
+    position: fixed;
+    border-radius: 10px;
+    width: 25%;
+    height: 24.9%;
+    left: 36.5%;
+    bottom: 31.5%;
+    pointer-events: none;
+    background: linear-gradient(
+      109.77deg,
+      rgba(255, 255, 255, 0.215) 13.1%,
+      rgba(0, 27, 109, 0.43) 86.05%
+    );
+    z-index: 10;
+  }
+  
+  .player-box {
+    position: fixed;
+    width: fit-content;
+    padding-bottom: 200px;
+    height: 0;
+  }
+  
+  #desktop-bottom {
+    z-index: 1000;
+  }
+  
+  .stand-head {
+    pointer-events: all;
+  }
+  @keyframes sunSet {
+    0% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: rotate(20deg) translateY(-400px);
+    }
+  }
+  
+  @keyframes moonRise {
+    0% {
+      transform-box: fill-box;
+      transform: rotate(-40deg) translateY(0px);
+    }
+    100% {
+      transform-box: fill-box;
+      transform: rotate(0deg) translateY(110px);
+    }
+  }
+  
+  @keyframes sunRise {
+    0% {
+      transform: rotate(20deg) translateY(-400px);
+    }
+    100% {
+      transform: translateY(0px); /* 끝점을 기존의 시작점으로 */
+    }
+  }
+  @keyframes moonSet {
+    0% {
+      transform-box: fill-box;
+      transform: rotate(0deg) translateY(110px); /* 시작점을 기존의 끝점으로 */
+    }
+    100% {
+      transform-box: fill-box;
+      transform: rotate(-40deg) translateY(0px); /* 끝점을 기존의 시작점으로 */
+    }
+  }
+  
+  #sun {
+    position: relative;
+    top: -20%;
+    z-index: -2;
+    animation-fill-mode: forwards;
+  }
+  
+  #sun.animate {
+    animation: sunSet 4s 1 forwards;
+    transform-box: fill-box;
+    animation-delay: 0.5s;
+  }
+  
+  #sun.night-day {
+    animation: sunRise 4s 1 forwards;
+    transform-box: fill-box;
+    animation-delay: 0s;
+    transform: translateY(-400px);
+  }
+  
+  #moon {
+    position: relative;
+    animation-fill-mode: forwards;
+    top: -41%;
+    left: 15%;
+    z-index: -2;
+  }
+  
+  #moon.animate {
+    animation: moonRise 3s 1 forwards;
+    animation-delay: 1s;
+  }
+  
+  #moon.night-day {
+    animation: moonSet 3s 1 forwards;
+    animation-delay: 0.5s;
+    transform: rotate(0deg) translateY(110px);
+  }
+  
+  .image-container {
+    position: fixed;
+    overflow: hidden;
+    width: 500px;
+    height: 490px;
+    top: 72px;
+    right: 62px;
+    z-index: 102;
+    overflow: hidden;
+  }
+  @keyframes light {
+    0% {
+      background: #3f2871;
+      opacity: 0.2;
+    }
+    10% {
+      background: #3f2871;
+      opacity: 0.4;
+    }
+    60% {
+      background: #251c43;
+      opacity: 0.7;
+    }
+    100% {
+      background: #251c43;
+      opacity: 0.85;
+    }
+  }
+  @keyframes lightDay {
+    1% {
+      background: #251c43;
+      opacity: 0.85;
+    }
+    20% {
+      background: #251c43;
+      opacity: 0.8;
+    }
+    40% {
+      background: #251c43;
+      opacity: 0.7;
+    }
+    60% {
+      background: #7760a8;
+      opacity: 0.4;
+    }
+    90% {
+      background: #7fa6d1;
+      opacity: 0.2;
+    }
+    100% {
+      background: radial-gradient(
+        49.92% 50% at 51.45% 50.64%,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(63, 105, 242, 0.2) 100%
+      );
+      background-blend-mode: multiply;
+      opacity: 0.7;
+    }
+  }
+  
+  .day-color {
+    pointer-events: none;
+    z-index: 100;
+    background: radial-gradient(
+      49.92% 50% at 51.45% 50.64%,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(63, 105, 242, 0.2) 100%
+    );
+    background-blend-mode: multiply;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  #active-day,
+  #active-night {
+    animation: none;
+  }
+  
+  #active-day {
+    animation: light 4s ease 1;
+    background-size: cover;
+  }
+  
+  .night-color {
+    pointer-events: none;
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  #active-night {
+    animation: lightDay 4s ease 1 !important;
+    background-size: cover;
+  }
+  
+  /* 유튜브 관련 */
+  .memo-youtube-book {
+    position: absolute;
+    z-index: 100;
+    right: 4vw;
+    top: 90vh;
+    width: 13vw;
+    height: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .change-music {
+    cursor: pointer;
+  }
+  .change-music-window {
+    position: fixed;
+    width: 22%;
+    height: 20%;
+    top: 40%;
+    left: 38%;
+    gap: 0px;
+    border-radius: 23px;
+    opacity: 0px;
+    z-index: 300;
+    background: #ffffff;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+  }
+  #open.change-music-window {
+    position: fixed;
+    opacity: 1;
+    display: block;
+    z-index: 900;
+    pointer-events: all;
+    transition: opacity 0.5s ease-in-out;
+  }
+  .music-title {
+    color: #6f7fb5;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21.09px;
+    text-align: left;
+    margin: 5% 6% 4% 6%;
+  }
+  .url {
+    margin-left: 6%;
+    border: none;
+    width: 85%;
+    height: 13%;
+    border-radius: 3px;
+    color: #6f7fb5;
+    box-shadow: 0px 0px 4px 0px #8c9dd599;
+  }
+  
+  .close-btn {
+    position: relative;
+    left: 90%;
+    top: 20px;
+    cursor: pointer;
+  }
+  
+  .complete {
+    position: relative;
+    cursor: pointer;
+    top: 6%;
+    left: 75%;
+    color: #d9ddec;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 21.09px;
+    text-align: left;
+  }
+  #ok {
+    color: #6f7fb5;
+  }
+  input::placeholder {
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 17.58px;
+    text-align: left;
+    color: #6f7fb580;
+  }
+  .error {
+    color: #e98888;
+    margin-left: 6%;
+    margin-top: 3%;
+    height: 8%;
+    font-size: 15px;
+  }
+  .background#blur {
+    filter: blur(4px) brightness(0.7);
+    transition: filter 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .add-memo {
+    cursor: pointer;
+  }
+  .bookshelfbox {
+    position: absolute;
+    left: 72vw; /* 뷰포트 너비의 80% 위치 */
+    top: 63.5vh; /* 뷰포트 높이의 50% 위치 */
+    width: 18vw; /* 뷰포트 너비의 10% 만큼 너비 */
+    height: 18vh; /* 뷰포트 높이의 20% 만큼 높이 */
+    display: flex;
+    flex-direction: row;
+  }
+  .cols-bookbox {
+    display: flex;
+    flex-direction: row;
+    width: 38%;
+    height: 100%;
+  }
+  .col-book1 {
+    border-radius: 5px;
+    background-color: yellow;
+    width: 25%;
+    height: 100%;
+    cursor: pointer;
+  }
+  .col-book2 {
+    border-radius: 5px;
+    background-color: black;
+    width: 25%;
+    height: 100%;
+  }
+  .col-book3 {
+    border-radius: 5px;
+    background-color: blue;
+    width: 25%;
+    height: 100%;
+  }
+  .col-book4 {
+    border-radius: 5px;
+    background-color: red;
+    width: 25%;
+    height: 100%;
+  }
+  .rows-bookbox {
+    width: 62%;
+    height: 100%;
+    position: relative;
+  }
+  .row-book1 {
+    border-radius: 5px;
+    position: absolute;
+    background-color: black;
+    bottom: 0;
+    left: 1%;
+    width: 90%;
+    height: 15%;
+  }
+  .row-book2 {
+    border-radius: 5px;
+    position: absolute;
+    background-color: blue;
+    bottom: 15%;
+    left: 5%;
+    width: 90%;
+    height: 15%;
+  }
+  .row-book3 {
+    border-radius: 5px;
+    position: absolute;
+    background-color: green;
+    bottom: 30%;
+    left: 1%;
+    width: 90%;
+    height: 15%;
+  }
+  .row-book4 {
+    border-radius: 5px;
+    position: absolute;
+    background-color: pink;
+    bottom: 45%;
+    left: 5%;
+    width: 90%;
+    height: 15%;
+  }
+  
+  .bar {
+    width: 100vw;
+    height: 40px;
+    background-color: black;
+    position: relative;
+    z-index: 100;
+  }
+  
+  .mode {
+    position: fixed;
+    top: 20px;
+    right: 40px;
+    width: 130px;
+    height: 55px;
+    border: none;
+    background-color: #fff;
+    opacity: 0.9;
+    border-radius: 40px;
+    z-index: 2000;
+  }
+  
+  .sticker-square {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 888;
   }
