@@ -539,7 +539,6 @@ export default function MainPage({ logoutHandler }) {
           <div>
             <p
               className={`apply-button ${applySetting ? "active" : null}`}
-<<<<<<< HEAD
               onClick={() => 
                   {
                     console.log(userData);
@@ -547,11 +546,6 @@ export default function MainPage({ logoutHandler }) {
                     
                   }
                 }  // 찾았다 요놈, 프로필  
-=======
-              onClick={() => {
-                applySetting && applyButton(userData["_id"]);
-              }} // 찾았다 요놈, 프로필
->>>>>>> 15fc606d6f92ee4383cfae5725b289b9712b06e7
             >
               적용하기
             </p>
