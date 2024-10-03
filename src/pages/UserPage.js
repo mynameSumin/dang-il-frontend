@@ -18,10 +18,12 @@ import "../styles/userPage.css";
 import { buttonBaseClasses } from "@mui/material";
 import { makeNewBook } from "../utils/bookData.js";
 import { useCookies } from "react-cookie";
+import { getUserRoom } from "../utils/data.js";
 
 const UserPage = () => {
+  const [roomData, setRoomData] = useState(null);
   const location = useLocation();
-  const { mode } = location.state;
+  const { mode, userRealId } = location.state;
   const [currentMode, setCurrentMode] = useState(mode);
 
   //book 관련
@@ -40,6 +42,7 @@ const UserPage = () => {
   const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
   const [key, setKey] = useState("bHvT0SNITuU");
   const [bookName, setBookName] = useState("Book Name");
+  const [bookList, setBookList] = useState({});
   const [showWindow, setShowWindow] = useState(false);
   const [activeWindow, setActiveWindow] = useState("");
   const [bulletin, setBulletin] = useState(false);
@@ -57,6 +60,7 @@ const UserPage = () => {
   };
 
   useEffect(() => {
+    setRoomData(getUserRoom(userRealId));
     if (currentMode == false) {
       setAnimation(true);
       setClick(true);
@@ -68,6 +72,8 @@ const UserPage = () => {
       moon.classList.add("animate");
     }
   }, []);
+
+  useEffect(() => {}, [roomData]);
 
   const bookRef = useRef(null);
   // 책 클릭시 편집화면 활성화
@@ -96,7 +102,7 @@ const UserPage = () => {
   const handlePrevUser = () => {
     const prevId = parseInt(userId) - 1;
     if (prevId >= minUserId) {
-      navigate(`/user/${prevId}`);
+      navigate(`/user/${prevId}`, { state: "day" });
     }
   };
 
@@ -104,7 +110,7 @@ const UserPage = () => {
   const handleNextUser = () => {
     const nextId = parseInt(userId) + 1;
     if (nextId <= maxUserId) {
-      navigate(`/user/${nextId}`);
+      navigate(`/user/${nextId}`, { state: "day" });
     }
   };
 
@@ -140,7 +146,6 @@ const UserPage = () => {
           src={bookbutton}
           className="add-book"
           onClick={(e) => {
-            makeNewBook(cookies);
             handleClick("add-book");
           }}
         />
@@ -172,6 +177,7 @@ const UserPage = () => {
         setBookName={setBookName}
         lockMode={lockMode}
         setLockMode={setLockMode}
+        setBookList={setBookList}
       />
       <DigitalClock />
       {bulletin && (
@@ -269,17 +275,32 @@ const UserPage = () => {
         />
         <div className="bookshelfbox">
           <div className="cols-bookbox">
-            <div className="col-book1"></div>
-            <div className="col-book2"></div>
-            <div className="col-book3"></div>
-            <div className="col-book4"></div>
+            <div
+              className="col-book1"
+              onClick={() => {
+                handleClick("add-book");
+              }}
+              id={bookList[0] ? "exist" : ""}
+              style={bookList[0] && { backgroundColor: bookList[0].bookColor }}
+            ></div>
+            <div
+              className="col-book2"
+              id={bookList[1] ? "exist" : ""}
+              style={bookList[1] && { backgroundColor: bookList[1].bookColor }}
+            ></div>
+            <div
+              style={bookList[2] && { backgroundColor: bookList[2].bookColor }}
+              className="col-book3"
+              id={bookList[2] ? "exist" : ""}
+            ></div>
+            <div className="col-book4" id={bookList[3] ? "exist" : ""}></div>
           </div>
 
           <div className="rows-bookbox">
-            <div className="row-book1"></div>
-            <div className="row-book2"></div>
-            <div className="row-book3"></div>
-            <div className="row-book4"></div>
+            <div className="row-book1" id={bookList[4] ? "exist" : ""}></div>
+            <div className="row-book2" id={bookList[5] ? "exist" : ""}></div>
+            <div className="row-book3" id={bookList[6] ? "exist" : ""}></div>
+            <div className="row-book4" id={bookList[7] ? "exist" : ""}></div>
           </div>
         </div>
 

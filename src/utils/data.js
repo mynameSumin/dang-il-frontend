@@ -16,7 +16,6 @@ export const getUserDataAfterLogin = async (cookies) => {
 
     // 응답 데이터를 객체로 변환
     const fetchedData = await response.json();
-    console.log(fetchedData);
 
     const fetchedUserData = fetchedData.data.user_data.my_data;
     const friendData = fetchedData.data.user_data.friend_data;
@@ -191,5 +190,25 @@ export const updateUrl = async (myId, oldVideoId, newVideoId) => {
   } catch (error) {
     console.error("Error updating video:", error);
     alert("동영상 업데이트 중 오류가 발생했습니다.");
+  }
+};
+
+export const getUserRoom = async (userId) => {
+  try {
+    const res = await fetch(`https://dangil-artisticsw.site/space/${userId}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (res.status == 200) {
+      const data = await res.json();
+      const roomData = data.data;
+      console.log(roomData);
+      return roomData;
+    } else {
+      console.log("error");
+    }
+  } catch (error) {
+    console.error("Error getting room:", error);
   }
 };

@@ -1,5 +1,5 @@
 //새 책을 만드는 함수
-export const makeNewBook = async (cookie) => {
+export const makeNewBook = async (title, color) => {
   try {
     await fetch("https://dangil-artisticsw.site/book/create", {
       method: "POST",
@@ -8,9 +8,9 @@ export const makeNewBook = async (cookie) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        note_title: "Book name",
+        note_title: title,
         note_description: "",
-        note_color: 0,
+        note_color: color,
       }),
     })
       .then((result) => {
@@ -36,5 +36,58 @@ export const makeNewBook = async (cookie) => {
       });
   } catch (error) {
     console.error("Failed to create book:", error);
+  }
+};
+
+export const writeBook = async (title, page, text, image, file, color) => {
+  await makeNewBook(title, color);
+  try {
+    const response = await fetch(
+      "https://dangil-artisticsw.site/book/page/write",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          note_title: title,
+          note_page: page,
+          note_text: text,
+          note_image: image,
+          note_file: file,
+        }),
+      }
+    );
+    console.log(response);
+    if (!response.ok) throw new Error("Failed to write book");
+    const data = await response.json();
+    console.log("Book write:", data);
+    return true;
+  } catch (error) {
+    console.error("Failed to write book! :", error);
+  }
+};
+
+// 책 정보 업데이트
+export const updateBook = async (title, newTitle, newDescription, color) => {
+  try {
+    const response = await fetch("https://dangil-artisticsw.site/book/update", {
+      method: "PUT", // PUT 메소드 사용
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        note_title: title, // 기존 제목
+        new_note_title: newTitle, // 새 제목
+        new_note_description: newDescription, // 새 설명
+        new_note_color: color,
+      }),
+    });
+    if (!response.ok) throw new Error("Failed to update book");
+    const data = await response.json();
+    console.log("Book updated:", data);
+  } catch (error) {
+    console.error("Failed to update book:", error);
   }
 };

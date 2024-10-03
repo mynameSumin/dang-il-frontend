@@ -132,6 +132,7 @@ export default function MainPage({ logoutHandler }) {
         allDataArray.push(...unknownData);
       }
       setAllData(allDataArray);
+      console.log(allData);
     }
   };
 
@@ -193,7 +194,7 @@ export default function MainPage({ logoutHandler }) {
   //두 번 클릭 시 다른 사용자 페이지로 이동
   const handleDoubleClick = (userId, mode) => {
     navigate(`/user/${userId}`, {
-      state: { mode },
+      state: { mode: mode, userRealId: allData[userId]._id },
     });
   };
 
@@ -207,16 +208,16 @@ export default function MainPage({ logoutHandler }) {
     try {
       const contentBody = {
         user_id: userId,
-        new_name: inputValue
-      }
-      console.log("으으으으으으으어어어엉, ", contentBody)
+        new_name: inputValue,
+      };
+      console.log("으으으으으으으어어어엉, ", contentBody);
 
       const response = await fetch(
         "https://dangil-artisticsw.site/users/user/name/update",
         {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json"//,
+            "Content-Type": "application/json", //,
             // Cookie: "session_id=" + cookies.session_id,
           },
           body: JSON.stringify(contentBody),
@@ -388,7 +389,7 @@ export default function MainPage({ logoutHandler }) {
 
   //적용하기 버튼 눌렀을때
   const applyButton = (userId) => {
-    console.log("으어어어222, ", userId)
+    console.log("으어어어222, ", userId);
     if (inputValue.trim()) {
       updateUserName(userId);
       setApplySetting(false); // 버튼 비활성화
@@ -518,12 +519,9 @@ export default function MainPage({ logoutHandler }) {
           <div>
             <p
               className={`apply-button ${applySetting ? "active" : null}`}
-              onClick={() => 
-                  {
-                    applySetting && applyButton( userData["_id"]);
-                    
-                  }
-                }  // 찾았다 요놈, 프로필 
+              onClick={() => {
+                applySetting && applyButton(userData["_id"]);
+              }} // 찾았다 요놈, 프로필
             >
               적용하기
             </p>

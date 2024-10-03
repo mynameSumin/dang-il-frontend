@@ -16,6 +16,7 @@ import { pdfjs, Document, Page } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import closeBtn from "../assets/close.png";
+import { updateBook, writeBook } from "../utils/bookData";
 
 // 워커 파일 경로 설정
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -40,10 +41,10 @@ const Book = forwardRef(
     const [fileOpen, setFileOpen] = useState(false);
     const [write, setWrite] = useState("");
     const [fileName, setFileName] = useState("");
-    const color1 = "#D3DEEE";
-    const color2 = "#B3C7EC";
-    const color3 = "#D8C7D4";
-    const color4 = "#DDD4EF";
+    const color1 = ["#D3DEEE", 0];
+    const color2 = ["#B3C7EC", 1];
+    const color3 = ["#D8C7D4", 2];
+    const color4 = ["#DDD4EF", 3];
 
     // 파일 선택 함수
     const onFileSelect = (e) => {
@@ -116,33 +117,6 @@ const Book = forwardRef(
       if (e.key === "Enter" || e.key === "Escape" /*Escape은 Esc를 의미함*/) {
         setNameEditing(false); // 편집 상태 종료
         console.log("편집 모드 종료");
-      }
-    };
-
-    const saveBook = () => {};
-
-    // 책 정보 업데이트
-    const updateBook = async (newTitle, newDescription) => {
-      try {
-        const response = await fetch(
-          "https://dangil-artisticsw.site/book/update",
-          {
-            method: "PUT", // PUT 메소드 사용
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              note_title: bookName, // 기존 제목
-              new_note_title: newTitle, // 새 제목
-              new_note_description: newDescription, // 새 설명
-            }),
-          }
-        );
-        if (!response.ok) throw new Error("Failed to update book");
-        const data = await response.json();
-        console.log("Book updated:", data);
-      } catch (error) {
-        console.error("Failed to update book:", error);
       }
     };
 
@@ -290,13 +264,28 @@ const Book = forwardRef(
             className={`book-page ${isFullscreen ? "fullscreen" : ""} ${
               fileOpen ? "blur" : ""
             }`}
-            style={{ backgroundColor: bookColor }}
+            style={{ backgroundColor: bookColor[0] }}
           >
             <div className="book-name-box">
               <div className="icon-box">
                 <img src={home} onClick={HomeButton} className="home" />
                 <div className="gray-colline"></div>
-                <img src={download} />
+                <img
+                  src={download}
+                  onClick={() => {
+                    if (writeBook(fileName, 1, write, {}, file, bookColor[1])) {
+                      setBookColor((prev) => [
+                        ...prev,
+                        {
+                          name: fileName,
+                          content: write,
+                          file: file,
+                          bookColor: bookColor[1],
+                        },
+                      ]);
+                    }
+                  }}
+                />
                 <img
                   src={newpage}
                   onClick={() => {
