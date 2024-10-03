@@ -287,6 +287,8 @@ const Book = forwardRef(
                       ]);
                       setShowWindow(false);
                       setActiveWindow("");
+                      setWrite("");
+                      setBookName("Book name");
                     }
                   }}
                 />

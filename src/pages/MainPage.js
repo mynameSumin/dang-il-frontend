@@ -14,6 +14,9 @@ import addByTag from "../assets/addByTag.png";
 import check from "../assets/check.png";
 import reject from "../assets/reject.png";
 import background from "../assets/background.png";
+import backNight from "../assets/backNight.png";
+import dayNight from "../assets/dayNight.png";
+
 import {
   getUserDataAfterLogin,
   handleLogout,
@@ -399,18 +402,33 @@ export default function MainPage({ logoutHandler }) {
 
   return (
     <div className={mode ? "day" : "night"}>
-      <img
-        src={background}
-        style={{
-          position: "fixed",
-          top: "0",
-          width: "100vw",
-          height: "100vh",
-          pointerEvents: "none",
-          zIndex: "888",
-          opacity: "0.1",
-        }}
-      />
+      {mode ? (
+        <img
+          src={background}
+          style={{
+            position: "fixed",
+            top: "0",
+            width: "100vw",
+            height: "100vh",
+            pointerEvents: "none",
+            zIndex: "888",
+            opacity: "1",
+          }}
+        />
+      ) : (
+        <img
+          src={backNight}
+          style={{
+            position: "fixed",
+            top: "0",
+            width: "100vw",
+            height: "100vh",
+            pointerEvents: "none",
+            zIndex: "888",
+            opacity: "1",
+          }}
+        />
+      )}
       <DeskField
         mode={mode}
         setMode={setMode}
@@ -418,14 +436,6 @@ export default function MainPage({ logoutHandler }) {
         fieldRef={fieldRef}
         onDoubleClick={handleDoubleClick}
       />
-      <button
-        onClick={() => {
-          setMode(!mode);
-        }}
-        className="mode"
-      >
-        낮/밤
-      </button>
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
@@ -544,6 +554,12 @@ export default function MainPage({ logoutHandler }) {
       ;
       <div ref={loginContainerRef} className="login-container">
         <button className="login-button-user">
+          <img
+            src={dayNight}
+            onClick={() => {
+              setMode(!mode);
+            }}
+          />
           <FaUserCircle className="user-icon1" />
           <div className="user-name-box">
             <span className="user-name">{userData.name}</span>

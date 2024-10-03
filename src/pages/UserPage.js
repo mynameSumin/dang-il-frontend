@@ -59,9 +59,16 @@ const UserPage = () => {
     }
   };
 
-  useEffect(() => {
-    setRoomData(getUserRoom(userRealId));
+  const getRoomData = async () => {
+    const roomData = await getUserRoom(userRealId); // userId를 전달하여 함수 호출
+    setRoomData(roomData);
+    setBookList(roomData.user_space_data.book_list);
+  };
 
+  useEffect(() => {
+    setRoomData(getRoomData);
+
+    console.log(roomData);
     if (currentMode == false) {
       setAnimation(true);
       setClick(true);
@@ -74,30 +81,33 @@ const UserPage = () => {
     }
   }, []);
 
-  useEffect(() => {}, [roomData]);
+  useEffect(() => {
+    if (roomData) console.log(roomData);
+  }, [roomData]);
 
   const bookRef = useRef(null);
+
   // 책 클릭시 편집화면 활성화
-  const bookImageClick = async (e) => {
-    e.stopPropagation();
-    setActiveWindow("");
-    try {
-      const response = await fetch(
-        "https://dangil-artisticsw.site/space/3661157737",
-        {
-          method: "GET",
-          credentials: "include", // 쿠키 포함 설정
-        }
-      );
+  // const bookImageClick = async (e) => {
+  //   e.stopPropagation();
+  //   setActiveWindow("");
+  //   try {
+  //     const response = await fetch(
+  //       "https://dangil-artisticsw.site/space/3661157737",
+  //       {
+  //         method: "GET",
+  //         credentials: "include", // 쿠키 포함 설정
+  //       }
+  //     );
 
-      const bookNameData = await response.json();
-      const bookNameList = bookNameData.data.user_space_data.book_list;
+  //     const bookNameData = await response.json();
+  //     const bookNameList = bookNameData.data.user_space_data.book_list;
 
-      setBookName();
-    } catch (error) {
-      console.error("Error handling the book name:", error);
-    }
-  };
+  //     setBookName();
+  //   } catch (error) {
+  //     console.error("Error handling the book name:", error);
+  //   }
+  // };
 
   // 이전 사용자로 이동하는 함수
   const handlePrevUser = () => {
