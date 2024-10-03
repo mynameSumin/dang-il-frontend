@@ -196,7 +196,7 @@ export default function MakeDesk({ mode, userData, fieldRef, onDoubleClick }) {
 
                   left: `${box.x}px`,
                   top: `${box.y}px`,
-                  opacity: isOutsideViewport(box) ? 0.3 : 1,
+
                   transform:
                     isClickedDesk === box.id ? "scale(1.2)" : "scale(1)",
                   cursor: "pointer",
@@ -496,7 +496,7 @@ export default function MakeDesk({ mode, userData, fieldRef, onDoubleClick }) {
 
                   left: `${box.x}px`,
                   top: `${box.y}px`,
-                  opacity: isOutsideViewport(box) ? 0.3 : 1,
+                  // opacity: isOutsideViewport(box) ? 0.3 : 1,
                   transform:
                     isClickedDesk === box.id ? "scale(1.2)" : "scale(1)",
                   cursor: "pointer",

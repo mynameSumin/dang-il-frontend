@@ -7,10 +7,7 @@ import { useCookies } from "react-cookie";
 import X from "../assets/X.png";
 import home from "../assets/home.png";
 import download from "../assets/download.png";
-import eraser from "../assets/eraser.png";
-import lightpen from "../assets/lightpen.png";
 import newpage from "../assets/newpage.png";
-import T from "../assets/T.png";
 import LockMode from "../assets/lockMode.png";
 import { pdfjs, Document, Page } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
@@ -19,7 +16,10 @@ import closeBtn from "../assets/close.png";
 import { updateBook, writeBook } from "../utils/bookData";
 
 // 워커 파일 경로 설정
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.mjs",
+  import.meta.url
+).toString();
 
 const Book = forwardRef(
   (
@@ -31,6 +31,7 @@ const Book = forwardRef(
       setBookName,
       lockMode,
       setLockMode,
+      setBookList,
     },
     bookRef
   ) => {
@@ -57,6 +58,7 @@ const Book = forwardRef(
 
     // 파일 불러오기 함수 (버튼을 눌렀을 때 호출)
     const onFileLoad = () => {
+      console.log(selectedFile);
       if (selectedFile) {
         const fileURL = URL.createObjectURL(selectedFile); // PDF 파일의 URL 생성
         setFile(fileURL);
@@ -196,7 +198,7 @@ const Book = forwardRef(
     };
 
     //책 색깔 관련
-    const [bookColor, setBookColor] = useState("");
+    const [bookColor, setBookColor] = useState(["#D3DEEE", 0]);
     // 선택된 색상으로 상태 업데이트
     const changeBookColor = (color) => {
       setBookColor(color);
@@ -273,16 +275,18 @@ const Book = forwardRef(
                 <img
                   src={download}
                   onClick={() => {
-                    if (writeBook(fileName, 1, write, {}, file, bookColor[1])) {
-                      setBookColor((prev) => [
+                    if (writeBook(bookName, 1, write, {}, file, bookColor[0])) {
+                      setBookList((prev) => [
                         ...prev,
                         {
                           name: fileName,
                           content: write,
                           file: file,
-                          bookColor: bookColor[1],
+                          bookColor: bookColor[0],
                         },
                       ]);
+                      setShowWindow(false);
+                      setActiveWindow("");
                     }
                   }}
                 />
@@ -302,7 +306,7 @@ const Book = forwardRef(
                     onChange={bookNameChange}
                     onKeyDown={bookNameEnter}
                     autoFocus
-                    style={{ backgroundColor: bookColor }}
+                    style={{ backgroundColor: bookColor[0] }}
                   />
                 ) : (
                   <p
@@ -310,7 +314,7 @@ const Book = forwardRef(
                     style={{
                       cursor: "text",
                       fontSize: "20px",
-                      backgroundColor: bookColor,
+                      backgroundColor: bookColor[0],
                     }}
                   >
                     {bookName}

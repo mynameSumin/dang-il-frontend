@@ -13,6 +13,7 @@ import searchBtn from "../assets/search.png";
 import addByTag from "../assets/addByTag.png";
 import check from "../assets/check.png";
 import reject from "../assets/reject.png";
+import background from "../assets/background.png";
 import {
   getUserDataAfterLogin,
   handleLogout,
@@ -398,6 +399,18 @@ export default function MainPage({ logoutHandler }) {
 
   return (
     <div className={mode ? "day" : "night"}>
+      <img
+        src={background}
+        style={{
+          position: "fixed",
+          top: "0",
+          width: "100vw",
+          height: "100vh",
+          pointerEvents: "none",
+          zIndex: "888",
+          opacity: "0.1",
+        }}
+      />
       <DeskField
         mode={mode}
         setMode={setMode}
