@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef}  from 'react';
 import "../styles/Bulletin.css";
 import TODAY from "../assets/TODAY.png";
+import TODAYN from "../assets/TODAYN.png";
 import eraser from "../assets/eraser.png";
 import eraserOn from "../assets/eraserOn.png";
 import T from "../assets/T.png";
+import TN from "../assets/TN.png";
+import eraserN from "../assets/eraserN.png";
 import circlee from "../assets/circlee.png";
 import Rectangle from "../assets/Rectangle.png";
 import Star from "../assets/Star.png";
@@ -11,7 +14,7 @@ import Star from "../assets/Star.png";
 
 
 
-const Bulletin = ({bulletin,setBulletin, setShowWindow}, ) => {
+const Bulletin = ({bulletin,setBulletin, setShowWindow, className}) => {
 //전체화면에서 가이드문구 5초뒤에 사라짐
 const [GuideBulletin, setGuideBulletin] = useState(true);
 const [smallPopup, setSmallPopup] = useState(false);
@@ -55,102 +58,97 @@ useEffect(() => {
   const TClick = () => {
     setTimg(true);
     setEraserimg(false)
-    console.log('sa')
   }
 
   const [eraserimg, setEraserimg] = useState(false);
   const eraserClick = () => {
     setTimg(false);
     setEraserimg(true);
-
-    // setTimg(false);
-    // setEraserimg(prev => !prev);
-    console.log(eraserimg)
   }
 
   const [showText, setShowText] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [inputText, setInputText] = useState('');
-
   const [inputTexts, setInputTexts] = useState([]);
 
+
   const handleMouseMove = (event) => {
+    if (editIndex === null) { 
     setCursorPos({
         x: event.clientX-170,
         y: event.clientY-90
     });
-  };
+  }};
   const handleInputChange = (event) => {
     setInputText(event.target.value);
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && inputText) {
-      const newText = { inputText, x: cursorPos.x, y: cursorPos.y };
-      setInputTexts([...inputTexts, newText]);
-      setInputText(''); // 입력 필드 초기화
-      e.preventDefault();
-      console.log(newText)
+    if (e.key === 'Enter') {
+      e.preventDefault();  // 이벤트의 기본 동작을 막습니다.
+      if (inputText.trim()) {
+        if (editIndex === null) {  // 새 텍스트 추가
+          const newText = { inputText, x: cursorPos.x, y: cursorPos.y };
+          setInputTexts([...inputTexts, newText]);
+        } else {  // 기존 텍스트 수정
+          const updatedTexts = inputTexts.map((item, idx) =>
+            idx === editIndex ? { ...item, inputText: inputText } : item
+          );
+          setInputTexts(updatedTexts);
+          setEditIndex(null);  // 수정 모드 종료
+        }
+        setInputText(''); // 입력 필드 초기화
+      }
     }
-    // if (e.key === 'Enter' && inputText.trim()) {
-    //   let updatedImages = [...images];
-    //   updatedImages[currentImageIndex].texts.push({ text: inputText, x: cursorPos.x, y: cursorPos.y });
+  };
+  
 
-    //   setInputText('');
-    //   setCurrentImageIndex((currentImageIndex + 1) % images.length);
-    //   setImages(updatedImages);
-    //   e.preventDefault();
-
-    // }
-  }
-  // const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  // const [images, setImages] = useState([
-  //   { id: 1, src: "../assets/Rectangle.png", texts: [] },
-  //   { id: 2, src: "../assets/circlee.png", texts: [] },
-  //   { id: 3, src: "../assets/Star.png", texts: [] },
-  // ]);
-
+  const [editIndex, setEditIndex] = useState(null); // 수정할 텍스트의 인덱스 저장
   const handleTextClick = (index) => {
     if (eraserimg) {
       // 지우개가 활성화되어 있을 때만 텍스트를 삭제
       const updatedTexts = inputTexts.filter((_, i) => i !== index);
       setInputTexts(updatedTexts);
+      console.log('지워')
+    }
+
+    else if (Timg) {
+      setEditIndex(index);
+      setInputText(inputTexts[index].inputText); // 현재 텍스트를 입력 필드로 로드
+      console.log('글써')
     }
   };
 
   return (
     <div>
-        <div className="BulletinBoard">
-            <div className="TopBar"></div>
+        <div className={`BulletinBoard ${className}`}>
+            <div className={`TopBar ${className}`}></div>
             <div 
-             className={`BulletinBoard-content ${
-               eraserimg ? "active" : ""
-            }`}
-            onMouseEnter={() => setShowText(true)}
-            onMouseLeave={() => setShowText(false)}
-            onMouseMove={handleMouseMove} 
+               className={`BulletinBoard-content ${eraserimg ? "active" : ""} ${className === "night" ? "night" : ""}`}
+              onMouseEnter={() => setShowText(true)}
+              onMouseLeave={() => setShowText(false)}
+              onMouseMove={handleMouseMove} 
             >              
-            <img src={TODAY} className="TODAY"></img>
+            <img src={className === "night" ? TODAYN : TODAY} className="TODAY"></img>
             <div className="pen-box">
-              <img src={T} className="T" onClick={TClick}></img>
-              <img src={eraser} className="eraser" onClick={eraserClick}></img>
+              <img src={className === "night" ? TN : T}  className={`T ${className === "night" ? "night" : ""}`} onClick={TClick}></img>
+              <img src={className === "night" ? eraserN : eraser} className={`eraser ${className === "night" ? "night" : ""}`} onClick={eraserClick}></img>
             </div>
             </div>
-            <div className="BottomBar"></div>
+            <div className={`BottomBar ${className}`}></div>
 
 
-            {showText && !eraserimg && Timg && (
+            {showText && Timg && (
                 <input
-                    className="bulletin-input-text"
+                    className={`bulletin-input-text ${className === "night" ? "night" : ""}`}
                     type="text"
                     value={inputText}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     style={{
                         position: 'absolute',
-                        left: `${cursorPos.x}px`,
-                        top: `${cursorPos.y}px`,
+                        left: `${editIndex !== null ? inputTexts[editIndex].x : cursorPos.x}px`,
+                        top: `${editIndex !== null ? inputTexts[editIndex].y : cursorPos.y}px`,
                         transform: 'translate(-50%, 0%)',
                         zIndex: 2000 
                     }}
@@ -158,31 +156,25 @@ useEffect(() => {
                     autoFocus
                 />
             )}
-            {/* {images.map((image, index) => (
-              <div key={image.id} style={{ position: 'relative' }}>
-                <img src={image.src} alt={`Image ${index + 1}`} />
-                {image.texts.map((text, idx) => (
-                  <div key={idx} style={{ position: 'absolute', left: text.x, top: text.y }}>
-                    {text.text}
-                  </div>
-                ))}
-              </div>
-          ))} */}
 
-                {inputTexts.map((item, index) => (
-                  
-                  <div key={index} className="bulletin-memo"
-                  style={{ 
-                    position: 'absolute', 
-                    left: item.x, 
-                    top: item.y 
-                    }}
-                     // 클릭 시 삭제하는 이벤트
-                    >
-                    <span className="erasergo" onClick={() => handleTextClick(index)}> {item.inputText} </span>
-                  </div>
-                ))}
-                
+          {inputTexts.map((item, index) => (
+            
+            <div key={index} className="bulletin-memo"
+            style={{ 
+              position: 'absolute', 
+              left: item.x, 
+              top: item.y 
+              }}>
+                {eraserimg ? 
+                (<span className={`erasergo ${className === "night" ? "night" : ""}`} onClick={() => handleTextClick(index)}> 
+                {item.inputText} </span>) : 
+                (<span className={`Tgo ${className === "night" ? "night" : ""}`} onClick={() => handleTextClick(index)}> 
+                {item.inputText} </span>)}
+              
+            </div>
+          ))}
+         
+               
         </div>
 
         {GuideBulletin && (<div className="BulletinBoardGuide">

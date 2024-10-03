@@ -152,7 +152,9 @@ const UserPage = () => {
       {bulletin && <Bulletin
         bulletin={bulletin}
         setBulletin={setBulletin}
-        setShowWindow={setShowWindow}/>}
+        setShowWindow={setShowWindow}
+        className={currentMode ? "" : "night"}
+        />}
       <div
         className="background"
         onClick={() => {
@@ -1301,6 +1303,7 @@ const UserPage = () => {
                 fill="#1E1543"
               />
               <rect
+                onClick={ClickBulletin}
                 x="384.618"
                 y="137.539"
                 width="512.512"
@@ -1634,7 +1637,10 @@ const UserPage = () => {
                 />
               </g>
               <path
-                style={{ visibility: animation ? "visible" : "hidden" }}
+
+                style={{ visibility: animation ? "visible" : "hidden",
+                  pointerEvents: animation ? "none" : "none"
+                 }}
                 d="M495.694 922.229L277.835 352.991L403.78 197.014L1920.96 922.229H495.694Z"
                 fill="url(#paint14_linear_2072_1393)"
                 fillOpacity="0.8"

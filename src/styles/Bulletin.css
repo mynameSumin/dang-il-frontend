@@ -3,12 +3,6 @@
   height: 100%;
 }
 
-/* .container.blurred-background {
-  filter: blur(8px);
-  transition: filter 0.3s;
-  블러처리 구현이안돼
-} */
-
 .BulletinBoard {
   position: fixed; 
   top: 50%;     
@@ -18,8 +12,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
+
 
 .TopBar, .BottomBar {
     width: 67vw;
@@ -31,12 +25,30 @@
     0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.TopBar.night, .BottomBar.night {
+  width: 67vw;
+  height: 9.7vh; 
+  border-radius: 8px;
+  background: linear-gradient(90deg, #49406D 0%, #302255 100%);  
+  box-shadow: 
+  0 8px 16px rgba(0, 0, 0, 0.1), /* 더 큰 그림자 */
+  0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 .BulletinBoard-content {
   position: relative; /* 상대적 위치 지정 */
-  cursor:   url('../assets/T\(shadow\).png'), auto; 
+  cursor:   url('../assets/T.png'), auto; 
   width: 65vw;
   height: 52.41vh; 
   background: linear-gradient(107deg, #FDFEFF -6.45%, #CDD6F8 108.15%);
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.1), 
+    0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+.BulletinBoard-content.night {
+  cursor:   url('../assets/TN.png'), auto; 
+  background: linear-gradient(107deg, #9C96C6 -6.45%, #443474 108.15%);    
   box-shadow: 
     0 8px 16px rgba(0, 0, 0, 0.1), 
     0 2px 4px rgba(0, 0, 0, 0.2);
@@ -46,11 +58,31 @@
   cursor: url('../assets/eraser.png'), auto; 
   }
 
+.night .BulletinBoard-content.active {
+  cursor: url('../assets/eraserN.png'), auto; 
+  }
+
+
+.bulletin-input-text {
+  border: 2px solid #ABBCDE; /* 항상 적용될 스타일 */
+  outline: none; /* 포커스 시 브라우저 기본 윤곽선 제거 */
+  background-color: transparent;
+}
+
+.night .bulletin-input-text {
+  border: 2px solid #D1CAFC; /* 항상 적용될 스타일 */
+  background-color: transparent;
+}
+
 .bulletin-input-text::placeholder {
     color: #000;
     text-align: center;
     font-weight: 400;
     font-size: 14px; /* 플레이스홀더 텍스트 크기 */
+}
+
+.night .bulletin-input-text::placeholder {
+  color: #D1CAFC; /* night 모드에서의 색상 */
 }
 
   
@@ -59,13 +91,6 @@
     opacity: 1;
     z-index: 2000;
   }
-  /* .drawing {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  } */
 
   .TODAY {
     margin-top:2%;
@@ -92,8 +117,12 @@
     }
 
   .T:hover {
-    cursor:   url('../assets/T\(shadow\).png'), auto; 
+    cursor: url('../assets/T.png'), auto; 
   }
+
+  .night .T:hover {
+    cursor: url('../assets/TN.png'), auto; /* night 모드에서의 hover 상태 */
+}
 
   .eraser {
     width: 35px; /* 원하는 아이콘 크기 */
@@ -107,8 +136,29 @@
     cursor: url('../assets/eraser.png') , auto; 
   }
 
+  .night .eraser:hover {
+    cursor: url('../assets/eraserN.png'), auto; /* night 모드에서의 hover 상태 */
+  }
+  .erasergo {
+    color :#0A266E;
+  }
+  .Tgo {
+    color :#0A266E;
+  }
+
+  .Tgo:hover {
+    cursor: url('../assets/T\(shadow\).png'), auto; 
+  }
+  .night .Tgo:hover {
+    cursor: url('../assets/TN.png'), auto; 
+  }
+
+
   .erasergo:hover {
     cursor: url('../assets/eraserOn.png'), auto; 
+  }
+  .night .erasergo:hover {
+    cursor: url('../assets/eraserN.png'), auto; 
   }
 
   .BulletinBoardGuide {
