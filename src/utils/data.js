@@ -29,15 +29,18 @@ export const getUserDataAfterLogin = async (cookies) => {
 };
 
 //logout 함수
-export const handleLogout = (logoutHandler) => {
+export const handleLogout = (cookies) => {
   fetch("https://dangil-artisticsw.site/auth/logout", {
     method: "POST",
     credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `session_id=${cookies.session_id}`, // 쿠키 설정
+    },
   })
     .then((response) => {
       console.log(response, ": hi");
       if (response.ok) {
-        logoutHandler();
         window.location.href = "/"; // 로그아웃 후 게스트 모드로 이동
       } else {
         console.error("Logout failed");

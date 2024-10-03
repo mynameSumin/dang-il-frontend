@@ -597,7 +597,7 @@ export default function MainPage({ logoutHandler }) {
           <div
             className="answer"
             onClick={() => {
-              handleLogout(logoutHandler);
+              handleLogout(cookies);
             }}
           >
             예

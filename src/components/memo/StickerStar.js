@@ -49,7 +49,7 @@ const StickerStar = ({ color, style, text, setShowWindow, showWindow }) => {
             height="25.4493"
             transform="rotate(34.4442 69.3936 3.86719)"
             fill="white"
-            fill-opacity="0.5"
+            fillOpacity="0.5"
           />
         </g>
         <text
@@ -91,9 +91,9 @@ const StickerStar = ({ color, style, text, setShowWindow, showWindow }) => {
             width="93.1768"
             height="89.2041"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feColorMatrix
               in="SourceAlpha"
               type="matrix"
