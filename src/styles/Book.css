@@ -1,240 +1,243 @@
 .book-page {
-    position: fixed;
-    top:10%;
-    right:10%;
-    width: 84%; /* 16:9비율임 */
-    height: 84.5%;
-    background: #D3DEEE;
-    border-radius: 22px;
-    box-shadow: 0px 0px 50px rgba(0, 16, 73, 0.5);
-    transform: translateX(200%); /* 초기에는 보이지 않음 */
-    z-index: 1000; /* 높은 값으로 설정하여 다른 요소들보다 위에 오도록 함 */
-  }
-
-  
-  .book-page.visible {
-    transform: translateX(0); /* 화면에 나타남 */
-  }
-
-  .book-name-box {
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    margin-top:20px;
-    margin-bottom:10px;
-    padding-left:20px;
-    padding-right: 20px;
-  }
-
-  .icon-box {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    left: 0;
-    cursor:pointer;
-    width:20%;
-    height: 20%;
-  }
-
-  .icon-box > *:not(.home) {
-    margin-right: 20px;
-  }
-
-  .icon-box img {
-    width: 20px; /* 원하는 아이콘 크기 */
-    height: 20px; /* 원하는 아이콘 크기 */
-    object-fit: contain; /* 아이콘의 비율을 유지하면서 크기를 맞춤 */
+  position: fixed;
+  top: 10%;
+  right: 10%;
+  width: 84%; /* 16:9비율임 */
+  height: 84.5%;
+  background: #d3deee;
+  border-radius: 22px;
+  box-shadow: 0px 0px 50px rgba(0, 16, 73, 0.5);
+  transform: translateX(200%); /* 초기에는 보이지 않음 */
+  z-index: 1000; /* 높은 값으로 설정하여 다른 요소들보다 위에 오도록 함 */
 }
-  
-  .home {
-    margin-left:20px;
-    margin-right:20px;
-  }
 
-  .icons {
-   width:27px;
-  }
+.book-page.visible {
+  transform: translateX(0); /* 화면에 나타남 */
+}
 
+.book-name-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
-  .gray-colline {
-    height: 15px;
-    border-right: solid #ccc;
-    margin-right:20px;
-  }
+.icon-box {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  cursor: pointer;
+  width: 20%;
+  height: 20%;
+}
 
-  .book-name {
-    cursor: 'text';
-    background-color: #D3DEEE;
-    }
+.icon-box > *:not(.home) {
+  margin-right: 20px;
+}
 
-  .bookColors {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    right: 0;
-  }
-  .bookColors > div {
-    width:20px;     
-    height: 20px;     
-    border-radius: 50%;
-    margin-right:13px
-  }
-  .color1 {
-    background: linear-gradient(to bottom, #ABB0E1 0%, #435190 100%);
+.icon-box img {
+  width: 20px; /* 원하는 아이콘 크기 */
+  height: 20px; /* 원하는 아이콘 크기 */
+  object-fit: contain; /* 아이콘의 비율을 유지하면서 크기를 맞춤 */
+}
 
-  }
-  .color2 {
-    background: linear-gradient(to bottom, #4869A8 0%, #1D2B47 100%);
+.home {
+  margin-left: 20px;
+  margin-right: 20px;
+}
 
-  }
-  .color3 {
-    background: linear-gradient(to bottom, #AA7A9E 0%, #734B6C 100%);
+.icons {
+  width: 27px;
+}
 
-  }
-  .color4 {
-    background: linear-gradient(to bottom, #C3AFE8 0%, #6C6285 100%);
-    }
+.gray-colline {
+  height: 15px;
+  border-right: solid #ccc;
+  margin-right: 20px;
+}
 
+.gray-colline {
+  padding: 5px;
+  border-right: 2px solid #ccc;
+}
 
-  .book-name input {
-    text-align: center;
-    font-size: 15px;
-    padding: 0px;
-  }
+.book-name {
+  cursor: "text";
+  background-color: #d3deee;
+}
+.bookColors {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  right: 0;
+}
+.bookColors > div {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 13px;
+}
+.color1 {
+  background: linear-gradient(to bottom, #abb0e1 0%, #435190 100%);
+}
+.color2 {
+  background: linear-gradient(to bottom, #4869a8 0%, #1d2b47 100%);
+}
+.color3 {
+  background: linear-gradient(to bottom, #aa7a9e 0%, #734b6c 100%);
+}
+.color4 {
+  background: linear-gradient(to bottom, #c3afe8 0%, #6c6285 100%);
+}
 
-  .gray-rowline {
-    border-bottom: 2px solid #ccc; /* 회색 구분선 */
-    margin-bottom: 15px;
-    margin-left:20px;
-    width:97%;
-    display:flex;
-    justify-content: center;
-  }
+.bookColors {
+  display: flex;
+  flex-direction: row;
+}
 
-  .book-content {
-    width:97%;
-    height:88%;
-    background: #FFFFFF;
-    border-radius: 20px;
-    margin : 0 auto;
-  }
+.book-name input {
+  text-align: center;
+  font-size: 15px;
+  padding: 0px;
+}
+.gray-rowline {
+  border-bottom: 2px solid #ccc; /* 회색 구분선 */
+  margin-bottom: 15px;
+  margin-left: 20px;
+  width: 97%;
+  display: flex;
+  justify-content: center;
+}
 
-  .book-text {
-    width:100%;
-    height:100%;
-    resize:'none'; 
-    border-radius:20px;
-    border: 1px solid white;
-  }
+.gray-rowline {
+  border-bottom: 2px solid #ccc; /* 회색 구분선 */
+  margin-bottom: 15px;
+  margin-left: 20px;
+  width: 97%;
+  display: flex;
+  justify-content: center;
+}
 
-  .book-button {
-    width :40px;
-    height: 40px;
-    margin-right: 100px;
-  }
+.book-content {
+  width: 97%;
+  height: 88%;
+  background: #ffffff;
+  border-radius: 20px;
+  margin: 0 auto;
+}
+.book-text {
+  width: 100%;
+  height: 100%;
+  resize: "none";
+  border-radius: 20px;
+  border: 1px solid white;
+}
 
-  .guideEsc {
-    position: fixed;
-    width: 20vw;
-    height: 5vh;
-    top: 90%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    background: rgba(255, 255, 255, 0.80);
-    border-radius: 17px;
-    box-shadow: 0px 4px 10px 0px rgba(0, 6, 60, 0.25);
-    backdrop-filter: blur(2px);
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.guideEsc {
+  position: fixed;
+  width: 20vw;
+  height: 5vh;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 17px;
+  box-shadow: 0px 4px 10px 0px rgba(0, 6, 60, 0.25);
+  backdrop-filter: blur(2px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    color: #154287;
-  }
+  color: #154287;
+}
 
-  .Esc {
-    border-radius: 7px;
-    border: 2px solid #154287;
-    padding-left:2px;
-    padding-right:2px;
-    padding-top:4px;
-    padding-bottom:4px;
-  }
+.Esc {
+  border-radius: 7px;
+  border: 2px solid #154287;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
 
-  .circleBottom {
-    position: fixed;
-    top: 83vh;
-    right:2vw;
-    z-index:200;
-    cursor: default;
-  }
+.circleBottom {
+  position: fixed;
+  top: 83vh;
+  right: 2vw;
+  z-index: 200;
+  cursor: default;
+}
 
-  .circleMid {
-    position: fixed;
-    top: 75vh;
-    right:2vw;
-    z-index:200;
-    cursor: default;
-  }
+.circleMid {
+  position: fixed;
+  top: 75vh;
+  right: 2vw;
+  z-index: 200;
+  cursor: default;
+}
 
-  .circleTop {
-    position: fixed;
-    top: 67vh;
-    right:2vw;
-    z-index:200;
-    cursor: default;
-  }
+.circleTop {
+  position: fixed;
+  top: 67vh;
+  right: 2vw;
+  z-index: 200;
+  cursor: default;
+}
 
-  .plus-icon {
-    position: fixed;
-    top:83vh;
-    right:2vw;
-    cursor: pointer;
-    transform: translateX(0); 
-    z-index: 1000;
-  }
+.plus-icon {
+  position: fixed;
+  top: 83vh;
+  right: 2vw;
+  cursor: pointer;
+  transform: translateX(0);
+  z-index: 1000;
+}
 
-  .plus-icon.invisible {
-    transform: translateX(200%);
-  }
-  
+.plus-icon.invisible {
+  transform: translateX(200%);
+}
 
-  .total {
-    position: fixed;
-    top: 82.3vh;
-    right:5.9vw;
-    z-index:300;
-    /* 수민이 화면에서 top이랑 right 적절히 조절필요*/
-  }
+.total {
+  position: fixed;
+  top: 82.3vh;
+  right: 5.9vw;
+  z-index: 300;
+  /* 수민이 화면에서 top이랑 right 적절히 조절필요*/
+}
 
-  .fullscreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1000;
-    background: #D3DEEE;
-    border-radius: 0;
-  }
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background: #d3deee;
+  border-radius: 0;
+}
 
-  .X {
-    position: fixed;
-    top: 90.5vh;
-    right:6vw;
-    z-index:300;
-    /* 수민이 화면에서 top이랑 right 적절히 조절필요*/
-    /* x이미지로 바꿔야함*/
-  }
+.X {
+  position: fixed;
+  top: 90.5vh;
+  right: 6vw;
+  z-index: 300;
+  /* 수민이 화면에서 top이랑 right 적절히 조절필요*/
+  /* x이미지로 바꿔야함*/
+}
 
-  .Lock {
-    position: fixed;
-    top: 74vh;
-    right:5.8vw;
-    z-index:300;
-    /* 수민이 화면에서 top이랑 right 적절히 조절필요*/
-  }
+.Lock {
+  position: fixed;
+  top: 74vh;
+  right: 5.8vw;
+  z-index: 300;
+  /* 수민이 화면에서 top이랑 right 적절히 조절필요*/
+}
 
-  .side-buttons.invisible {
-    transform: translateX(200%);
-  }
+.side-buttons.invisible {
+  transform: translateX(200%);
+}
