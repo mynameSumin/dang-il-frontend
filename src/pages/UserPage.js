@@ -19,6 +19,8 @@ import { buttonBaseClasses } from "@mui/material";
 import { makeNewBook } from "../utils/bookData.js";
 import { useCookies } from "react-cookie";
 import { getUserRoom } from "../utils/data.js";
+import next from "../assets/next.png";
+import before from "../assets/before.png";
 
 const UserPage = () => {
   const [roomData, setRoomData] = useState(null);
@@ -244,7 +246,15 @@ const UserPage = () => {
               parseInt(userId) === minUserId ? "invisible" : ""
             }`}
           >
-            <span className="icon">＜</span>
+            <img
+              src={before}
+              style={{
+                width: "10px",
+                height: "15px",
+                paddingLeft: "10px",
+                paddingTop: "3px",
+              }}
+            />
           </button>
           {/* 중간 기능 버튼 */}
           <button className="control-button">
@@ -272,7 +282,15 @@ const UserPage = () => {
               parseInt(userId) === maxUserId ? "invisible" : ""
             }`}
           >
-            <span className="icon">＞</span>
+            <img
+              src={next}
+              style={{
+                width: "10px",
+                height: "15px",
+                paddingRight: "10px",
+                paddingTop: "3px",
+              }}
+            />
           </button>
         </div>
 
