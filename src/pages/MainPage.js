@@ -110,6 +110,10 @@ export default function MainPage({ logoutHandler }) {
   const [messages, setMessages] = useState([]);
   const [search, setSearch] = useState(null);
 
+  // 프로필 사진 체크박스 상호 배타적 동작
+  const [isHideInAlramChecked, setIsHideInAlramChecked] = useState(false);
+  const [isStartWithComputerChecked, setIsStartWithComputerChecked] = useState(false);
+
   const filteredUsers = friendData.filter((user) =>
     user.name.toLowerCase().includes(filter.toLowerCase())
   );
@@ -132,6 +136,7 @@ export default function MainPage({ logoutHandler }) {
         allDataArray.push(...unknownData);
       }
       setAllData(allDataArray);
+      console.log(allData);
     }
   };
 
@@ -150,22 +155,16 @@ export default function MainPage({ logoutHandler }) {
   //프로필사진정보 백엔드에서 가져오기
   const fetchProfilePicture = async () => {
     try {
-      const response = await fetch(
-        "https://dangil-artisticsw.site/getProfilePicture",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Cookie: "session_id=" + cookies.session_id,
-          },
-          credentials: "include",
-        }
-      );
+      const imgUrl = userData["profile_image_url"];
+      const match = imgUrl.match(/fname=([^&]+)/);
+      console.log("유알엘입니다아",match[1]);
+      const imageUrl = match[1];
 
-      if (!response.ok) throw new Error("Failed to fetch profile picture");
+      if (match) {
+        console.log(imageUrl); // http://t1.kakaocdn.net/account_images/default_profile.jpeg
+      }
 
-      const data = await response.json();
-      setProfilePicUrl(data.pictureUrl); // 예상 응답: { pictureUrl: 'url_to_image' }
+      setProfilePicUrl(imageUrl); // 예상 응답: { pictureUrl: 'url_to_image' }
     } catch (error) {
       console.error("Error fetching profile picture:", error);
     }
@@ -175,7 +174,9 @@ export default function MainPage({ logoutHandler }) {
   const handleClearProfilePicChange = (event) => {
     const isChecked = event.target.checked;
     setClearProfilePic(isChecked);
+    setIsStartWithComputerChecked(isChecked);
     if (isChecked) {
+      setIsHideInAlramChecked(false); // 다른 체크박스를 해제
       // 프로필 사진 URL을 초기화합니다.
       setProfilePicUrl("");
     }
@@ -184,6 +185,13 @@ export default function MainPage({ logoutHandler }) {
   // 체크박스 변경 이벤트 핸들러
   const handleProfileFetchCheck = (event) => {
     if (event.target.checked) {
+      const isChecked = event.target.checked;
+      setIsHideInAlramChecked(isChecked);
+      setClearProfilePic(false)
+    
+      if (isChecked) {
+        setIsStartWithComputerChecked(false); // 다른 체크박스를 해제
+      }
       fetchProfilePicture();
     } else {
       setProfilePicUrl(""); // 체크 해제시 미리보기 제거
@@ -193,27 +201,33 @@ export default function MainPage({ logoutHandler }) {
   //두 번 클릭 시 다른 사용자 페이지로 이동
   const handleDoubleClick = (userId, mode) => {
     navigate(`/user/${userId}`, {
-      state: { mode },
+      state: { mode: mode, userRealId: allData[userId]._id },
     });
   };
 
   //이름 변경 시 백엔드 변경요청 & 로컬상태 업데이트
-  const updateUserName = async () => {
-    const updatedUserData = { ...userData, name: inputValue };
+  const updateUserName = async (userId) => {
+    const updatedUserData = { ...userData, id: userId, name: inputValue };
     setUserData(updatedUserData);
 
     // 백엔드에 변경 요청
 
     try {
+      const contentBody = {
+        user_id: userId,
+        new_name: inputValue,
+      };
+      console.log("으으으으으으으어어어엉, ", contentBody);
+
       const response = await fetch(
-        "https://dangil-artisticsw.site/updateUserName",
+        "https://dangil-artisticsw.site/users/user/name/update",
         {
-          method: "POST",
+          method: "PUT",
           headers: {
-            "Content-Type": "application/json",
-            Cookie: "session_id=" + cookies.session_id,
+            "Content-Type": "application/json", //,
+            // Cookie: "session_id=" + cookies.session_id,
           },
-          body: JSON.stringify({ name: inputValue }),
+          body: JSON.stringify(contentBody),
           credentials: "include",
         }
       );
@@ -381,9 +395,10 @@ export default function MainPage({ logoutHandler }) {
   };
 
   //적용하기 버튼 눌렀을때
-  const applyButton = () => {
+  const applyButton = (userId) => {
+    console.log("으어어어222, ", userId);
     if (inputValue.trim()) {
-      updateUserName();
+      updateUserName(userId);
       setApplySetting(false); // 버튼 비활성화
     }
   };
@@ -464,11 +479,12 @@ export default function MainPage({ logoutHandler }) {
                     type="checkbox"
                     id="hideInAlram"
                     name="settings"
+                    onChange={handleProfileFetchCheck}
+                    checked={isHideInAlramChecked}
                   />
                   <label
                     className="checkbox-text"
                     for="hideInAlram"
-                    onChange={handleProfileFetchCheck}
                   >
                     연동된 계정에서 불러오기
                   </label>
@@ -481,6 +497,7 @@ export default function MainPage({ logoutHandler }) {
                     id="startWithComputer"
                     name="settings"
                     onChange={handleClearProfilePicChange}
+                    checked={isStartWithComputerChecked}
                   />
                   <label className="checkbox-text" for="startWithComputer">
                     프로필 사진 비우기
@@ -493,9 +510,20 @@ export default function MainPage({ logoutHandler }) {
                       src={profilePicUrl}
                       alt="Profile Preview"
                       className="profile-preview-image"
+                      style={{
+                        width: "120px",      // 원하는 너비
+                        height: "120px",     // 원하는 높이
+                        objectFit: "cover"//,  // 비율을 유지하면서 이미지를 잘라서 맞춤
+                        // borderRadius: "50%"  // 둥근 프로필 이미지를 만들 경우
+                      }}
                     />
                   ) : (
-                    <span className="before-see">미리보기</span>
+                    // <span className="before-see">미리보기</span>
+                    <FaUserCircle style={{
+                      width: "120px",
+                      height: "120px",
+                      objectFit: "cover"
+                    }} />
                   )}
                 </div>
               </div>
@@ -511,7 +539,13 @@ export default function MainPage({ logoutHandler }) {
           <div>
             <p
               className={`apply-button ${applySetting ? "active" : null}`}
-              onClick={() => applySetting && applyButton()}
+              onClick={() => 
+                  {
+                    console.log(userData);
+                    applySetting && applyButton( userData["_id"]);
+                    
+                  }
+                }  // 찾았다 요놈, 프로필  
             >
               적용하기
             </p>
@@ -520,8 +554,18 @@ export default function MainPage({ logoutHandler }) {
       )}
       ;
       <div ref={loginContainerRef} className="login-container">
-        <button className="login-button-user">
-          <FaUserCircle className="user-icon1" />
+        <button className="login-button-user"> {/* 찾았다 요놈 */}
+          {isHideInAlramChecked ? (
+            <img
+              src={profilePicUrl}
+              alt="Profile"
+              className="user-icon1"  // 기존 스타일을 동일하게 적용
+              // style={{ borderRadius: '20%', width: '20px', height: '20px' }}  // 동그란 프로필 이미지
+            />
+          ): (
+            <FaUserCircle className="user-icon1" />
+          )}
+
           <div className="user-name-box">
             <span className="user-name">{userData.name}</span>
             <div className="tag-hover">tag : {userData.tag}</div>
@@ -585,7 +629,7 @@ export default function MainPage({ logoutHandler }) {
           <div
             className="answer"
             onClick={() => {
-              handleLogout(logoutHandler);
+              handleLogout(cookies);
             }}
           >
             예

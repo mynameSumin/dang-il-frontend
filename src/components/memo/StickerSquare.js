@@ -49,7 +49,7 @@ const StickerSquare = ({ color, style, text, setShowWindow, showWindow }) => {
             height="21.7008"
             transform="rotate(-9.83628 32.2393 2.85156)"
             fill="white"
-            fill-opacity="0.5"
+            fillOpacity="0.5"
           />
         </g>
         <text
@@ -64,7 +64,7 @@ const StickerSquare = ({ color, style, text, setShowWindow, showWindow }) => {
         >
           {text ? (
             !showWindow ? (
-              <tspan x="46%" textLength="80">
+              <tspan x="46%" textLength="70">
                 {text.slice(0, 5)}
               </tspan>
             ) : (
@@ -91,9 +91,9 @@ const StickerSquare = ({ color, style, text, setShowWindow, showWindow }) => {
             width="88.3516"
             height="99.7041"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feColorMatrix
               in="SourceAlpha"
               type="matrix"

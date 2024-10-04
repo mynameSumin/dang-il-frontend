@@ -2,27 +2,5 @@
     position: fixed; 
     right:1%;
     top:2%;
-    z-index: 0;
     pointer-events: none;
-}
-
-.modernCurtain {
-position: fixed; 
-  right:1%;
-  top:2%;
-  z-index: 0;
-}
-
-.blindN {
-    position: fixed; 
-    right:1%;
-    top:2%;
-    z-index: 0;
-}
-
-.blind {
-    position: fixed; 
-    right:1%;
-    top:2%;
-    z-index: 0;
 }

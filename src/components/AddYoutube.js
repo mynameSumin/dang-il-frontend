@@ -1,5 +1,7 @@
 import closeBtn from "../assets/close.png";
 import { useState } from "react";
+import { saveUrl, deleteUrl, updateUrl } from "../utils/data";
+import { useCookies } from "react-cookie";
 
 const AddYoutube = ({
   setKey,
@@ -14,8 +16,8 @@ const AddYoutube = ({
 
   // 유튜브 링크 검증 및 ID 추출 함수
   const validateYoutubeUrl = (inputUrl) => {
-    const youtubeRegex =
-      /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})$/;
+    const youtubeRegex = /^https:\/\/www\.youtube\.com\/watch\?v=([^&]+)/;
+
     const match = inputUrl.match(youtubeRegex);
 
     if (match) {
@@ -33,11 +35,14 @@ const AddYoutube = ({
     }
   };
 
+  const [cookies] = useCookies(["session_id"]);
+
   const handleApplyClick = () => {
     // URL 검증
     if (validateYoutubeUrl(url)) {
       console.log("유효한 URL:", url);
       // 추가 로직을 여기서 처리 (예: URL 저장 또는 처리)
+      saveUrl(cookies, videoId);
     } else {
       console.log("유효하지 않은 URL");
       // 에러 메시지 출력
@@ -71,7 +76,9 @@ const AddYoutube = ({
         <div
           className="complete"
           id={url.length !== 0 ? "ok" : ""}
-          onClick={handleApplyClick} // 버튼 클릭 시 검증 및 처리
+          onClick={() => {
+            handleApplyClick();
+          }} // 버튼 클릭 시 검증 및 처리
         >
           적용하기
         </div>

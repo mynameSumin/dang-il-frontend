@@ -13,6 +13,7 @@ import StickerRRectangle from "./memo/StickerRRectangle";
 import StickerCircle from "./memo/StickerCircle";
 import StickerStar from "./memo/StickerStar";
 import zIndex from "@mui/material/styles/zIndex";
+import { setRef } from "@mui/material";
 
 const AddMemo = ({
   setKey,
@@ -21,6 +22,7 @@ const AddMemo = ({
   activeWindow,
   setActiveWindow,
   desktopRef,
+  desktopNightRef,
 }) => {
   const [memo, setMemo] = useState("");
   const [color, setColor] = useState("#faebd7");
@@ -29,6 +31,7 @@ const AddMemo = ({
   const [list, setList] = useState([]);
   const sliderRef = useRef("");
   const thumbRef = useRef("");
+  const ref = desktopNightRef.current ? desktopNightRef : desktopRef;
 
   const selectShape = (name) => {
     const selected = document.querySelector(`.${shape}`);
@@ -72,9 +75,10 @@ const AddMemo = ({
       // 새로운 스티커를 상태에 추가
       setList((prevStickers) => [...prevStickers, newSticker]);
 
-      desktopRef.current.removeEventListener("dblclick", handleClick); // 클릭 이벤트 제거
+      ref.current.removeEventListener("dblclick", handleClick); // 클릭 이벤트 제거
     };
-    desktopRef.current.addEventListener("dblclick", handleClick);
+
+    ref.current.addEventListener("dblclick", handleClick);
   };
 
   const renderSticker = (sticker, index) => {

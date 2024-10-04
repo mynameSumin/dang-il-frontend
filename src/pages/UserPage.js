@@ -16,15 +16,23 @@ import DigitalClock from "../components/DigitalClock.js";
 import Bulletin from "../components/Bulletin.js";
 import "../styles/userPage.css";
 import { buttonBaseClasses } from "@mui/material";
+import { makeNewBook } from "../utils/bookData.js";
+import { useCookies } from "react-cookie";
+import { getUserRoom } from "../utils/data.js";
 import "../styles/SVG.css";
 import modernCurtain from "../assets/modernCurtain.png";
 
 
 
 const UserPage = () => {
+  const [roomData, setRoomData] = useState(null);
   const location = useLocation();
-  const { mode } = location.state;
+  const { mode, userRealId } = location.state;
   const [currentMode, setCurrentMode] = useState(mode);
+
+  //book 관련
+  const [lockMode, setLockMode] = useState(false);
+  const [cookies] = useCookies(["session_id"]);
   const { userId } = useParams(); // URL에서 userId를 받아옴
   const navigate = useNavigate();
   const minUserId = 0; // 최소 사용자 ID 설정
@@ -32,12 +40,13 @@ const UserPage = () => {
   const [isListVisible, setIsListVisible] = useState(false);
   const panelRef = useRef(null);
   const desktopRef = useRef(null);
+  const desktopNightRef = useRef(null);
   const [click, setClick] = useState(false);
   const [animation, setAnimation] = useState(false);
-  const [editBook, setEditBook] = useState(false); // 책 편집 화면 표시 여부
   const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
   const [key, setKey] = useState("bHvT0SNITuU");
   const [bookName, setBookName] = useState("Book Name");
+  const [bookList, setBookList] = useState({});
   const [showWindow, setShowWindow] = useState(false);
   const [activeWindow, setActiveWindow] = useState("");
   const [bulletin, setBulletin] = useState(false);
@@ -52,17 +61,19 @@ const UserPage = () => {
   // };
 
   const handleClick = (windowType) => {
-    // 창을 열 때 창 타입 설정 (음악 창 또는 메모 창)
     if (activeWindow == windowType) {
+      //이미 열려있는 창과 클릭한 창이 같을 때
       setShowWindow(false);
       setActiveWindow("");
     } else {
+      //다른창을 클릭했을 때
       setActiveWindow(windowType);
       setShowWindow(true);
     }
   };
 
   useEffect(() => {
+    setRoomData(getUserRoom(userRealId));
     if (currentMode == false) {
       setAnimation(true);
       setClick(true);
@@ -75,11 +86,13 @@ const UserPage = () => {
     }
   }, []);
 
+  useEffect(() => {}, [roomData]);
+
   const bookRef = useRef(null);
   // 책 클릭시 편집화면 활성화
   const bookImageClick = async (e) => {
     e.stopPropagation();
-    setEditBook(!editBook);
+    setActiveWindow("");
     try {
       const response = await fetch(
         "https://dangil-artisticsw.site/space/3661157737",
@@ -102,7 +115,7 @@ const UserPage = () => {
   const handlePrevUser = () => {
     const prevId = parseInt(userId) - 1;
     if (prevId >= minUserId) {
-      navigate(`/user/${prevId}`);
+      navigate(`/user/${prevId}`, { state: "day" });
     }
   };
 
@@ -110,7 +123,7 @@ const UserPage = () => {
   const handleNextUser = () => {
     const nextId = parseInt(userId) + 1;
     if (nextId <= maxUserId) {
-      navigate(`/user/${nextId}`);
+      navigate(`/user/${nextId}`, { state: "day" });
     }
   };
 
@@ -170,7 +183,13 @@ const UserPage = () => {
             handleClick("change-music");
           }}
         />
-        <img src={bookbutton} className="bookbutton" />
+        <img
+          src={bookbutton}
+          className="add-book"
+          onClick={(e) => {
+            handleClick("add-book");
+          }}
+        />
       </div>
       {/*
        */}
@@ -188,18 +207,32 @@ const UserPage = () => {
         activeWindow={activeWindow}
         setActiveWindow={setActiveWindow}
         desktopRef={desktopRef}
+        desktopNightRef={desktopNightRef}
+      />
+      <Book
+        bookRef={bookRef}
+        activeWindow={activeWindow}
+        setActiveWindow={setActiveWindow}
+        setShowWindow={setShowWindow}
+        bookName={bookName}
+        setBookName={setBookName}
+        lockMode={lockMode}
+        setLockMode={setLockMode}
+        setBookList={setBookList}
       />
       <DigitalClock />
-      {bulletin && <Bulletin
-        bulletin={bulletin}
-        setBulletin={setBulletin}
-        setShowWindow={setShowWindow}
-        className={currentMode ? "" : "night"}
-        />}
+      {bulletin && (
+        <Bulletin
+          bulletin={bulletin}
+          setBulletin={setBulletin}
+          setShowWindow={setShowWindow}
+          className={currentMode ? "" : "night"}
+        />
+      )}
       <div
         className="background"
         onClick={() => {
-          if (showWindow && activeWindow !== "") {
+          if (showWindow && activeWindow !== "" && !lockMode) {
             setActiveWindow("");
             setShowWindow(false);
           }
@@ -277,7 +310,7 @@ const UserPage = () => {
           </button>
         </div>
 
-        <div class="image-container">
+        <div className="image-container">
           <img src={sun} id="sun" />
           <img src={moon} id="moon" />
         </div>
@@ -287,34 +320,39 @@ const UserPage = () => {
         />
         <div className="bookshelfbox">
           <div className="cols-bookbox">
-            <div className="col-book1" onClick={bookImageClick}>
-              <Book
-                bookRef={bookRef}
-                editBook={editBook}
-                setEditBook={setEditBook}
-                bookName={bookName}
-                setBookName={setBookName}
-              />
-            </div>
-            <div className="col-book2"></div>
-            <div className="col-book3"></div>
-            <div className="col-book4"></div>
+            <div
+              className="col-book1"
+              onClick={() => {
+                handleClick("add-book");
+              }}
+              id={bookList[0] ? "exist" : ""}
+              style={bookList[0] && { backgroundColor: bookList[0].bookColor }}
+            ></div>
+            <div
+              className="col-book2"
+              id={bookList[1] ? "exist" : ""}
+              style={bookList[1] && { backgroundColor: bookList[1].bookColor }}
+            ></div>
+            <div
+              style={bookList[2] && { backgroundColor: bookList[2].bookColor }}
+              className="col-book3"
+              id={bookList[2] ? "exist" : ""}
+            ></div>
+            <div className="col-book4" id={bookList[3] ? "exist" : ""}></div>
           </div>
 
           <div className="rows-bookbox">
-            <div className="row-book1"></div>
-            <div className="row-book2"></div>
-            <div className="row-book3"></div>
-            <div className="row-book4"></div>
+            <div className="row-book1" id={bookList[4] ? "exist" : ""}></div>
+            <div className="row-book2" id={bookList[5] ? "exist" : ""}></div>
+            <div className="row-book3" id={bookList[6] ? "exist" : ""}></div>
+            <div className="row-book4" id={bookList[7] ? "exist" : ""}></div>
           </div>
         </div>
-      
-        {/* SVG 렌더링 */}
-        
         {decoClick==='curtain' && (
           <>
            {currentMode ? (
-            <svg className="curtain"width="804" height="522" viewBox="0 0 804 522" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div style={{zIndex:'103'}}>
+            <svg className="curtain" width="804" height="522" viewBox="0 0 804 522" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_2321_386)">
 <rect x="23.9844" y="31.4932" width="38.3433" height="475.934" fill="url(#paint0_linear_2321_386)"/>
 <rect x="62.3262" y="31.4932" width="38.3433" height="475.934" fill="url(#paint1_linear_2321_386)"/>
@@ -385,7 +423,9 @@ const UserPage = () => {
 </linearGradient>
 </defs>
             </svg>
+            </div>
            ) : (
+            <div style={{zIndex:'103'}}>
             <svg className="curtain" width="812" height="532" viewBox="0 0 812 532" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_2398_453)">
 <rect x="28.2715" y="36.5791" width="38.3433" height="475.934" fill="#190B40"/>
@@ -421,6 +461,7 @@ const UserPage = () => {
 </filter>
 </defs>
             </svg>
+            </div>
            )}
           </>
         )}
@@ -428,6 +469,7 @@ const UserPage = () => {
         {decoClick==='blind' && (
           <>
           {currentMode ? (
+            <div style={{zIndex:'103'}}>
             <svg className="curtain" width="800" height="491" viewBox="0 0 800 491" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_2321_328)">
 <rect x="10.1152" y="6.32031" width="779.207" height="24.2046" rx="12.1023" fill="url(#paint0_linear_2321_328)"/>
@@ -542,7 +584,9 @@ const UserPage = () => {
 </linearGradient>
 </defs>
             </svg>
+            </div>
           ):(
+            <div style={{zIndex:'103'}}>
             <svg className="curtain" width="799" height="489" viewBox="0 0 799 489" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_2398_438)">
             <rect x="9.98438" y="5.40625" width="779.207" height="24.2046" rx="12.1023" fill="url(#paint0_linear_2398_438)"/>
@@ -657,6 +701,7 @@ const UserPage = () => {
             </linearGradient>
             </defs>
             </svg>
+            </div>
           )}
           </>
         )}
@@ -664,6 +709,7 @@ const UserPage = () => {
         {decoClick==='Star' && (
           <>
           {currentMode? (
+            <div style={{zIndex:'103'}}>            
             <svg className="curtain" width="1650" height="620" viewBox="0 0 1650 620" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_2420_595)">
             <path d="M741.302 161.399L746.049 170.472L755.585 174.989L746.049 179.505L741.302 188.578L736.555 179.505L727.019 174.989L736.555 170.472L741.302 161.399Z" fill="white" fill-opacity="0.5" shape-rendering="crispEdges"/>
@@ -1330,8 +1376,11 @@ const UserPage = () => {
             <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2420_595" result="shape"/>
             </filter>
             </defs>
-            </svg>            
-          ):(<svg className="curtain" width="1650" height="534" viewBox="0 0 1650 534" fill="none" xmlns="http://www.w3.org/2000/svg">
+            </svg>  
+            </div>
+          ):(
+            <div style={{zIndex:'103'}}>
+          <svg className="curtain" width="1650" height="534" viewBox="0 0 1650 534" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_2420_650)">
             <path d="M1617.15 146.484L1621.89 155.557L1631.43 160.073L1621.89 164.59L1617.15 173.663L1612.4 164.59L1602.86 160.073L1612.4 155.557L1617.15 146.484Z" fill="#E3CEFF"/>
             </g>
@@ -1803,15 +1852,11 @@ const UserPage = () => {
             </filter>
             </defs>
             </svg>
-            
-
+            </div>
           )}
           </>
         )}
-
-        
-
-
+        {/* SVG 렌더링 */}
         {currentMode ? (
           <svg
             width="100%"
@@ -1821,7 +1866,7 @@ const UserPage = () => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g clip-path="url(#clip0_397_66)">
+            <g clipPath="url(#clip0_397_66)">
               <rect
                 width="1920"
                 height="1080"
@@ -2035,7 +2080,7 @@ const UserPage = () => {
                 />
               </g>
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 clipRule="evenodd"
                 d="M1149.16 68.8652H1863.16V734H1149.16V68.8652ZM1519.37 94.5942H1835.54V388.256H1519.37V94.5942ZM1519.37 414.609H1835.54V544.628H1519.37V414.609ZM1493.01 544.628V414.609H1176.78V544.628H1493.01ZM1176.78 570.98H1493.01V708.271H1176.78V570.98ZM1519.37 570.98H1835.54V708.271H1519.37V570.98ZM1493.01 94.5942V388.256H1176.78V94.5942H1493.01Z"
                 fill="#808EBD"
@@ -2077,7 +2122,7 @@ const UserPage = () => {
                 fill="#6B7AB2"
               />
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 clipRule="evenodd"
                 d="M303.762 562.435H338.929H770.309H805.476V597.602V751.163V786.33V939.892V975.059V1087.98H770.309V975.059H338.929V1087.98H303.762V975.059V939.892V786.33V751.163V597.602V562.435ZM770.309 939.892V786.33H338.929V939.892H770.309ZM770.309 751.163V597.602H338.929V751.163H770.309Z"
                 fill="#8095CE"
@@ -2094,7 +2139,7 @@ const UserPage = () => {
                 fill="#AAB7D3"
               />
               <rect
-              onClick={ClickBulletin}
+                onClick={ClickBulletin}
                 x="384.118"
                 y="137.539"
                 width="512.512"
@@ -2152,7 +2197,7 @@ const UserPage = () => {
                     setCurrentMode(!currentMode);
                   }, 3950);
                 }}
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 clipRule="evenodd"
                 d="M263.861 265.024C257.73 279.246 258.556 322.299 276.922 353.118L308.523 314.232L340.123 275.347L340.123 275.347L371.506 236.728L403.593 197.245C369.55 185.717 326.918 194.106 314.106 203.195L288.437 234.781L288.438 234.781L263.861 265.024Z"
                 fill="url(#paint4_linear_397_66)"
@@ -2194,7 +2239,7 @@ const UserPage = () => {
                 fill="#9BAAC5"
               />
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 clipRule="evenodd"
                 d="M1364.56 786.593C1364.56 782.313 1368.03 778.844 1372.3 778.844C1376.58 778.844 1380.05 782.313 1380.05 786.593V871.504C1380.05 875.922 1383.63 879.504 1388.05 879.504L1715.84 879.504C1720.26 879.504 1723.84 875.922 1723.84 871.504V786.593C1723.84 782.313 1727.31 778.844 1731.59 778.844C1735.87 778.844 1739.34 782.313 1739.34 786.593V879.504V881V887C1739.34 891.418 1735.76 895 1731.34 895L1372.3 895C1368.03 895 1364.56 891.531 1364.56 887.252V879.504C1364.56 879.504 1364.56 879.504 1364.56 879.504C1364.56 879.504 1364.56 879.504 1364.56 879.504V786.593Z"
                 fill="url(#paint7_linear_397_66)"
@@ -2208,7 +2253,7 @@ const UserPage = () => {
               />
               <path
                 style={{ zIndex: "10" }}
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 clipRule="evenodd"
                 d="M1149 67.3652H1863V732.5H1149V67.3652ZM1519.21 93.0942H1835.38V386.756H1519.21V93.0942ZM1519.21 413.109H1835.38V543.128H1519.21V413.109ZM1492.85 543.128V413.109H1176.62V543.128H1492.85ZM1176.62 569.48H1492.85V706.771H1176.62V569.48ZM1519.21 569.48H1835.38V706.771H1519.21V569.48ZM1492.85 93.0942V386.756H1176.62V93.0942H1492.85Z"
                 fill="#808EBD"
@@ -2419,30 +2464,31 @@ const UserPage = () => {
                   fill="#CEDFFF"
                 />
               </g>
-              <rect
-              style={{zIndex:'400'}}
-                x="692.902"
-                y="463"
-                width="506.421"
-                height="349"
-                rx="17"
-                fill="#1A1A33"
-              />
-              <path
-                style={{zIndex:'100'}}
-                d="M686.41 480C686.41 470.611 694.021 463 703.41 463H1175.59C1184.98 463 1192.59 470.611 1192.59 480V795C1192.59 804.389 1184.98 812 1175.59 812H703.41C694.021 812 686.41 804.389 686.41 795V480Z"
-                fill="#7A91D4"
-              />
-              <path
-                d="M692.902 749.77H1199.32V795C1199.32 804.389 1191.71 812 1182.32 812H709.902C700.514 812 692.902 804.389 692.902 795V749.77Z"
-                fill="#A6A6C3"
-              />
-              <path
-                id="#desktop-bottom"
-                ref={desktopRef}
-                d="M686.41 749.77H1192.59V795C1192.59 804.389 1184.98 812 1175.59 812H703.41C694.021 812 686.41 804.389 686.41 795V749.77Z"
-                fill="#BCC6ED"
-              />
+
+                  <rect
+                    x="692.902"
+                    y="463"
+                    width="506.421"
+                    height="349"
+                    rx="17"
+                    fill="#1A1A33"
+                  />
+                  <path
+                    d="M686.41 480C686.41 470.611 694.021 463 703.41 463H1175.59C1184.98 463 1192.59 470.611 1192.59 480V795C1192.59 804.389 1184.98 812 1175.59 812H703.41C694.021 812 686.41 804.389 686.41 795V480Z"
+                    fill="#7A91D4"
+                  />
+
+                <path
+                  d="M692.902 749.77H1199.32V795C1199.32 804.389 1191.71 812 1182.32 812H709.902C700.514 812 692.902 804.389 692.902 795V749.77Z"
+                  fill="#A6A6C3"
+                />
+
+                <path
+                  id="#desktop-bottom"
+                  ref={desktopRef}
+                  d="M686.41 749.77H1192.59V795C1192.59 804.389 1184.98 812 1175.59 812H703.41C694.021 812 686.41 804.389 686.41 795V749.77Z"
+                  fill="#BCC6ED"
+                />
               <rect
                 x="896.797"
                 y="812"
@@ -2457,7 +2503,7 @@ const UserPage = () => {
                 height="83"
                 fill="#9090BB"
               />
-              <g clip-path="url(#clip1_397_66)">
+              <g clipPath="url(#clip1_397_66)">
                 <rect
                   width="475"
                   height="254"
@@ -2791,7 +2837,7 @@ const UserPage = () => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g clip-path="url(#clip0_2072_1393)">
+            <g clipPath="url(#clip0_2072_1393)">
               <rect
                 width="1920"
                 height="1080"
@@ -2836,7 +2882,7 @@ const UserPage = () => {
                 fill="#120D23"
               />
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 clipRule="evenodd"
                 d="M339.429 562.435H770.809H805.976V597.602V751.163V786.33V939.892V975.059V1087.98H770.809V975.059L339.429 975.059V1087.98H304.262V975.059V939.892V786.33V751.163V597.602V562.435L339.429 562.435ZM770.809 939.892V786.33L339.429 786.33V939.892L770.809 939.892ZM770.809 751.163V597.602L339.429 597.602V751.163L770.809 751.163Z"
                 fill="#180E2D"
@@ -2875,7 +2921,7 @@ const UserPage = () => {
                 fill="url(#paint3_linear_2072_1393)"
               />
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 clipRule="evenodd"
                 d="M1149.66 68.8652H1863.66V734H1149.66V68.8652ZM1519.87 94.5942H1836.04V388.256H1519.87V94.5942ZM1519.87 414.609H1836.04V544.628H1519.87V414.609ZM1493.51 544.628V414.609H1177.28V544.628H1493.51ZM1177.28 570.98H1493.51V708.271H1177.28V570.98ZM1519.87 570.98H1836.04V708.271H1519.87V570.98ZM1493.51 94.5942V388.256H1177.28V94.5942H1493.51Z"
                 fill="#452D67"
@@ -2920,7 +2966,7 @@ const UserPage = () => {
                 fill="#FBC8B4"
               />
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 clipRule="evenodd"
                 className="stand-head"
                 onClick={() => {
@@ -3104,7 +3150,7 @@ const UserPage = () => {
                 fill="#504678"
               />
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 clipRule="evenodd"
                 d="M1365.06 786.593C1365.06 782.313 1368.53 778.844 1372.8 778.844C1377.08 778.844 1380.55 782.313 1380.55 786.593V871.504C1380.55 875.922 1384.13 879.504 1388.55 879.504L1716.34 879.504C1720.76 879.504 1724.34 875.922 1724.34 871.504V786.593C1724.34 782.313 1727.81 778.844 1732.09 778.844C1736.37 778.844 1739.84 782.313 1739.84 786.593V879.504V881V887C1739.84 891.418 1736.26 895 1731.84 895L1372.8 895C1368.53 895 1365.06 891.531 1365.06 887.252V879.504C1365.06 879.504 1365.06 879.504 1365.06 879.504C1365.06 879.504 1365.06 879.504 1365.06 879.504V786.593Z"
                 fill="url(#paint8_linear_2072_1393)"
@@ -3130,6 +3176,7 @@ const UserPage = () => {
                 fill="#5B4865"
               />
               <path
+                ref={desktopNightRef}
                 d="M687 748.77H1193.18V794C1193.18 803.389 1185.57 811 1176.18 811H704C694.611 811 687 803.389 687 794V748.77Z"
                 fill="#C7A4B8"
               />
@@ -3147,7 +3194,7 @@ const UserPage = () => {
                 height="83"
                 fill="#5B4865"
               />
-              <g clip-path="url(#clip1_2072_1393)">
+              <g clipPath="url(#clip1_2072_1393)">
                 <rect
                   width="475"
                   height="254"
@@ -3178,8 +3225,9 @@ const UserPage = () => {
                 fill="url(#paint12_linear_2072_1393)"
               />
 
-              <g filter="url(#filter1_f_2072_1393)">
+              <g filter="url(#filter1_f_2072_1393)" pointerEvents="none">
                 <path
+                  pointerEvents="none"
                   style={{ visibility: animation ? "visible" : "hidden" }}
                   d="M493.457 922.229L275.599 352.991L401.544 197.014L1918.73 922.229H493.457Z"
                   fill="url(#paint13_linear_2072_1393)"
@@ -3187,10 +3235,8 @@ const UserPage = () => {
                 />
               </g>
               <path
-
-                style={{ visibility: animation ? "visible" : "hidden",
-                  pointerEvents: animation ? "none" : "none"
-                 }}
+                pointerEvents="none"
+                style={{ visibility: animation ? "visible" : "hidden" }}
                 d="M495.694 922.229L277.835 352.991L403.78 197.014L1920.96 922.229H495.694Z"
                 fill="url(#paint14_linear_2072_1393)"
                 fillOpacity="0.8"
