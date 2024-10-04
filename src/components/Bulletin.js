@@ -119,6 +119,19 @@ useEffect(() => {
     }
   };
 
+  // LocalStorage에서 데이터를 불러오기
+  useEffect(() => {
+    const savedTexts = localStorage.getItem('bulletinTexts');
+    if (savedTexts) {
+      setInputTexts(JSON.parse(savedTexts));
+    }
+  }, []);
+
+  // inputTexts가 업데이트될 때마다 localStorage에 저장
+  useEffect(() => {
+    localStorage.setItem('bulletinTexts', JSON.stringify(inputTexts));
+  }, [inputTexts]);
+
   return (
     <div>
         <div className={`BulletinBoard ${className}`}>

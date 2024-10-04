@@ -19,10 +19,8 @@ import { buttonBaseClasses } from "@mui/material";
 import { makeNewBook } from "../utils/bookData.js";
 import { useCookies } from "react-cookie";
 import { getUserRoom } from "../utils/data.js";
-import "../styles/SVG.css";
-import modernCurtain from "../assets/modernCurtain.png";
-
-
+import before from "../assets/before.png";
+import next from "../assets/next.png";
 
 const UserPage = () => {
   const [roomData, setRoomData] = useState(null);
@@ -46,14 +44,13 @@ const UserPage = () => {
   const [tagbutton, settagbutton] = useState(false); //태그버튼 눌렀을때 색변환
   const [key, setKey] = useState("bHvT0SNITuU");
   const [bookName, setBookName] = useState("Book Name");
-  const [bookList, setBookList] = useState({});
+  const [bookList, setBookList] = useState([]);
   const [showWindow, setShowWindow] = useState(false);
   const [activeWindow, setActiveWindow] = useState("");
   const [bulletin, setBulletin] = useState(false);
 
 
   // 이 함수는 패널에서 호출되어 SVG 상태를 업데이트함
-  const [selectedSVG, setSelectedSVG] = useState(null); // 관리할 SVG 상태
   const [deco, setDeco] = useState(false);
 
   // const handleSVGChange = (selectedSVG) => {
@@ -72,8 +69,16 @@ const UserPage = () => {
     }
   };
 
+  const getRoomData = async () => {
+    const roomData = await getUserRoom(userRealId); // userId를 전달하여 함수 호출
+    setRoomData(roomData);
+    setBookList(roomData.user_space_data.book_list);
+  };
+
   useEffect(() => {
-    setRoomData(getUserRoom(userRealId));
+    setRoomData(getRoomData);
+
+    console.log(roomData);
     if (currentMode == false) {
       setAnimation(true);
       setClick(true);
@@ -86,30 +91,33 @@ const UserPage = () => {
     }
   }, []);
 
-  useEffect(() => {}, [roomData]);
+  useEffect(() => {
+    if (roomData) console.log(roomData);
+  }, [roomData]);
 
   const bookRef = useRef(null);
+
   // 책 클릭시 편집화면 활성화
-  const bookImageClick = async (e) => {
-    e.stopPropagation();
-    setActiveWindow("");
-    try {
-      const response = await fetch(
-        "https://dangil-artisticsw.site/space/3661157737",
-        {
-          method: "GET",
-          credentials: "include", // 쿠키 포함 설정
-        }
-      );
+  // const bookImageClick = async (e) => {
+  //   e.stopPropagation();
+  //   setActiveWindow("");
+  //   try {
+  //     const response = await fetch(
+  //       "https://dangil-artisticsw.site/space/3661157737",
+  //       {
+  //         method: "GET",
+  //         credentials: "include", // 쿠키 포함 설정
+  //       }
+  //     );
 
-      const bookNameData = await response.json();
-      const bookNameList = bookNameData.data.user_space_data.book_list;
+  //     const bookNameData = await response.json();
+  //     const bookNameList = bookNameData.data.user_space_data.book_list;
 
-      setBookName();
-    } catch (error) {
-      console.error("Error handling the book name:", error);
-    }
-  };
+  //     setBookName();
+  //   } catch (error) {
+  //     console.error("Error handling the book name:", error);
+  //   }
+  // };
 
   // 이전 사용자로 이동하는 함수
   const handlePrevUser = () => {
@@ -274,7 +282,15 @@ const UserPage = () => {
               parseInt(userId) === minUserId ? "invisible" : ""
             }`}
           >
-            <span className="icon">＜</span>
+            <img
+              src={before}
+              style={{
+                width: "10px",
+                height: "15px",
+                paddingLeft: "10px",
+                paddingTop: "3px",
+              }}
+            />
           </button>
           {/* 중간 기능 버튼 */}
           <button className="control-button">
@@ -306,7 +322,15 @@ const UserPage = () => {
               parseInt(userId) === maxUserId ? "invisible" : ""
             }`}
           >
-            <span className="icon">＞</span>
+            <img
+              src={next}
+              style={{
+                width: "10px",
+                height: "15px",
+                paddingRight: "10px",
+                paddingTop: "3px",
+              }}
+            />
           </button>
         </div>
 
@@ -321,31 +345,33 @@ const UserPage = () => {
         <div className="bookshelfbox">
           <div className="cols-bookbox">
             <div
-              className="col-book1"
+              className="col-book"
               onClick={() => {
                 handleClick("add-book");
               }}
               id={bookList[0] ? "exist" : ""}
-              style={bookList[0] && { backgroundColor: bookList[0].bookColor }}
+              style={
+                bookList[0] && {
+                  backgroundColor: bookList[0].bookColor,
+                }
+              }
             ></div>
             <div
-              className="col-book2"
-              id={bookList[1] ? "exist" : ""}
+              className="col-book"
               style={bookList[1] && { backgroundColor: bookList[1].bookColor }}
             ></div>
             <div
               style={bookList[2] && { backgroundColor: bookList[2].bookColor }}
-              className="col-book3"
-              id={bookList[2] ? "exist" : ""}
+              className="col-book"
             ></div>
-            <div className="col-book4" id={bookList[3] ? "exist" : ""}></div>
+            <div className="col-book" id={bookList[3] ? "exist" : ""}></div>
           </div>
 
           <div className="rows-bookbox">
-            <div className="row-book1" id={bookList[4] ? "exist" : ""}></div>
-            <div className="row-book2" id={bookList[5] ? "exist" : ""}></div>
-            <div className="row-book3" id={bookList[6] ? "exist" : ""}></div>
-            <div className="row-book4" id={bookList[7] ? "exist" : ""}></div>
+            <div className="row-book1"></div>
+            <div className="row-book2"></div>
+            <div className="row-book3"></div>
+            <div className="row-book4"></div>
           </div>
         </div>
         {decoClick==='curtain' && (

@@ -54,8 +54,8 @@ export const writeBook = async (title, page, text, image, file, color) => {
           note_title: title,
           note_page: page,
           note_text: text,
-          note_image: image,
-          note_file: file,
+          note_image: file,
+          note_file: {},
         }),
       }
     );

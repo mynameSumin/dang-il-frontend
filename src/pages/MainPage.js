@@ -13,6 +13,10 @@ import searchBtn from "../assets/search.png";
 import addByTag from "../assets/addByTag.png";
 import check from "../assets/check.png";
 import reject from "../assets/reject.png";
+import background from "../assets/background.png";
+import backNight from "../assets/backNight.png";
+import dayNight from "../assets/dayNight.png";
+
 import {
   getUserDataAfterLogin,
   handleLogout,
@@ -112,7 +116,8 @@ export default function MainPage({ logoutHandler }) {
 
   // 프로필 사진 체크박스 상호 배타적 동작
   const [isHideInAlramChecked, setIsHideInAlramChecked] = useState(false);
-  const [isStartWithComputerChecked, setIsStartWithComputerChecked] = useState(false);
+  const [isStartWithComputerChecked, setIsStartWithComputerChecked] =
+    useState(false);
 
   const filteredUsers = friendData.filter((user) =>
     user.name.toLowerCase().includes(filter.toLowerCase())
@@ -157,7 +162,7 @@ export default function MainPage({ logoutHandler }) {
     try {
       const imgUrl = userData["profile_image_url"];
       const match = imgUrl.match(/fname=([^&]+)/);
-      console.log("유알엘입니다아",match[1]);
+      console.log("유알엘입니다아", match[1]);
       const imageUrl = match[1];
 
       if (match) {
@@ -187,8 +192,8 @@ export default function MainPage({ logoutHandler }) {
     if (event.target.checked) {
       const isChecked = event.target.checked;
       setIsHideInAlramChecked(isChecked);
-      setClearProfilePic(false)
-    
+      setClearProfilePic(false);
+
       if (isChecked) {
         setIsStartWithComputerChecked(false); // 다른 체크박스를 해제
       }
@@ -405,6 +410,33 @@ export default function MainPage({ logoutHandler }) {
 
   return (
     <div className={mode ? "day" : "night"}>
+      {mode ? (
+        <img
+          src={background}
+          style={{
+            position: "fixed",
+            top: "0",
+            width: "100vw",
+            height: "100vh",
+            pointerEvents: "none",
+            zIndex: "888",
+            opacity: "1",
+          }}
+        />
+      ) : (
+        <img
+          src={backNight}
+          style={{
+            position: "fixed",
+            top: "0",
+            width: "100vw",
+            height: "100vh",
+            pointerEvents: "none",
+            zIndex: "888",
+            opacity: "1",
+          }}
+        />
+      )}
       <DeskField
         mode={mode}
         setMode={setMode}
@@ -412,14 +444,6 @@ export default function MainPage({ logoutHandler }) {
         fieldRef={fieldRef}
         onDoubleClick={handleDoubleClick}
       />
-      <button
-        onClick={() => {
-          setMode(!mode);
-        }}
-        className="mode"
-      >
-        낮/밤
-      </button>
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
@@ -482,10 +506,7 @@ export default function MainPage({ logoutHandler }) {
                     onChange={handleProfileFetchCheck}
                     checked={isHideInAlramChecked}
                   />
-                  <label
-                    className="checkbox-text"
-                    for="hideInAlram"
-                  >
+                  <label className="checkbox-text" for="hideInAlram">
                     연동된 계정에서 불러오기
                   </label>
                 </div>
@@ -511,19 +532,21 @@ export default function MainPage({ logoutHandler }) {
                       alt="Profile Preview"
                       className="profile-preview-image"
                       style={{
-                        width: "120px",      // 원하는 너비
-                        height: "120px",     // 원하는 높이
-                        objectFit: "cover"//,  // 비율을 유지하면서 이미지를 잘라서 맞춤
+                        width: "120px", // 원하는 너비
+                        height: "120px", // 원하는 높이
+                        objectFit: "cover", //,  // 비율을 유지하면서 이미지를 잘라서 맞춤
                         // borderRadius: "50%"  // 둥근 프로필 이미지를 만들 경우
                       }}
                     />
                   ) : (
                     // <span className="before-see">미리보기</span>
-                    <FaUserCircle style={{
-                      width: "120px",
-                      height: "120px",
-                      objectFit: "cover"
-                    }} />
+                    <FaUserCircle
+                      style={{
+                        width: "120px",
+                        height: "120px",
+                        objectFit: "cover",
+                      }}
+                    />
                   )}
                 </div>
               </div>
@@ -539,13 +562,10 @@ export default function MainPage({ logoutHandler }) {
           <div>
             <p
               className={`apply-button ${applySetting ? "active" : null}`}
-              onClick={() => 
-                  {
-                    console.log(userData);
-                    applySetting && applyButton( userData["_id"]);
-                    
-                  }
-                }  // 찾았다 요놈, 프로필  
+              onClick={() => {
+                console.log(userData);
+                applySetting && applyButton(userData["_id"]);
+              }} // 찾았다 요놈, 프로필
             >
               적용하기
             </p>
@@ -554,23 +574,29 @@ export default function MainPage({ logoutHandler }) {
       )}
       ;
       <div ref={loginContainerRef} className="login-container">
-        <button className="login-button-user"> {/* 찾았다 요놈 */}
+        <button className="login-button-user">
+          {" "}
+          {/* 찾았다 요놈 */}
+          <img
+            src={dayNight}
+            onClick={() => {
+              setMode(!mode);
+            }}
+          />
           {isHideInAlramChecked ? (
             <img
               src={profilePicUrl}
               alt="Profile"
-              className="user-icon1"  // 기존 스타일을 동일하게 적용
+              className="user-icon1" // 기존 스타일을 동일하게 적용
               // style={{ borderRadius: '20%', width: '20px', height: '20px' }}  // 동그란 프로필 이미지
             />
-          ): (
+          ) : (
             <FaUserCircle className="user-icon1" />
           )}
-
           <div className="user-name-box">
             <span className="user-name">{userData.name}</span>
             <div className="tag-hover">tag : {userData.tag}</div>
           </div>
-
           <span
             className={`dropdown-button ${isDropdownOpen ? "active" : null}`}
             onClick={toggleDropdown}

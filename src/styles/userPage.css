@@ -404,10 +404,14 @@ input::placeholder {
   width: 38%;
   height: 100%;
 }
-.col-book1 {
+.col-book {
   border-radius: 5px;
   width: 25%;
   height: 100%;
+}
+
+.col-book#exist {
+  opacity: 1;
 }
 .col-book2 {
   border-radius: 5px;
