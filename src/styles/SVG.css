@@ -1,0 +1,6 @@
+.curtain {
+    position: fixed; 
+    right:1%;
+    top:2%;
+    pointer-events: none;
+}
