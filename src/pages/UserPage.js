@@ -62,15 +62,19 @@ const UserPage = () => {
   };
 
   const getRoomData = async () => {
-    const roomData = await getUserRoom(userRealId); // userId를 전달하여 함수 호출
-    setRoomData(roomData);
-    setBookList(roomData.user_space_data.book_list);
+    const roomData1 = await getUserRoom(userRealId); // userId를 전달하여 함수 호출
+    setRoomData(roomData1);
+    setBookList(roomData1.user_space_data.book_list);
+    setKey(roomData1["user_space_data"]["music_url"][0])
+    
   };
 
   useEffect(() => {
-    setRoomData(getRoomData);
+    // getRoomData 비동기
+    getRoomData().then((rd)=> {
+      console.log("룸데이터에요 ", rd);
+    })
 
-    console.log(roomData);
     if (currentMode == false) {
       setAnimation(true);
       setClick(true);
@@ -84,7 +88,9 @@ const UserPage = () => {
   }, []);
 
   useEffect(() => {
-    if (roomData) console.log(roomData);
+
+    if (roomData) console.log("이이이이", roomData);
+
   }, [roomData]);
 
   const bookRef = useRef(null);
@@ -217,7 +223,7 @@ const UserPage = () => {
         <div className="player-box">
           <YouTube
             iframeClassName="player"
-            videoId={key}
+            videoId={key} // 찾았다
             opts={{
               width: "25%",
               height: "24.9%",

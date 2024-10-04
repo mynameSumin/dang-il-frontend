@@ -196,6 +196,13 @@ export default function MainPage({ logoutHandler }) {
 
       if (isChecked) {
         setIsStartWithComputerChecked(false); // 다른 체크박스를 해제
+        
+      const imgUrl = userData["profile_image_url"];
+      const match = imgUrl.match(/fname=([^&]+)/);
+      console.log("유알엘입니다아", match[1]);
+      const imageUrl = match[1];
+
+        setProfilePicUrl(imageUrl);
       }
       fetchProfilePicture();
     } else {

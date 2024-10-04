@@ -1,9 +1,10 @@
 import closeBtn from "../assets/close.png";
 import { useState } from "react";
 import { saveUrl, deleteUrl, updateUrl } from "../utils/data";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 
 const AddYoutube = ({
+  userRealId,
   setKey,
   showWindow,
   setShowWindow,
@@ -11,6 +12,7 @@ const AddYoutube = ({
   setActiveWindow,
 }) => {
   const [url, setUrl] = useState("");
+  const [vid, setVid] = useState("");
   const [errorMessage, setErrorMessage] = useState(" ");
   const [videoId, setVideoId] = useState("");
 
@@ -21,9 +23,12 @@ const AddYoutube = ({
     const match = inputUrl.match(youtubeRegex);
 
     if (match) {
+      const videoId1 = match[1]; // 바로 추출한 값을 사용
       setErrorMessage(" "); // 유효한 경우 에러 메시지 제거
-      setVideoId(match[1]); // URL에서 ID 추출
-      setKey(match[1]);
+      setVideoId(videoId1); // 상태 업데이트
+      setKey(videoId1);
+      setVid(videoId1); // vid를 업데이트 하지만 바로 vid를 의존하지 않고 match[1]을 사용
+      console.log("키추출  ", videoId1);
       setShowWindow(false);
       setActiveWindow("");
       setUrl("");
@@ -35,14 +40,18 @@ const AddYoutube = ({
     }
   };
 
-  const [cookies] = useCookies(["session_id"]);
+  // const [cookies] = useCookies(["session_id"]);
 
   const handleApplyClick = () => {
+    const youtubeRegex = /^https:\/\/www\.youtube\.com\/watch\?v=([^&]+)/;
     // URL 검증
     if (validateYoutubeUrl(url)) {
       console.log("유효한 URL:", url);
+      const match1 = url.match(youtubeRegex);
+      console.log("유효키 ", match1);
+      console.log()
       // 추가 로직을 여기서 처리 (예: URL 저장 또는 처리)
-      saveUrl(cookies, videoId);
+      saveUrl(userRealId, match1[1]);
     } else {
       console.log("유효하지 않은 URL");
       // 에러 메시지 출력

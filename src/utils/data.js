@@ -116,7 +116,6 @@ export const saveUrl = async (myId, url) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user_id: myId,
           video_id: url,
         }),
       }
