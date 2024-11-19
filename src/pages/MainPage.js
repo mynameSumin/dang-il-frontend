@@ -315,42 +315,42 @@ export default function MainPage({ logoutHandler }) {
     setProfileSetting("profile");
   }, []);
 
-  useEffect(() => {
-    fetchData();
-    // SSE 연결 (withCredentials 설정)
-    const eventSource = new EventSource(
-      "https://dangil-artisticsw.site/sse/connect",
-      {
-        withCredentials: true,
-      }
-    );
+  // useEffect(() => {
+  //   fetchData();
+  //   // SSE 연결 (withCredentials 설정)
+  //   const eventSource = new EventSource(
+  //     "https://dangil-artisticsw.site/sse/connect",
+  //     {
+  //       withCredentials: true,
+  //     }
+  //   );
 
-    eventSource.onmessage = function (event) {
-      // 서버로부터 받은 데이터를 파싱
-      const data = event.data.replace(/'/g, '"');
-      const correctedData = data
-        .replace(/\bTrue\b/g, true)
-        .replace(/\bFalse\b/g, false);
-      const receiveData = JSON.parse(correctedData);
-      setMessages((prevMessages) => [...prevMessages, receiveData]);
-      console.log("messages", messages);
-      // 'source'와 'data' 필드 사용
-      console.log("data:", receiveData);
-      console.log("Source:", receiveData.source);
+  //   eventSource.onmessage = function (event) {
+  //     // 서버로부터 받은 데이터를 파싱
+  //     const data = event.data.replace(/'/g, '"');
+  //     const correctedData = data
+  //       .replace(/\bTrue\b/g, true)
+  //       .replace(/\bFalse\b/g, false);
+  //     const receiveData = JSON.parse(correctedData);
+  //     setMessages((prevMessages) => [...prevMessages, receiveData]);
+  //     console.log("messages", messages);
+  //     // 'source'와 'data' 필드 사용
+  //     console.log("data:", receiveData);
+  //     console.log("Source:", receiveData.source);
 
-      // 예: 친구 요청 처리
-      if (event.data.source === "/friend/apply") {
-        console.log("친구 요청 받음:");
-        console.log("보낸 사람 ID:", event.data.sender_id);
-        console.log("받는 사람 ID:", event.data.receiver_id);
-      }
-    };
+  //     // 예: 친구 요청 처리
+  //     if (event.data.source === "/friend/apply") {
+  //       console.log("친구 요청 받음:");
+  //       console.log("보낸 사람 ID:", event.data.sender_id);
+  //       console.log("받는 사람 ID:", event.data.receiver_id);
+  //     }
+  //   };
 
-    eventSource.onerror = (error) => {
-      console.error("SSE 연결 오류:", error);
-      eventSource.close();
-    };
-  }, []);
+  //   eventSource.onerror = (error) => {
+  //     console.error("SSE 연결 오류:", error);
+  //     eventSource.close();
+  //   };
+  // }, []);
 
   useEffect(() => {
     console.log("messages", messages);

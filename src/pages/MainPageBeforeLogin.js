@@ -43,9 +43,9 @@ export default function MainPageBeforeLogin() {
     }
   };
 
-  useEffect(() => {
-    getUserDataBeforeLogin();
-  }, []);
+  // useEffect(() => {
+  //   getUserDataBeforeLogin();
+  // }, []);
 
   const handleLogin = (event) => {
     event.preventDefault();
