@@ -5,6 +5,7 @@ import {
   Route,
   Routes,
   Navigate,
+  BrowserRouter,
 } from "react-router-dom";
 import LoginGoogle from "./components/LoginGoogle";
 import LoginKakao from "./components/LoginKakao";
@@ -36,7 +37,7 @@ const App = () => {
   };
 
   return (
-    <Router>
+    <BrowserRouter basename="https://dang-il.github.io/dang-il-frontend/">
       <Routes>
         {/* 로그인된 경우엔 바로 메인페이지로 이동 */}
         <Route
@@ -68,7 +69,7 @@ const App = () => {
         />
         <Route path="/user/:userId" element={<UserPage />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 
