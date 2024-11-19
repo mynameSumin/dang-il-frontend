@@ -7,11 +7,11 @@ import {
   Navigate,
   BrowserRouter,
 } from "react-router-dom";
-import LoginGoogle from "./components/LoginGoogle";
-import LoginKakao from "./components/LoginKakao";
-import MainPageBeforeLogin from "./pages/MainPageBeforeLogin";
-import UserPage from "./pages/UserPage";
-import MainPage from "./pages/MainPage";
+import LoginGoogle from "./components/LoginGoogle.js";
+import LoginKakao from "./components/LoginKakao.js";
+import MainPageBeforeLogin from "./pages/MainPageBeforeLogin.js";
+import UserPage from "./pages/UserPage.js";
+import MainPage from "./pages/MainPage.js";
 
 const App = () => {
   //login
@@ -41,7 +41,7 @@ const App = () => {
       <Routes>
         {/* 로그인된 경우엔 바로 메인페이지로 이동 */}
         <Route
-          path="/"
+          exact path="/"
           element={
             <ProtectedRoute isLogin={isLogin}>
               <MainPageBeforeLogin />

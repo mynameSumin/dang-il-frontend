@@ -1,4 +1,4 @@
-import DeskField from "../components/MakeDesk";
+import DeskField from "../components/MakeDesk.js";
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/mainPage.css";
 import "../styles/popup.css";

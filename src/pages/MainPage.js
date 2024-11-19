@@ -1,4 +1,4 @@
-import DeskField from "../components/MakeDesk";
+import DeskField from "../components/MakeDesk.js";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
