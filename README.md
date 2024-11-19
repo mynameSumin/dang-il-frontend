@@ -1,6 +1,12 @@
 # 🌕 예술적인 소프트웨어
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=800&size=30&pause=1000&color=645392&center=true&width=435&separator=%3C&lines=%EB%8B%B9%EC%8B%A0%EC%9D%B4+%EC%9D%BC%ED%95%98%EB%8A%94+%EC%8B%9C%EA%B0%84+;+%EB%8B%B9%EC%9D%BC)](https://git.io/typing-svg)
 <img width="1440" alt="image" src="https://github.com/user-attachments/assets/27a82226-db83-4019-a995-6f08fc602ea2">
+
+## 사용 링크
+아래 링크에서 실제로 사용해보실 수 있습니다.
+(현재는 서버가 없어 개인 공간만 사용해보실 수 있습니다.)
+[당신이 일하는 시간 ; 당일](https://dang-il.github.io/dang-il-frontend/)  
+
 ## 💭 어떤 프로젝트인가요?
 현대인들은 하루 중 대부분의 시간을 홀로 무언가에 열중하며 보내고 있습니다.  
 사회적 동물인 인간은 필연적으로 외로움에 취약합니다.  
