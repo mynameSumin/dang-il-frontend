@@ -37,7 +37,7 @@ const App = () => {
   };
 
   return (
-    <BrowserRouter basename="https://dang-il.github.io/dang-il-frontend/">
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         {/* 로그인된 경우엔 바로 메인페이지로 이동 */}
         <Route
