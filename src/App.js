@@ -56,13 +56,14 @@ const App = () => {
           path="/auth/kakao/callback"
           element={<LoginKakao loginHandler={loginHandler} />}
         />
-
+      {/* 서버 종료로 인해 로그인이 안되더라도 mainPage 이동이 가능하도록 수정 */}
         <Route
           path="/mainPage"
           element={
-            <ProtectedRoute isLogin={isLogin}>
-              <MainPage logoutHandler={logoutHandler} />
-            </ProtectedRoute>
+            // <ProtectedRoute isLogin={isLogin}>
+            //   <MainPage logoutHandler={logoutHandler} />
+            // </ProtectedRoute>
+            <MainPage logoutHandler={logoutHandler} />
           }
         />
         <Route path="/user/:userId" element={<UserPage />} />

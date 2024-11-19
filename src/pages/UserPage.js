@@ -182,7 +182,7 @@ const UserPage = () => {
   return (
     <div>
       {/* 단축 버튼들 */}
-      {userRealId == "105737853036771628932" && (
+      
         <div className="memo-youtube-book">
           <img
             src={memobutton}
@@ -209,9 +209,7 @@ const UserPage = () => {
             }}
           />
         </div>
-      )}
-      {/*
-       */}
+      
       <AddYoutube
         setKey={setKey}
         showWindow={showWindow}

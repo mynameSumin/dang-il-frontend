@@ -213,7 +213,7 @@ export default function MainPage({ logoutHandler }) {
   //두 번 클릭 시 다른 사용자 페이지로 이동
   const handleDoubleClick = (userId, mode) => {
     navigate(`/user/${userId}`, {
-      state: { mode: mode, userRealId: allData[userId]._id },
+      state: { mode: mode, userRealId: 0},
     });
   };
 
@@ -589,7 +589,7 @@ export default function MainPage({ logoutHandler }) {
               setMode(!mode);
             }}
           />{" "}
-          {/* 찾았다 요놈 */}
+          
           {isHideInAlramChecked ? (
             <img
               src={profilePicUrl}
