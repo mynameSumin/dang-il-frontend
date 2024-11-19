@@ -1,7 +1,6 @@
 import closeBtn from "../assets/close.png";
 import { useState } from "react";
 import { saveUrl, deleteUrl, updateUrl } from "../utils/data";
-// import { useCookies } from "react-cookie";
 
 const AddYoutube = ({
   userRealId,
@@ -49,7 +48,7 @@ const AddYoutube = ({
       console.log("유효한 URL:", url);
       const match1 = url.match(youtubeRegex);
       console.log("유효키 ", match1);
-      console.log()
+      console.log();
       // 추가 로직을 여기서 처리 (예: URL 저장 또는 처리)
       saveUrl(userRealId, match1[1]);
     } else {

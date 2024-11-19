@@ -196,11 +196,11 @@ export default function MainPage({ logoutHandler }) {
 
       if (isChecked) {
         setIsStartWithComputerChecked(false); // 다른 체크박스를 해제
-        
-      const imgUrl = userData["profile_image_url"];
-      const match = imgUrl.match(/fname=([^&]+)/);
-      console.log("유알엘입니다아", match[1]);
-      const imageUrl = match[1];
+
+        const imgUrl = userData["profile_image_url"];
+        const match = imgUrl.match(/fname=([^&]+)/);
+        console.log("유알엘입니다아", match[1]);
+        const imageUrl = match[1];
 
         setProfilePicUrl(imageUrl);
       }
@@ -582,14 +582,14 @@ export default function MainPage({ logoutHandler }) {
       ;
       <div ref={loginContainerRef} className="login-container">
         <button className="login-button-user">
-          {" "}
-          {/* 찾았다 요놈 */}
           <img
             src={dayNight}
+            style={{ position: "relative", right: "150px" }}
             onClick={() => {
               setMode(!mode);
             }}
-          />
+          />{" "}
+          {/* 찾았다 요놈 */}
           {isHideInAlramChecked ? (
             <img
               src={profilePicUrl}

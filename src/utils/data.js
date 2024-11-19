@@ -43,6 +43,7 @@ export const handleLogout = (cookies) => {
         window.location.href = "/"; // 로그아웃 후 게스트 모드로 이동
       } else {
         console.error("Logout failed");
+        window.location.href = "/"; // 로그아웃 후 게스트 모드로 이동
       }
     })
     .catch((error) => {

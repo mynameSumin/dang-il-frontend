@@ -32,20 +32,24 @@ const Book = forwardRef(
       lockMode,
       setLockMode,
       setBookList,
+      write,
+      setWrite,
+      fileName,
+      setFileName,
+      file,
+      setFile,
     },
     bookRef
   ) => {
-    const [file, setFile] = useState(null);
     const [numPages, setNumPages] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
     const [fileOpen, setFileOpen] = useState(false);
-    const [write, setWrite] = useState("");
-    const [fileName, setFileName] = useState("");
-    const color1 = ["#D3DEEE", 0];
-    const color2 = ["#B3C7EC", 1];
-    const color3 = ["#D8C7D4", 2];
-    const color4 = ["#DDD4EF", 3];
+
+    const color1 = ["#47548F", 0];
+    const color2 = ["#1F2C45", 1];
+    const color3 = ["#7C4F6B", 2];
+    const color4 = ["#756885", 3];
 
     // 파일 선택 함수
     const onFileSelect = (e) => {
@@ -275,11 +279,12 @@ const Book = forwardRef(
                 <img
                   src={download}
                   onClick={() => {
-                    if (writeBook(bookName, 1, write, {}, file, bookColor[0])) {
+                    // writeBook(bookName, 1, write, {}, file, bookColor[0])
+                    if (true) {
                       setBookList((prev) => [
                         ...prev,
                         {
-                          name: fileName,
+                          name: bookName,
                           content: write,
                           file: file,
                           bookColor: bookColor[0],

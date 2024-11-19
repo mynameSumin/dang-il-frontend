@@ -72,7 +72,7 @@
     rgba(255, 255, 255, 0.215) 13.1%,
     rgba(0, 27, 109, 0.43) 86.05%
   );
-  z-index: 10;
+  z-index: 150;
 }
 
 .player-box {
@@ -80,6 +80,7 @@
   width: fit-content;
   padding-bottom: 200px;
   height: 0;
+  z-index: 104;
 }
 
 #desktop-bottom {
@@ -387,9 +388,10 @@ input::placeholder {
   width: 38%;
   height: 100%;
 }
-.col-book1 {
+
+.col-book {
   border-radius: 5px;
-  background-color: yellow;
+
   width: 25%;
   height: 100%;
   cursor: pointer;
@@ -417,10 +419,9 @@ input::placeholder {
   height: 100%;
   position: relative;
 }
-.row-book1 {
+.row-book {
   border-radius: 5px;
   position: absolute;
-  background-color: black;
   bottom: 0;
   left: 1%;
   width: 90%;

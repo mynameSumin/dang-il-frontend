@@ -60,12 +60,12 @@
 .bulletin-input-text {
   border: 2px solid #abbcde; /* 항상 적용될 스타일 */
   outline: none; /* 포커스 시 브라우저 기본 윤곽선 제거 */
-  background-color: transparent;
+  background: linear-gradient(107deg, #fdfeff -6.45%, #cdd6f8 108.15%);
 }
 
 .night .bulletin-input-text {
   border: 2px solid #d1cafc;
-  background-color: transparent;
+  background: linear-gradient(107deg, #9c96c6 -6.45%, #302356 108.15%);
 }
 
 .bulletin-input-text::placeholder {
