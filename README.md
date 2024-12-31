@@ -19,36 +19,47 @@
 나의 공간 및 다른 사람들의 공간으로 놀러갈 수 있는 메인 화면입니다.  
 드래그를 통해 자유로운 이동이 가능하며 컴퓨터를 더블클릭하여 사용자의 공간으로 이동이 가능합니다.
 
+<img width="1433" alt="image" src="https://github.com/user-attachments/assets/56a98e1a-fae5-4ddd-9c6d-f1eafe2366fa" />
+위 사진처럼 tag 또는 이름을 검색하여 친구추가를 진행할 수 있습니다.
+
 ### 나의 공간
-1. BGM 설정  
+## 1. BGM 설정  
    <img width="1440" alt="image" src="https://github.com/user-attachments/assets/dbb8c925-2e78-4f66-b866-a15fc9a0a3bb">
    나만의 공간에 맞는 BGM 및 영상 설정이 가능합니다.  
-2. 방 꾸미기  
+   
+## 2. 방 꾸미기  
    벽지 및 커튼 등등 방의 요소를 마음에 드는 모양으로 변경이 가능합니다.  
    <img width="1440" alt="image" src="https://github.com/user-attachments/assets/fa64bcfc-62b6-4619-bfc2-375a69f20f04">
    <img width="1436" alt="image" src="https://github.com/user-attachments/assets/75066c24-a3a5-4f3f-bc38-448c2d0380fa">
-3. pdf 불러오기 및 필기 기능  
+   
+## 3. pdf 불러오기 및 필기 기능  
    나의 노트북에 있는 pdf를 불러오고 그와 더불어 필기가 가능합니다. 또한 저장도 가능합니다.  
    전체화면 설정과 클릭 실수로 인한 필기 화면 이탈 방지를 위한 자물쇠 기능도 제공합니다.
    <img width="1427" alt="image" src="https://github.com/user-attachments/assets/25815af9-edac-47f3-8208-8480afd0cf73">  
    <img width="1424" alt="image" src="https://github.com/user-attachments/assets/722c05f7-4271-4ef5-8306-eb72db411e55">  
 
-4. 필기 확인 및 수정 기능  
+## 4. 필기 확인 및 수정 기능  
    이전에 필기했던 내용을 확인하고 다시 필기가 가능합니다.  
-5. 메모지 기능  
+
+## 5. 메모지 기능  
    메모가 필요할 경우, 원하는 모양과 색상을 선택한 후, 나만의 공간 컴퓨터 하단에 메모지를 붙일 수 있습니다.  
    더블클릭 시 메모 내용을 자세히 확인이 가능합니다.  
    <img width="1419" alt="image" src="https://github.com/user-attachments/assets/028c5f8e-5ea2-4fe1-abb0-337678de98fe">
    <img width="1413" alt="image" src="https://github.com/user-attachments/assets/067f250f-c8de-466c-8763-17ceb953aa07">
 
-6. 밤낮 모드 설정  
-    스탠드 클릭 시, 낮과 밤 모드를 선택할 수 있습니다. 메인 공간에서도 이어지게 됩니다.
-7. 시간 기록 기능
-   타이머를 클릭해 공부 시간을 기록할 수 있습니다.  
+## 6. 밤낮 모드 설정  
+   스탠드 클릭 시, 낮과 밤 모드를 선택할 수 있습니다. 메인 공간에서도 이어지게 됩니다.
+   <img width="1439" alt="image" src="https://github.com/user-attachments/assets/5e188f72-170a-4410-a10e-4706587cbf81" />
+   <img width="1438" alt="image" src="https://github.com/user-attachments/assets/db7a768e-e8c1-412a-b920-5152a2611c12" />
+   메인 공간의 밤모드
+   <img width="1440" alt="image" src="https://github.com/user-attachments/assets/aa37cdd7-613e-441d-bf4c-d01d27c732a1" />
 
+## 7. 시간 기록 기능
+   타이머를 클릭해 공부 시간을 기록할 수 있습니다.  
+   <img width="606" alt="image" src="https://github.com/user-attachments/assets/3607170f-10bb-4f61-b6fe-af0c23b7d038" />
 
 ### 타인의 공간
-1. 방명록 기능
+## 1. 방명록 기능
    다른 사람의 공간으로 들어간 경우, 방명록을 남길 수 있습니다.
    <img width="1415" alt="image" src="https://github.com/user-attachments/assets/3be4aead-e4ec-4333-8d09-02e3ca6463ea">
 
